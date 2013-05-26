@@ -1,0 +1,97 @@
+<project default ="compile">
+  
+  <!-- build.xml for Country Runner, cs56, S13
+       name: Mathew Glodack, Christina Morris
+  -->
+
+  
+  <property environment="env"/> <!-- load environment vars -->
+  <property name="webRoot" value="${env.HOME}/public_html/cs56/13S/${env.USER}/country_runner" />
+  <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
+  <property name="webBaseURL1" value="https://foo.cs.ucsb.edu/56mantis/view.php?id=805" />
+  
+  <property name="course" value="cs56" />
+  <property name="quarter" value="13S" />
+  <property name="projectName" value="country_runner" />
+  <property name="projectPath" value="${course}/projects/games/${projectName}"/>
+  <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
+  <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" /> 
+  <property name="mainClass" value="edu.ucsb.cs56.projects.games.country_runner" />
+
+  <path id="project.class.path">
+    <pathelement location="build"/>
+    <pathelement location="lib/junit-4.8.2.jar"/>
+  </path>
+  
+  <!-- target that compiles the src codes and make a build folder to store the class file -->
+  <target name="compile" description="Compiles Country Runner">
+    <mkdir dir="build" />
+    <javac srcdir="src" destdir="build" debug="true" 
+	   debuglevel="lines,source" includeantruntime="false">
+      <compilerarg value="-Xlint:unchecked" />
+      <classpath refid="project.class.path" />
+    </javac>
+  </target>
+  
+  <!-- target that runs the program -->
+  <target name="run" description="Runs Country Runner" depends="compile,jar">
+    <java jar="dist/${course}_${quarter}_${projectName}.jar" classpath="build" fork="true" />
+  </target>
+  
+  <!-- target that deletes unnecessary files and directories -->
+  <target name="clean" description="Deletes unnecessary files and dir" >
+    <delete failonerror="false" verbose="true">
+      <fileset dir="build" includes="**/*.class"/>
+    </delete>
+    <delete dir="javadoc" quiet="true" />
+  </target>
+    
+  <!-- target that generates javadoc files for MemoryCardGame -->
+  <target name="javadoc" description="Generates JavaDoc files for Country Runner" depends="compile">
+    <delete dir="javadoc"  quiet="true" />
+    <javadoc destdir="javadoc" author="true" version="true" use="true">
+      <fileset dir="src" includes="**/*.java" />
+      <classpath refid="project.class.path" />
+    </javadoc>
+    <delete quiet="true" dir="${javadocDest}" />
+    <copy todir="${javadocDest}" >
+      <fileset dir="javadoc"/>
+    </copy>
+    <!-- Note: this only does the chmod command on the javadoc
+	 subdirectory and its contents. You MIGHT have to MANUALLY do the
+	 chmod on the parent directories. However, you should only need to do
+	 that once.
+    -->
+    <chmod dir="${javadocDest}" perm="755" type="dir" includes="**" />
+    <chmod dir="${javadocDest}" perm="755" type="file" includes="**/*" />
+    <echo>Javadoc deployed to ${javadocURL}</echo>
+  </target> 
+  
+  <!-- target that create a jar file -->
+  <target name="jar" description = "Creates a jar file" depends="compile">
+    <mkdir dir="dist" />
+    <copy todir="build/images">
+      <fileset dir="images"/>
+    </copy>
+    <jar destfile="dist/${course}_${quarter}_${projectName}.jar" 
+	 basedir="build" >
+      <manifest>
+	<attribute name="Main-Class" value="${mainClass}" />
+      </manifest>
+    </jar>
+  </target>
+  
+  <!-- target that runs Junit Tests -->
+  <target name="test" description="Run JUnit tests on Country Runner" depends="compile">
+    <junit haltonerror="no" haltonfailure="no">
+      <classpath refid="project.class.path" />
+      <batchtest fork="yes">
+	<fileset dir="src">
+	  <include name="**/*Test.java"/>
+	</fileset>
+      </batchtest>
+      <formatter type="plain" usefile="false"/>
+    </junit>
+  </target>
+  
+</project>
