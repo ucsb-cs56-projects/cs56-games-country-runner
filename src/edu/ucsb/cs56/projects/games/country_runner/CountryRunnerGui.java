@@ -18,18 +18,10 @@ public class CountryRunnerGui{
 	
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	CountryPanel cp = new CountryPanel();
-	frame.getContentPane().add(cp);
+	CountryRunnerJPanel cp = new CountryRunnerJPanel();
+	frame.add(cp);
 	frame.setVisible(true);
     }
 	
-	public static class CountryPanel extends JPanel{
-	    public void paintComponent(Graphics g){
-		Graphics2D g2 = (Graphics2D) g;
-		Runner boy = new Runner();
-		g2.setColor(Color.black);
-		g2.draw(boy);
-	    
-	    }
-	}
+
 }

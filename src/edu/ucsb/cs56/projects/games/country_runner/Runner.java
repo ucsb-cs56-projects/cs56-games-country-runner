@@ -23,17 +23,25 @@ public class Runner extends GeneralPathWrapper implements Shape {
     private double height;
     private double width;
 
-    public Runner(){
-	this.height = 10.0;
+    public Runner(double y){
+	this.height = 40.0;
 	this.width = 10.0; 
 	this.x = 500.0;
-	this.y = 300.0;
+	this.y = y;
 
 	Rectangle2D.Double runner = 
 	    new Rectangle2D.Double(x, y, width,height);
 	
 	GeneralPath r = this.get();
 	r.append(runner, false);
+    }
+
+    public void jump(double y){
+	this.y = y;
+    }
+
+    public void ground(){
+	this.y = 300;
     }
 }
 
