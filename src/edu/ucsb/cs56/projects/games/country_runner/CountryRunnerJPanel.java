@@ -12,12 +12,9 @@ public class CountryRunnerJPanel extends JPanel implements KeyListener{
     Circle c1 = new Circle(20, 20);
     Circle c2 = new Circle(40, 40);
     Label l1;
-    Graphics2D g2;
-    //  public CountryRunnerJPanel(){
-	//	this.setFocusable(true);
-	//	addKeyListener(this);
-    //  }
+    public Graphics2D g2;
     public static final boolean debug = true;
+    
     public void paintComponent(Graphics g){
 	g2 = (Graphics2D) g;
 	g2.setColor(Color.black);
@@ -25,19 +22,15 @@ public class CountryRunnerJPanel extends JPanel implements KeyListener{
 	g2.draw(c1);
     }
     
-	
-     public void keyPressed(KeyEvent e) {
-	 if(e.getKeyCode() ==37){ 
+    public void keyPressed(KeyEvent e) {
+	if(e.getKeyCode() ==37){ 
 	    g2.draw(c2);
-	this.repaint();
-	this.keyPaint();
-	 }
-			//keyPaint();
-	//	doAction();
+	    this.repaint();
+	    this.keyPaint();
+	}
     }
 	
 	public void keyReleased(KeyEvent e){
-	    // boy.ground();
 	}
 
 	public void keyTyped(KeyEvent e){
@@ -60,8 +53,8 @@ public class CountryRunnerJPanel extends JPanel implements KeyListener{
     }
 
     public void keyPaint() { 
-	c1.move(10);
-	this.repaint(); 
+	c1.move(50);
+	g2.draw(c1); 
 	if(debug){ System.out.println("In keyPaint()");}
 }
 
