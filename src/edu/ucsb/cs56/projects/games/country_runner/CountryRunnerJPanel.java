@@ -10,28 +10,29 @@ import java.util.*;
 public class CountryRunnerJPanel extends JPanel implements KeyListener{
     Runner boy = new Runner(300);
     Circle c1 = new Circle(20, 20);
+    Circle c2 = new Circle(40, 40);
     Label l1;
     Graphics2D g2;
+    //  public CountryRunnerJPanel(){
+	//	this.setFocusable(true);
+	//	addKeyListener(this);
+    //  }
+    public static final boolean debug = true;
     public void paintComponent(Graphics g){
 	g2 = (Graphics2D) g;
 	g2.setColor(Color.black);
 	g2.draw(boy);
 	g2.draw(c1);
-	addKeyListener(this);
     }
-  
+    
 	
-    @Override
-    public void keyPressed(KeyEvent e) {
-	if ( e.getKeyCode() == 37 )
-	    {
-	
-		boy.jump(200);
-			g2.draw(boy);
-			this.repaint();
-			
-    }
-	keyPaint();
+     public void keyPressed(KeyEvent e) {
+	 if(e.getKeyCode() ==37){ 
+	    g2.draw(c2);
+	this.repaint();
+	this.keyPaint();
+	 }
+			//keyPaint();
 	//	doAction();
     }
 	
@@ -41,7 +42,7 @@ public class CountryRunnerJPanel extends JPanel implements KeyListener{
 
 	public void keyTyped(KeyEvent e){
 	}
-
+    
     class RunGame extends Thread{
 	public void run(){//begin run method
 	    try{
@@ -58,11 +59,15 @@ public class CountryRunnerJPanel extends JPanel implements KeyListener{
 	}//end RunGame
     }
 
-    public void keyPaint() { this.repaint(); }
+    public void keyPaint() { 
+	c1.move(10);
+	this.repaint(); 
+	if(debug){ System.out.println("In keyPaint()");}
+}
 
     public void doAction(int delay) throws InterruptedException{
 	
-	    c1.move(10);
+	    
 	    this.repaint();
 	    if(Thread.currentThread().interrupted())
 		throw(new InterruptedException());
