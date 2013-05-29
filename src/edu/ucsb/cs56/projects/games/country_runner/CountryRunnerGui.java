@@ -14,23 +14,22 @@ public class CountryRunnerGui{
 
 	JFrame frame = new JFrame();
 
-	frame.setSize(350,400);
+	frame.setSize(600,400);
 	
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	CountryPanel cp = new CountryPanel();
-	frame.add(cp);
+	frame.getContentPane().add(cp);
 	frame.setVisible(true);
+    }
 	
-	class CountryPanel extends JPanel{
-	    public CountryPanel(){
+	public static class CountryPanel extends JPanel{
 	    public void paintComponent(Graphics g){
 		Graphics2D g2 = (Graphics2D) g;
 		Runner boy = new Runner();
 		g2.setColor(Color.black);
 		g2.draw(boy);
-	    }
+	    
 	    }
 	}
-    }
 }

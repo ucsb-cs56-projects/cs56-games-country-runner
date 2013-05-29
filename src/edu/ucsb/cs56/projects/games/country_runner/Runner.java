@@ -10,9 +10,6 @@ import java.awt.Rectangle;
 import java.awt.geom.PathIterator;
 import java.awt.geom.AffineTransform;
 
-import edu.ucsb.cs56.S13.drawings.utilities.ShapeTransforms;
-import edu.ucsb.cs56.S13.drawings.utilities.GeneralPathWrapper;
-
 /**
  * @author Christina Morris, Mathew Glodack
  * @version CS56, S13, project3
@@ -29,7 +26,7 @@ public class Runner extends GeneralPathWrapper implements Shape {
     public Runner(){
 	this.height = 10.0;
 	this.width = 10.0; 
-	this.x = 300.0;
+	this.x = 500.0;
 	this.y = 300.0;
 
 	Rectangle2D.Double runner = 

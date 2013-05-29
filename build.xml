@@ -16,7 +16,7 @@
   <property name="projectPath" value="${course}/projects/games/${projectName}"/>
   <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" /> 
-  <property name="mainClass" value="edu.ucsb.cs56.projects.games.country_runner" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.games.country_runner/CountryRunnerGui" />
 
   <path id="project.class.path">
     <pathelement location="build"/>
@@ -25,17 +25,20 @@
   
   <!-- target that compiles the src codes and make a build folder to store the class file -->
   <target name="compile" description="Compiles Country Runner">
-    <mkdir dir="build" />
-    <javac srcdir="src" destdir="build" debug="true" 
-	   debuglevel="lines,source" includeantruntime="false">
-      <compilerarg value="-Xlint:unchecked" />
-      <classpath refid="project.class.path" />
+   <mkdir dir="build" />
+    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source">
+      <classpath>
+<pathelement location="build" />
+<pathelement location="lib/junit-4.8.2.jar" />
+      </classpath>
     </javac>
   </target>
   
   <!-- target that runs the program -->
-  <target name="run" description="Runs Country Runner" depends="compile,jar">
-    <java jar="dist/${course}_${quarter}_${projectName}.jar" classpath="build" fork="true" />
+  <target name="run" description="Runs Country Runner" depends="compile">
+   <java classname="${mainClass}" fork="true">
+      <classpath refid="project.class.path"/>
+    </java>
   </target>
   
   <!-- target that deletes unnecessary files and directories -->
