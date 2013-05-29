@@ -8,20 +8,20 @@ import java.util.ArrayList;
 import java.util.*;
 
 
-public class CountryRunnerGui{
+public class CountryRunnerGui extends JFrame{
+    CountryRunnerJPanel cp = new CountryRunnerJPanel();    
+    public CountryRunnerGui(){
+	RunGame rg = new RunGame();
+	rg.start();
+	this.setSize(600,400);
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.add(cp);
+	this.setVisible(true);
+    }
 
     public static void main(String [] args){
 
-	JFrame frame = new JFrame();
-
-	frame.setSize(600,400);
+	new CountryRunnerGui();
 	
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	CountryRunnerJPanel cp = new CountryRunnerJPanel();
-	frame.add(cp);
-	frame.setVisible(true);
     }
-	
-
 }

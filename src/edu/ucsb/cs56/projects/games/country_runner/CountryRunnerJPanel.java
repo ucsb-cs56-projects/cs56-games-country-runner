@@ -9,11 +9,13 @@ import java.util.*;
 
 public class CountryRunnerJPanel extends JPanel {
     Runner boy = new Runner(300);
+    Circle c1 = new Circle(20, 20);
     public void paintComponent(Graphics g){
 	Graphics2D g2 = (Graphics2D) g;
 
 	g2.setColor(Color.black);
 	g2.draw(boy);
+	g2.draw(c1);
 	addKeyListener(new KeyInput());
     }
     public class KeyInput implements KeyListener{
@@ -24,7 +26,7 @@ public class CountryRunnerJPanel extends JPanel {
 		{
 		    boy.jump(200);
 		}
-	    doAction();
+	    //   doAction();
 	}
 	
 	public void keyReleased(KeyEvent e){
@@ -34,8 +36,27 @@ public class CountryRunnerJPanel extends JPanel {
 	public void keyTyped(KeyEvent e){
 	}
     }
-    
-    public void doAction(){
-	this.repaint();
+    class RunGame extends Thread{
+	public void run(){//begin run method
+	    try{
+		while(true){
+		    doAction(40);
+		}//end while loop
+	    }catch(Exception ex){
+		if(ex instanceof InterruptedException){}
+		else{//Unexpected exception occurred.
+		    System.out.println(ex);
+		    System.exit(1);//terminate program
+		}//end else
+	    }//end catch
+	}//end RunGame
+    }
+    public void doAction(int delay) throws InterruptedException{
+	
+	    c1.move(10);
+	    this.repaint();
+	    if(Thread.currentThread().interrupted())
+		throw(new InterruptedException());
+	    Thread.currentThread().sleep(delay);
     }
 }
