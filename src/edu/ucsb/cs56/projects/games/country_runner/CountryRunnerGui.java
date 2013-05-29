@@ -11,8 +11,8 @@ import java.util.*;
 public class CountryRunnerGui extends JFrame{
     CountryRunnerJPanel cp = new CountryRunnerJPanel();    
     public CountryRunnerGui(){
-	RunGame rg = new RunGame();
-	rg.start();
+	//	RunGame rg = new RunGame();
+	//	rg.start();
 	this.setSize(600,400);
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.add(cp);
