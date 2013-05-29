@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.*;
 
-
 public class CountryRunnerGui{
 
     public static void main(String [] args){
