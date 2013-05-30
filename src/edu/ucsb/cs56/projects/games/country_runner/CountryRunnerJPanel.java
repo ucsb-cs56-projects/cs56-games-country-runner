@@ -21,20 +21,29 @@ public class CountryRunnerJPanel extends JPanel implements KeyListener{
 	g2.draw(boy);
 	g2.draw(c1);
     }
+    public void addNotify() {
+	super.addNotify();
+        requestFocus();
+    }
     
     public void keyPressed(KeyEvent e) {
-	if(e.getKeyCode() ==37){ 
-	    g2.draw(c2);
-	    this.repaint();
-	    this.keyPaint();
-	}
+	//	if(e.getKeyCode() ==37){ 
+	    // g2.draw(c2);
+	    // this.repaint();
+	    //	    c1.move(50);
+	    //	    g2.draw(c2);
+	    //	    keyPaint(g2);
+	//	}
     }
 	
 	public void keyReleased(KeyEvent e){
 	}
 
 	public void keyTyped(KeyEvent e){
-	}
+	    if(e.getKeyCode() == 37){
+		boy.jump(200);
+		repaint();
+	    }}
     
     class RunGame extends Thread{
 	public void run(){//begin run method
@@ -52,10 +61,14 @@ public class CountryRunnerJPanel extends JPanel implements KeyListener{
 	}//end RunGame
     }
 
-    public void keyPaint() { 
+    public void keyPaint(Graphics g) { 
+	g2 = (Graphics2D) g;
 	c1.move(50);
+	
+	g2.draw(c2);
 	g2.draw(c1); 
-	if(debug){ System.out.println("In keyPaint()");}
+	//	this.repaint();
+	if(debug){ System.out.println("In keyPaint()" + "c1 should be:50 "+c1.getX());}
 }
 
     public void doAction(int delay) throws InterruptedException{
