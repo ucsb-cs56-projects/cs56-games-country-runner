@@ -37,7 +37,9 @@ public class Runner extends GeneralPathWrapper implements Shape {
     }
 
     public void jump(double y){
+	System.out.println("got into the jump");
 	this.y = y;
+	System.out.println("y is: " + y);
     }
 
     public void ground(){

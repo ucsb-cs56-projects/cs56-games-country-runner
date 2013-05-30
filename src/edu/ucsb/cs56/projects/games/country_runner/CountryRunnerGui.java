@@ -15,8 +15,9 @@ public class CountryRunnerGui extends JFrame {
 	//	RunGame rg = new RunGame();
 	//	rg.start();
 	cp = new CountryRunnerJPanel();
-	cp.setFocusable(true);
-	cp.addKeyListener(cp);
+	//cp.setFocusable(true);
+	//cp.requestFocusInWindow();
+	//cp.addKeyListener(new KeyAdapter());
 	this.setSize(600,400);
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.add(cp);
