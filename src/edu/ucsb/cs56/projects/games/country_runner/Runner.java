@@ -51,8 +51,19 @@ public class Runner extends GeneralPathWrapper implements Shape {
 	System.out.println("y is: " + y);
     }
 
-    public void ground(){
-	this.y = 300;
+    /**As soon as the runner gets jumps up
+     * it must jump back down to it normal running position
+     * @param dy changes the position of the runner back to its normal
+     * position
+     */
+    
+    //Note: do we really need this function
+    public void ground(double dy){
+	GeneralPath temp = this.get();
+	Shape t = ShapeTransforms.translatedCopyOf(temp,0,dy);
+	this.set(new GeneralPath(t));
+	this.y = y-dy;
+	System.out.println("got into the ground");
     }
 }
 

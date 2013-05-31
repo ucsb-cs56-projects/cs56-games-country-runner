@@ -42,11 +42,16 @@ public class CountryRunnerJPanel extends JPanel{
             if (key == KeyEvent.VK_KP_LEFT || key == KeyEvent.VK_LEFT)
             {
                 System.out.println(text + " LEFT");
-                //Call some function
+                //all some function
 		boy.jump(-5);
 		((CountryRunnerJPanel)e.getSource()).repaint();
 		
             }
+	    else if (key == KeyEvent.KEY_RELEASED){
+		System.out.println("key released");
+		boy.ground(-10);
+		((CountryRunnerJPanel)e.getSource()).repaint();
+	    }
             else if (key == KeyEvent.VK_KP_RIGHT || key == KeyEvent.VK_RIGHT)
             {
                 System.out.println(text + " RIGHT");
