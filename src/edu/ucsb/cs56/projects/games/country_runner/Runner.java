@@ -22,7 +22,7 @@ public class Runner extends GeneralPathWrapper implements Shape {
     private double y;
     private double height;
     private double width;
-
+    //todo: consider getting rid of instance variables
     public Runner(double y){
 	this.height = 40.0;
 	this.width = 10.0; 
@@ -36,9 +36,18 @@ public class Runner extends GeneralPathWrapper implements Shape {
 	r.append(runner, false);
     }
 
-    public void jump(double y){
+    /**
+       @param dy delta y, how much to jump by, negative moves up, positive mves down
+    */
+
+    public void jump(double dy){
+
+	GeneralPath temp = this.get();
+	Shape t = ShapeTransforms.translatedCopyOf(temp, 0, dy);
+	this.set(new GeneralPath(t));
+
 	System.out.println("got into the jump");
-	this.y = y;
+	this.y = y+dy;
 	System.out.println("y is: " + y);
     }
 

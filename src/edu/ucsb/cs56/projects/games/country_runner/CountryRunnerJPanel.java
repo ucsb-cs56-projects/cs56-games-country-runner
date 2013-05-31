@@ -43,8 +43,8 @@ public class CountryRunnerJPanel extends JPanel{
             {
                 System.out.println(text + " LEFT");
                 //Call some function
-		boy.jump(200);
-		keyPaint(g2);
+		boy.jump(-5);
+		((CountryRunnerJPanel)e.getSource()).repaint();
 		
             }
             else if (key == KeyEvent.VK_KP_RIGHT || key == KeyEvent.VK_RIGHT)
@@ -61,6 +61,8 @@ public class CountryRunnerJPanel extends JPanel{
     
     public void paintComponent(Graphics g){
 	g2 = (Graphics2D) g;
+	g2.setColor(Color.white);
+	g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 	g2.setColor(Color.black);
 	g2.draw(boy);
 	g2.draw(c1);
