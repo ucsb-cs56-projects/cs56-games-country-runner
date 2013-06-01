@@ -70,7 +70,7 @@ public class Runner extends GeneralPathWrapper implements Shape {
     }
 
     public boolean onGround(){
-	if ( this.y == 300 )
+	if ( this.y == 300.0 )
 	    return true;
 	return false;
     }

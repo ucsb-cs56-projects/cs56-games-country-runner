@@ -17,8 +17,9 @@ public class CountryRunnerGui extends JFrame {
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.add(cp);
 	this.setVisible(true);
-	cp.moveObstacle();
-	
+	//cp.run();
+		cp.moveObstacle();
+	//	cp.fall();
     }
 
     public static void main(String [] args){

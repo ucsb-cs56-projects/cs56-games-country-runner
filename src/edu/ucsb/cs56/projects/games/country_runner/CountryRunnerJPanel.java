@@ -15,11 +15,15 @@ import java.util.*;
 
 
 public class CountryRunnerJPanel extends JPanel implements Runnable{
-    Runner boy = new Runner(300);
+    Runner boy = new Runner(300.0);
     Circle c1 = new Circle(20, 20);
     Circle c2 = new Circle(40, 40);
     Label l1;
+    //  Runnable r = new CountryRunnerJPanel();
+    Thread t;
+    //Thread t2 = new Thread(this);
     public Graphics2D g2;
+
     public static final boolean debug = true;
 
     /** Constructor adds the keyListener
@@ -27,6 +31,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 
 
     public CountryRunnerJPanel(){
+	t = new Thread(this);
 	setFocusable(true);
 	requestFocusInWindow();
 
@@ -38,7 +43,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 
          @Override
          public void keyReleased(KeyEvent e) {
-            myKeyEvt(e, "keyReleased");
+	     //  myKeyEvt(e, "keyReleased");
          }
 
          @Override
@@ -53,17 +58,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
             if (key == KeyEvent.VK_KP_LEFT || key == KeyEvent.VK_LEFT)
             {
                 System.out.println(text + " LEFT");
-		
-		//fall(e);
-	       
-		boy.jump(-5);
-		((CountryRunnerJPanel)e.getSource()).repaint();
-		
-            }
+		//Makes a new thread so runner can jump
+		makeThread();
+	    }
 	    else if (key == KeyEvent.KEY_RELEASED){
 		System.out.println("key released");
-		//		fall();
-	    }
+		    }
             else if (key == KeyEvent.VK_KP_RIGHT || key == KeyEvent.VK_RIGHT)
             {
                 System.out.println(text + " RIGHT");
@@ -87,8 +87,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	g2.draw(boy);
 	g2.draw(c1);
     }
+    /**This moves the circle
+     *
+     */
   
-    public void moveObstacle(){
+      public void moveObstacle(){
 	for ( int i=0; i<this.getWidth(); i+=1)
 	    {
 		c1.move(10);
@@ -98,36 +101,48 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 		}catch(Exception e){
 		}
 	    }
-    }
+	    }
 
-   
+    public void run(){
+	jumpRun(-1);
+	jumpRun(1);
+	/*
 
-  
-
-    /*
-    
-    class RunGame extends Thread{
-	public void run(){//begin run method
-	    try{
-		while(true){
-		    doAction(40);
-		}//end while loop
-	    }catch(Exception ex){
-		if(ex instanceof InterruptedException){}
-		else{//Unexpected exception occurred.
-		    System.out.println(ex);
-		    System.exit(1);//terminate program
-		}//end else
-	    }//end catch
-	}//end RunGame
-    }
-   
-    public void doAction(int delay) throws InterruptedException{
-	
-	    
+	for(int i = 0; i<100; i++){
+	    boy.jump(-1);
 	    this.repaint();
-	    if(Thread.currentThread().interrupted())
-		throw(new InterruptedException());
-	    Thread.currentThread().sleep(delay);
-	    }*/
+	    //	((CountryRunnerJPanel)e.getSource()).repaint();
+	    try{
+		t.sleep(10);
+	    }catch (InterruptedException ex){
+	    }
+	}
+	
+	if(!boy.onGround() && boy.getY()==200){
+	    for(int i = 0; i<100; i++){
+		boy.jump(1);
+		this.repaint();
+		try{
+		    t.sleep(10);
+		}catch (InterruptedException ex){
+		}
+		}}*/
+    }
+    
+    public synchronized void jumpRun(int j){
+	for(int i = 0; i<100; i++){
+	    boy.jump(j);
+	    this.repaint();
+	    try{
+		t.sleep(10);
+	    }catch (InterruptedException ex){
+	    }
+	}
+    }
+
+    public void makeThread(){
+	t = new Thread(this);
+	t.start();
+    }
+    
 }
