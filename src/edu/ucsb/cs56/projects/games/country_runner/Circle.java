@@ -21,11 +21,12 @@ import java.awt.geom.Ellipse2D;
 	GeneralPath r = this.get();
 	r.append(c, false);
     }
+	
 	public void move(double dx){
 	    GeneralPath temp = this.get();
 	    Shape t = ShapeTransforms.translatedCopyOf(temp, dx, 0);
 	    this.set(new GeneralPath(t));
-	    
+	    setX(dx);
 
 	}
 

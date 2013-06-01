@@ -94,6 +94,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
       public void moveObstacle(){
 	for ( int i=0; i<this.getWidth(); i+=1)
 	    {
+		if(crash(c1, boy))
+		    System.out.println("CRASH!!!!!");
 		c1.move(10);
 	        this.repaint();
 		try{
@@ -144,5 +146,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	t = new Thread(this);
 	t.start();
     }
+    public boolean crash(Circle c, Runner r){
+	return c.getX()==r.getX())
+}
+
     
 }

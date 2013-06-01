@@ -36,8 +36,8 @@ public class Runner extends GeneralPathWrapper implements Shape {
 	GeneralPath r = this.get();
 	r.append(runner, false);
     }
-
-    public double getY(){ return this.y;}
+	public double getX(){ return this.x;}
+	public double getY(){ return this.y;}
 
     /**
        @param dy delta y, how much to jump by, negative moves up, positive mves down
@@ -59,16 +59,6 @@ public class Runner extends GeneralPathWrapper implements Shape {
      * position
      */
     
-    //Note: do we really need this function
-    public void fall(double dy){
-	GeneralPath temp = this.get();
-	Shape t = ShapeTransforms.translatedCopyOf(temp,0,dy);
-	this.set(new GeneralPath(t));
-
-	this.y = y-dy;
-	System.out.println("got into the ground");
-    }
-
     public boolean onGround(){
 	if ( this.y == 300.0 )
 	    return true;

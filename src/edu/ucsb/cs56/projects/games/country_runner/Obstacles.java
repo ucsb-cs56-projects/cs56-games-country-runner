@@ -19,7 +19,7 @@ public class Obstacles extends GeneralPathWrapper implements Shape{
 
     public double getX(){return this.x;}
     public double getY(){return this.y;}
-    
+    public void setX(double x){this.x += x;}
 
    
     public Obstacles(double width, double height){
