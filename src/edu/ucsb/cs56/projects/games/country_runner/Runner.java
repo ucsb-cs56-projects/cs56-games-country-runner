@@ -22,6 +22,7 @@ public class Runner extends GeneralPathWrapper implements Shape {
     private double y;
     private double height;
     private double width;
+    
     //todo: consider getting rid of instance variables
     public Runner(double y){
 	this.height = 40.0;
@@ -36,12 +37,13 @@ public class Runner extends GeneralPathWrapper implements Shape {
 	r.append(runner, false);
     }
 
+    public double getY(){ return this.y;}
+
     /**
        @param dy delta y, how much to jump by, negative moves up, positive mves down
     */
 
     public void jump(double dy){
-
 	GeneralPath temp = this.get();
 	Shape t = ShapeTransforms.translatedCopyOf(temp, 0, dy);
 	this.set(new GeneralPath(t));
@@ -58,13 +60,21 @@ public class Runner extends GeneralPathWrapper implements Shape {
      */
     
     //Note: do we really need this function
-    public void ground(double dy){
+    public void fall(double dy){
 	GeneralPath temp = this.get();
 	Shape t = ShapeTransforms.translatedCopyOf(temp,0,dy);
 	this.set(new GeneralPath(t));
+
 	this.y = y-dy;
 	System.out.println("got into the ground");
     }
+
+    public boolean onGround(){
+	if ( this.y == 300 )
+	    return true;
+	return false;
+    }
+
 }
 
     

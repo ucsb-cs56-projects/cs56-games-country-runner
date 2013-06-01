@@ -7,13 +7,24 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.*;
 
-public class CountryRunnerJPanel extends JPanel{
+/**
+   This class makes the JPanel for the Country Runner game
+   @author Mathew Glodack, Christina Morris
+   @version cs56 S13 proj3
+*/
+
+
+public class CountryRunnerJPanel extends JPanel implements Runnable{
     Runner boy = new Runner(300);
     Circle c1 = new Circle(20, 20);
     Circle c2 = new Circle(40, 40);
     Label l1;
     public Graphics2D g2;
     public static final boolean debug = true;
+
+    /** Constructor adds the keyListener
+     */
+
 
     public CountryRunnerJPanel(){
 	setFocusable(true);
@@ -42,20 +53,20 @@ public class CountryRunnerJPanel extends JPanel{
             if (key == KeyEvent.VK_KP_LEFT || key == KeyEvent.VK_LEFT)
             {
                 System.out.println(text + " LEFT");
-                //all some function
+		
+		//fall(e);
+	       
 		boy.jump(-5);
 		((CountryRunnerJPanel)e.getSource()).repaint();
 		
             }
 	    else if (key == KeyEvent.KEY_RELEASED){
 		System.out.println("key released");
-		boy.ground(-10);
-		((CountryRunnerJPanel)e.getSource()).repaint();
+		//		fall();
 	    }
             else if (key == KeyEvent.VK_KP_RIGHT || key == KeyEvent.VK_RIGHT)
             {
                 System.out.println(text + " RIGHT");
-                //Call some function
             }
          }
 
@@ -63,6 +74,10 @@ public class CountryRunnerJPanel extends JPanel{
       });
    }
 
+    /**The Paint Component method is required for any graphics on a
+       JPanel. It draws the Runner and obstacles.
+       
+     */
     
     public void paintComponent(Graphics g){
 	g2 = (Graphics2D) g;
@@ -72,31 +87,24 @@ public class CountryRunnerJPanel extends JPanel{
 	g2.draw(boy);
 	g2.draw(c1);
     }
-    public void addNotify() {
-	super.addNotify();
-        requestFocus();
+  
+    public void moveObstacle(){
+	for ( int i=0; i<this.getWidth(); i+=1)
+	    {
+		c1.move(10);
+	        this.repaint();
+		try{
+		    Thread.sleep(100);
+		}catch(Exception e){
+		}
+	    }
     }
-    
-    /**
-    
-    public void keyPressed(KeyEvent e) {
-	//	if(e.getKeyCode() ==37){ 
-	    // g2.draw(c2);
-	    // this.repaint();
-	    //	    c1.move(50);
-	    //	    g2.draw(c2);
-	    //	    keyPaint(g2);
-	//	}
-    }
-	
-	public void keyReleased(KeyEvent e){
-	}
 
-	public void keyTyped(KeyEvent e){
-	    if(e.getKeyCode() == 37){
-		boy.jump(200);
-		repaint();
-	    }}
+   
+
+  
+
+    /*
     
     class RunGame extends Thread{
 	public void run(){//begin run method
@@ -113,17 +121,7 @@ public class CountryRunnerJPanel extends JPanel{
 	    }//end catch
 	}//end RunGame
     }
-    */
-    public void keyPaint(Graphics g) { 
-	g2 = (Graphics2D) g;
-	c1.move(50);
-	
-	g2.draw(c2);
-	g2.draw(c1); 
-	this.repaint();
-	if(debug){ System.out.println("In keyPaint()" + "c1 should be:50 "+c1.getX());}
-}
-    /*
+   
     public void doAction(int delay) throws InterruptedException{
 	
 	    
