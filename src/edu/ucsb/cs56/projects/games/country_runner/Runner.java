@@ -18,20 +18,16 @@ import java.awt.geom.AffineTransform;
 
 public class Runner extends GeneralPathWrapper implements Shape {
 
-    private double x;
-    private double y;
-    private double height;
-    private double width;
-    
-    //todo: consider getting rid of instance variables
-    public Runner(double y){
-	this.height = 40.0;
-	this.width = 10.0; 
-	this.x = 500.0;
-	this.y = y;
+    private static final double x = 500.0;
+    private double y = 300.0;
+
+    /** Default Constructor makes the Runner
+     */
+
+    public Runner(){
 
 	Rectangle2D.Double runner = 
-	    new Rectangle2D.Double(x, y, width,height);
+	    new Rectangle2D.Double(x, y, 10, 40);
 	
 	GeneralPath r = this.get();
 	r.append(runner, false);
@@ -51,18 +47,6 @@ public class Runner extends GeneralPathWrapper implements Shape {
 	System.out.println("got into the jump");
 	this.y = y+dy;
 	System.out.println("y is: " + y);
-    }
-
-    /**As soon as the runner gets jumps up
-     * it must jump back down to it normal running position
-     * @param dy changes the position of the runner back to its normal
-     * position
-     */
-    
-    public boolean onGround(){
-	if ( this.y == 300.0 )
-	    return true;
-	return false;
     }
 
 }

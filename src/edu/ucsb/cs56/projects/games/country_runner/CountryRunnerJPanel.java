@@ -15,7 +15,7 @@ import java.util.*;
 
 
 public class CountryRunnerJPanel extends JPanel implements Runnable{
-    Runner boy = new Runner(300.0);
+    Runner boy = new Runner();
     Circle c1 = new Circle(20, 20);
     Circle c2 = new Circle(40, 40);
     Label l1;
@@ -105,31 +105,18 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	    }
 	    }
 
+    /**The run method is required by the Runnable interface
+     *
+     */
+
     public void run(){
 	jumpRun(-1);
 	jumpRun(1);
-	/*
-
-	for(int i = 0; i<100; i++){
-	    boy.jump(-1);
-	    this.repaint();
-	    //	((CountryRunnerJPanel)e.getSource()).repaint();
-	    try{
-		t.sleep(10);
-	    }catch (InterruptedException ex){
-	    }
-	}
-	
-	if(!boy.onGround() && boy.getY()==200){
-	    for(int i = 0; i<100; i++){
-		boy.jump(1);
-		this.repaint();
-		try{
-		    t.sleep(10);
-		}catch (InterruptedException ex){
-		}
-		}}*/
     }
+
+    /**
+     *@param j the amount the runner jumps by each time jump is called, negative moves up, positive moves down
+     */
     
     public synchronized void jumpRun(int j){
 	for(int i = 0; i<100; i++){
@@ -142,12 +129,25 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	}
     }
 
+    /**This method makes a new thread
+     *
+     */
+
     public void makeThread(){
 	t = new Thread(this);
 	t.start();
     }
+
+    /**
+     *@param c circle object
+     *@param r runner object
+     *@return boolean true if there is a crash, false if not
+     */
+
     public boolean crash(Circle c, Runner r){
-	return c.getX()==r.getX())
+	if ( c.getY() == r.getY() )
+	    return c.getX()==r.getX();
+	return false;
 }
 
     
