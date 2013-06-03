@@ -17,45 +17,41 @@ import java.awt.geom.Ellipse2D;
  * Draws the runner object on the screen
  */
 
-public class Runner extends GeneralPathWrapper implements Shape {
+public class Runner2 extends GeneralPathWrapper implements Shape {
 
     private static final double x = 500.0;
     private double y = 300.0;
 
-    /** Default Constructor makes the Runner
+    /** Default Constructor makes the Runner2
      */
 
-    public Runner(){
+    public Runner2(){
 
 	Ellipse2D.Double head = new Ellipse2D.Double(x-5, y, 10, 10);
 	Line2D.Double body =
             new Line2D.Double (x, y + 10, x , y + 30);
 	Line2D.Double upperLeftArm =
-            new Line2D.Double (x, y + 15, x -5 , y + 20);
-	Line2D.Double lowerLeftArm =
-            new Line2D.Double (x - 5, y + 20, x-10 , y + 15);
-	Line2D.Double upperRightArm =
-            new Line2D.Double (x, y + 15, x + 5 , y + 20);
-	Line2D.Double lowerRightArm =
-            new Line2D.Double (x + 5, y + 20, x , y + 25);
-	Line2D.Double upperLeftLeg =
-            new Line2D.Double (x, y + 30, x-5 , y + 40);
-Line2D.Double lowerLeftLeg =
-            new Line2D.Double (x -5, y + 40, x , y + 50);
+            new Line2D.Double (x, y + 15, x + 2.5 , y + 22.5);
+		Line2D.Double lowerLeftArm =
+	 new Line2D.Double (x + 2.5, y + 22.5, x-5 , y + 25);
+		//Line2D.Double upperRightArm =
+		//new Line2D.Double (x, y + 15, x + 5 , y + 20);
+		//Line2D.Double lowerRightArm =
+		//new Line2D.Double (x + 5, y + 20, x , y + 25);
+		//Line2D.Double upperLeftLeg =
+		//new Line2D.Double (x, y + 30, x-5 , y + 40);
+		//Line2D.Double lowerLeftLeg =
+		//new Line2D.Double (x -5, y + 40, x , y + 50);
 Line2D.Double upperRightLeg =
-            new Line2D.Double (x, y + 30, x + 5 , y + 40);
+            new Line2D.Double (x, y + 30, x - 2.5 , y + 40);
 Line2D.Double lowerRightLeg =
-            new Line2D.Double (x + 5, y + 40, x + 15 , y + 45);
+            new Line2D.Double (x  -2.5, y + 40, x + 2.5 , y + 50);
 	
 	GeneralPath r = this.get();
 	r.append(head, false);
 	r.append(body, false);
 	r.append(upperLeftArm, false);
 	r.append(lowerLeftArm, false);
-	r.append(upperRightArm, false);
-	r.append(lowerRightArm, false);
-	r.append(upperLeftLeg, false);
-	r.append(lowerLeftLeg, false);
 	r.append(upperRightLeg, false);
 	r.append(lowerRightLeg, false);
     }
@@ -87,6 +83,5 @@ Line2D.Double lowerRightLeg =
 	    return true;
 	return false;
     } 
-}
 
-    
+}

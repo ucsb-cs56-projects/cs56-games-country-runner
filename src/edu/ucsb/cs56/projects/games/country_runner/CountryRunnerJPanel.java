@@ -16,12 +16,12 @@ import java.util.*;
 
 public class CountryRunnerJPanel extends JPanel implements Runnable{
     Runner boy = new Runner();
+    Runner2 girl = new Runner2();
     Circle c1 = new Circle(20, 20);
-    Circle c2 = new Circle(40, 40);
-    Label l1;
-    //  Runnable r = new CountryRunnerJPanel();
     Thread t;
-    //Thread t2 = new Thread(this);
+    Thread ogt;
+    boolean boyTrue = true;
+    boolean kp = false;
     public Graphics2D g2;
 
     public static final boolean debug = true;
@@ -59,10 +59,14 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
             {
                 System.out.println(text + " LEFT");
 		//Makes a new thread so runner can jump
+		kp = true;
 		makeThread();
 	    }
 	    else if (key == KeyEvent.KEY_RELEASED){
 		System.out.println("key released");
+		kp = false;
+		if(boy.onGround())
+		    runOnGround();
 		    }
             else if (key == KeyEvent.VK_KP_RIGHT || key == KeyEvent.VK_RIGHT)
             {
@@ -84,7 +88,14 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	g2.setColor(Color.white);
 	g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 	g2.setColor(Color.black);
-	g2.draw(boy);
+	if(boy.onGround() && boyTrue)
+	    g2.draw(girl);
+	else if(girl.onGround() && !boyTrue)
+	    g2.draw(boy);
+	else
+	    g2.draw(boy);
+	//	g2.draw(boy);
+	//	g2.draw(girl);
 	g2.draw(c1);
     }
     /**This moves the circle
@@ -110,10 +121,30 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
      */
 
     public void run(){
-	jumpRun(-1);
-	jumpRun(1);
+	if ( kp ){
+	    jumpRun(-1);
+	    jumpRun(1);
+	}
+	while ( boy.onGround() ){
+	    if(boyTrue && !kp){
+		boyTrue = false;
+		this.repaint();
+		try{
+		    t.sleep(500);
+		}catch (InterruptedException ex){
+		}
+	    }
+	    else if (!boyTrue && !kp){
+		boyTrue = true;
+		this.repaint();
+		try{
+		    t.sleep(500);
+		}catch (InterruptedException ex){
+		}	
+	    }
+	}
     }
-
+    
     /**
      *@param j the amount the runner jumps by each time jump is called, negative moves up, positive moves down
      */
@@ -134,10 +165,16 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
      */
 
     public void makeThread(){
-	t = new Thread(this);
-	t.start();
+	//if ( kp ) {
+	    t = new Thread(this);
+	    t.start();
+	    /*}
+	else {
+	    ogt = new Thread(this);
+	    ogt.start();
+	    }*/
     }
-
+    
     /**
      *@param c circle object
      *@param r runner object
@@ -149,6 +186,31 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	    return c.getX()==r.getX();
 	return false;
 }
+    /**Switches the runners position on while on the ground
+     */
+    public void runOnGround(){
+	kp = false;
+	makeThread();
+	/*	while ( boy.onGround() ) {
+	    if( boyTrue){
+		boyTrue = false;
+		this.repaint();
+		try{
+		    Thread.sleep(100);
+		}catch(Exception e){
+		}
+	    }
+	    if ( !boyTrue){
+		boyTrue = true;
+		this.repaint();
+		try{
+		    Thread.sleep(100);
+		}catch(Exception e){
+		}
+	    }
 
-    
+		
+	*/
+    }
 }
+

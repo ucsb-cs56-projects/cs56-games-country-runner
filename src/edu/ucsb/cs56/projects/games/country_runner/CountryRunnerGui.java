@@ -10,6 +10,7 @@ import java.util.*;
 
 public class CountryRunnerGui extends JFrame {
     CountryRunnerJPanel cp;
+    boolean b = true;
 
     public CountryRunnerGui(){
 	cp = new CountryRunnerJPanel();
@@ -18,7 +19,8 @@ public class CountryRunnerGui extends JFrame {
 	this.add(cp);
 	this.setVisible(true);
 	//cp.run();
-		cp.moveObstacle();
+	//	cp.moveObstacle();
+	cp.runOnGround();
 	//	cp.fall();
     }
 
