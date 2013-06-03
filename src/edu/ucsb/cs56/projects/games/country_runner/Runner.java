@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.Rectangle;
 import java.awt.geom.PathIterator;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 
 /**
  * @author Christina Morris, Mathew Glodack
@@ -26,11 +27,37 @@ public class Runner extends GeneralPathWrapper implements Shape {
 
     public Runner(){
 
-	Rectangle2D.Double runner = 
-	    new Rectangle2D.Double(x, y, 10, 40);
+	Ellipse2D.Double head = new Ellipse2D.Double(x-5, y, 10, 10);
+	Line2D.Double body =
+            new Line2D.Double (x, y + 10, x , y + 30);
+	Line2D.Double upperLeftArm =
+            new Line2D.Double (x, y + 15, x -5 , y + 20);
+	Line2D.Double lowerLeftArm =
+            new Line2D.Double (x - 5, y + 20, x-10 , y + 15);
+	Line2D.Double upperRightArm =
+            new Line2D.Double (x, y + 15, x + 5 , y + 20);
+	Line2D.Double lowerRightArm =
+            new Line2D.Double (x + 5, y + 20, x , y + 25);
+	Line2D.Double upperLeftLeg =
+            new Line2D.Double (x, y + 30, x-5 , y + 40);
+Line2D.Double lowerLeftLeg =
+            new Line2D.Double (x -5, y + 40, x , y + 50);
+Line2D.Double upperRightLeg =
+            new Line2D.Double (x, y + 30, x + 5 , y + 40);
+Line2D.Double lowerRightLeg =
+            new Line2D.Double (x + 5, y + 40, x + 15 , y + 45);
 	
 	GeneralPath r = this.get();
-	r.append(runner, false);
+	r.append(head, false);
+	r.append(body, false);
+	r.append(upperLeftArm, false);
+	r.append(lowerLeftArm, false);
+	r.append(upperRightArm, false);
+	r.append(lowerRightArm, false);
+	r.append(upperLeftLeg, false);
+	r.append(lowerLeftLeg, false);
+	r.append(upperRightLeg, false);
+	r.append(lowerRightLeg, false);
     }
 	public double getX(){ return this.x;}
 	public double getY(){ return this.y;}
