@@ -17,8 +17,10 @@ import java.awt.geom.Ellipse2D;
    @version cs56 S13 proj3
 */
 
-public class Circle extends Obstacles{
+public class Circle extends Obstacles {
     
+
+
     /** Constructor for the Circle
      *@param width sets the width
      *@param height sets the height
@@ -26,7 +28,7 @@ public class Circle extends Obstacles{
 
     public Circle(double width, double height){
 	super(width, height);
-	
+
 	Ellipse2D.Double c = 
 	    new Ellipse2D.Double(getX(),getY(), width, height);
 

@@ -19,7 +19,7 @@ public class CountryRunnerGui extends JFrame {
 	this.add(cp);
 	this.setVisible(true);
 	//cp.run();
-	//	cp.moveObstacle();
+	//		cp.moveObstacle();
 	cp.runOnGround();
 	//	cp.fall();
     }

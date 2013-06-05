@@ -19,7 +19,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
     Runner2 girl = new Runner2();
     Circle c1 = new Circle(20, 20);
     Thread t;
-    Thread ogt;
+    Thread ct;
     boolean boyTrue = true;
     boolean kp = false;
     public Graphics2D g2;
@@ -34,6 +34,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	t = new Thread(this);
 	setFocusable(true);
 	requestFocusInWindow();
+	ObstacleThread obtd = new ObstacleThread();
 
 	addKeyListener(new KeyAdapter() {
 		         @Override
@@ -102,20 +103,56 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
      *
      */
   
-      public void moveObstacle(){
-	for ( int i=0; i<this.getWidth(); i+=1)
-	    {
-		if(crash(c1, boy))
-		    System.out.println("CRASH!!!!!");
-		c1.move(10);
-	        this.repaint();
-		try{
-		    Thread.sleep(100);
-		}catch(Exception e){
-		}
-	    }
-	    }
+    public class ObstacleThread implements Runnable {
+	Thread ct;
+	
+	public ObstacleThread () {
+	    ct = new Thread(this);
+	    ct.start();
+	}
 
+	public void run(){
+	    //   for ( int i=0; i<630; i+=1)
+	    while( true )
+		{
+		    if(crash(c1, boy))
+			System.out.println("CRASH!!!!!");
+		    if(c1.getX()==630)
+			c1.move(-630);
+		    c1.move(10);
+		    paintObstacles();
+		    //	makeThread(); //made new thread for circle
+		    try{
+			ct.sleep(100);
+		    }catch(Exception e){
+		    }
+		}
+	}
+	
+    }
+
+    public void paintObstacles(){
+	this.repaint();
+    }
+
+
+    /*    public void moveObstacle(){
+	  ct = new Thread(this);
+	  ct.start();
+	  for ( int i=0; i<this.getWidth(); i+=1)
+	      {
+		  if(crash(c1, boy))
+		      System.out.println("CRASH!!!!!");
+		  c1.move(10);
+		  this.repaint();
+		  //	makeThread(); //made new thread for circle
+		  try{
+		      t.sleep(100);
+		  }catch(Exception e){
+		  }
+	      }
+      }
+    */
     /**The run method is required by the Runnable interface
      *
      */
@@ -124,13 +161,16 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	if ( kp ){
 	    jumpRun(-1);
 	    jumpRun(1);
+	    if ( boy.onGround() ) {
+		runOnGround();
+	    }
 	}
 	while ( boy.onGround() ){
 	    if(boyTrue && !kp){
 		boyTrue = false;
 		this.repaint();
 		try{
-		    t.sleep(500);
+		    Thread.sleep(500); //changed this to main thread
 		}catch (InterruptedException ex){
 		}
 	    }
@@ -138,7 +178,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 		boyTrue = true;
 		this.repaint();
 		try{
-		    t.sleep(500);
+		    Thread.sleep(500); //changed to main thread
 		}catch (InterruptedException ex){
 		}	
 	    }
@@ -165,16 +205,18 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
      */
 
     public void makeThread(){
-	//if ( kp ) {
 	    t = new Thread(this);
 	    t.start();
-	    /*}
-	else {
-	    ogt = new Thread(this);
-	    ogt.start();
+
+	    /*	else {
+	    ct = new Thread(this);
+	    ct.start();
 	    }*/
     }
-    
+
+  
+  
+
     /**
      *@param c circle object
      *@param r runner object
@@ -189,14 +231,14 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
     /**Switches the runners position on while on the ground
      */
     public void runOnGround(){
-	kp = false;
-	makeThread();
-	/*	while ( boy.onGround() ) {
+	//kp = false;
+	//makeThread();
+		while ( boy.onGround() ) {
 	    if( boyTrue){
 		boyTrue = false;
 		this.repaint();
 		try{
-		    Thread.sleep(100);
+		    Thread.sleep(250);
 		}catch(Exception e){
 		}
 	    }
@@ -204,13 +246,15 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 		boyTrue = true;
 		this.repaint();
 		try{
-		    Thread.sleep(100);
+
+		    Thread.sleep(250);
 		}catch(Exception e){
 		}
 	    }
 
 		
-	*/
+	
+    }
     }
 }
 
