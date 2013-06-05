@@ -17,11 +17,13 @@ import java.util.*;
 public class CountryRunnerJPanel extends JPanel implements Runnable{
     Runner boy = new Runner();
     Runner2 girl = new Runner2();
-    Circle c1 = new Circle(20, 20);
+    Sheep sheep = new Sheep(20,20);
+    //Circle c1 = new Circle(20, 20);
     Thread t;
     Thread ct;
     boolean boyTrue = true;
     boolean kp = false;
+    boolean crash;
     public Graphics2D g2;
 
     public static final boolean debug = true;
@@ -88,8 +90,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	g2 = (Graphics2D) g;
 	Image image = new ImageIcon("background.jpg").getImage();
 	g.drawImage(image, 0, 0, this);
-	//	g2.setColor(Color.white);
+	//     	g2.setColor(Color.white);
 	//	g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+		g2.setStroke(new BasicStroke(3));
 	g2.setColor(Color.black);
 	if(boy.onGround() && boyTrue)
 	    g2.draw(girl);
@@ -99,8 +102,14 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	    g2.draw(boy);
 	//	g2.draw(boy);
 	//	g2.draw(girl);
-	g2.draw(c1);
-    }
+	g2.setStroke(new BasicStroke(3));
+	g2.setColor(Color.white);
+	g2.draw(sheep);
+	if ( crash ) {
+	    g2.setColor(Color.black);
+	    g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+	}
+	}
     /**This moves the circle
      *
      */
@@ -117,11 +126,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	    //   for ( int i=0; i<630; i+=1)
 	    while( true )
 		{
-		    if(crash(c1, boy))
+		    if(crash(sheep, boy)) {
+			crash = true;
 			System.out.println("CRASH!!!!!");
-		    if(c1.getX()==630)
-			c1.move(-630);
-		    c1.move(10);
+		    }
+		    if(sheep.getX()==630)
+			sheep.move(-630);
+		    sheep.move(10);
 		    paintObstacles();
 		    //	makeThread(); //made new thread for circle
 		    try{
@@ -220,12 +231,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
   
 
     /**
-     *@param c circle object
+     *@param c sheep object
      *@param r runner object
      *@return boolean true if there is a crash, false if not
      */
 
-    public boolean crash(Circle c, Runner r){
+    public boolean crash(Sheep c, Runner r){
 	if ( c.getY() == r.getY() )
 	    return c.getX()==r.getX();
 	return false;
@@ -235,7 +246,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
     public void runOnGround(){
 	//kp = false;
 	//makeThread();
-		while ( boy.onGround() ) {
+	while ( boy.onGround() ) {
 	    if( boyTrue){
 		boyTrue = false;
 		this.repaint();
@@ -248,7 +259,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 		boyTrue = true;
 		this.repaint();
 		try{
-
+		    
 		    Thread.sleep(250);
 		}catch(Exception e){
 		}

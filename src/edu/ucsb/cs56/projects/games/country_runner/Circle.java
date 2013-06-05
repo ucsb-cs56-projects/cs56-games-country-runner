@@ -19,34 +19,34 @@ import java.awt.geom.Ellipse2D;
 
 public class Circle extends Obstacles {
     
-
-
+    
+    
     /** Constructor for the Circle
      *@param width sets the width
      *@param height sets the height
      */
-
+    
     public Circle(double width, double height){
 	super(width, height);
-
-	Ellipse2D.Double c = 
+	
+	Ellipse2D.Double c =
 	    new Ellipse2D.Double(getX(),getY(), width, height);
-
+	
 	GeneralPath r = this.get();
 	r.append(c, false);
     }
-
+    
     /**This method moves the Circle
      *@param dx amount x moves, positive moves to the right
      */
-	
-	public void move(double dx){
-	    GeneralPath temp = this.get();
-	    Shape t = ShapeTransforms.translatedCopyOf(temp, dx, 0);
-	    this.set(new GeneralPath(t));
-	    setX(dx);
-
-	}
-
+    
+    public void move(double dx){
+	GeneralPath temp = this.get();
+	Shape t = ShapeTransforms.translatedCopyOf(temp, dx, 0);
+	this.set(new GeneralPath(t));
+	setX(dx);
 	
     }
+    
+    
+}
