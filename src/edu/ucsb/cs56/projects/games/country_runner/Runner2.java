@@ -24,7 +24,6 @@ public class Runner2 extends GeneralPathWrapper implements Shape {
 
     /** Default Constructor makes the Runner2
      */
-
     public Runner2(){
 
 	Ellipse2D.Double head = new Ellipse2D.Double(x-5, y, 10, 10);
@@ -32,21 +31,13 @@ public class Runner2 extends GeneralPathWrapper implements Shape {
             new Line2D.Double (x, y + 10, x , y + 30);
 	Line2D.Double upperLeftArm =
             new Line2D.Double (x, y + 15, x + 2.5 , y + 22.5);
-		Line2D.Double lowerLeftArm =
-	 new Line2D.Double (x + 2.5, y + 22.5, x-5 , y + 25);
-		//Line2D.Double upperRightArm =
-		//new Line2D.Double (x, y + 15, x + 5 , y + 20);
-		//Line2D.Double lowerRightArm =
-		//new Line2D.Double (x + 5, y + 20, x , y + 25);
-		//Line2D.Double upperLeftLeg =
-		//new Line2D.Double (x, y + 30, x-5 , y + 40);
-		//Line2D.Double lowerLeftLeg =
-		//new Line2D.Double (x -5, y + 40, x , y + 50);
-Line2D.Double upperRightLeg =
-            new Line2D.Double (x, y + 30, x - 2.5 , y + 40);
-Line2D.Double lowerRightLeg =
-            new Line2D.Double (x  -2.5, y + 40, x + 2.5 , y + 50);
-	
+	Line2D.Double lowerLeftArm =
+	    new Line2D.Double (x + 2.5, y + 22.5, x-5 , y + 25);
+	Line2D.Double upperRightLeg =
+	    new Line2D.Double (x, y + 30, x - 2.5 , y + 40);
+	Line2D.Double lowerRightLeg =
+	    new Line2D.Double (x  -2.5, y + 40, x + 2.5 , y + 50);
+		
 	GeneralPath r = this.get();
 	r.append(head, false);
 	r.append(body, false);
@@ -72,12 +63,8 @@ Line2D.Double lowerRightLeg =
 	System.out.println("y is: " + y);
     }
 
-    /**As soon as the runner gets jumps up
-     * it must jump back down to it normal running position
-     * @param dy changes the position of the runner back to its normal
-     * position
+    /**Checks whether the runner2 is on the ground
      */
-    
     public boolean onGround(){
 	if ( this.y == 300.0 )
 	    return true;

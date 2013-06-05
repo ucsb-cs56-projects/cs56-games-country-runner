@@ -10,6 +10,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.Rectangle;
 import java.awt.geom.PathIterator;
 
+/**Obstacle class for other obstacles to be created
+ */
+
 public class Obstacles extends GeneralPathWrapper implements Shape{
 
     private double x;
@@ -21,7 +24,10 @@ public class Obstacles extends GeneralPathWrapper implements Shape{
     public double getY(){return this.y;}
     public void setX(double x){this.x += x;}
 
-   
+    /**Constructor for the Obstacles
+     * @param width
+     * @param height
+     */
     public Obstacles(double width, double height){
 	this.x = 0; 
 	this.y=300;

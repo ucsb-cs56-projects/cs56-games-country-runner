@@ -11,10 +11,10 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 
-/**
+/**Draws the runner object on the screen
  * @author Christina Morris, Mathew Glodack
  * @version CS56, S13, project3
- * Draws the runner object on the screen
+ * 
  */
 
 public class Runner extends GeneralPathWrapper implements Shape {
@@ -24,7 +24,6 @@ public class Runner extends GeneralPathWrapper implements Shape {
 
     /** Default Constructor makes the Runner
      */
-
     public Runner(){
 
 	Ellipse2D.Double head = new Ellipse2D.Double(x-5, y, 10, 10);
@@ -65,7 +64,6 @@ Line2D.Double lowerRightLeg =
     /**
        @param dy delta y, how much to jump by, negative moves up, positive mves down
     */
-
     public void jump(double dy){
 	GeneralPath temp = this.get();
 	Shape t = ShapeTransforms.translatedCopyOf(temp, 0, dy);
@@ -76,12 +74,8 @@ Line2D.Double lowerRightLeg =
 	System.out.println("y is: " + y);
     }
 
-    /**As soon as the runner gets jumps up
-     * it must jump back down to it normal running position
-     * @param dy changes the position of the runner back to its normal
-     * position
-     */
-    
+    /**Checks whether the Runner is on the ground
+     */  
     public boolean onGround(){
 	if ( this.y == 300.0 )
 	    return true;
