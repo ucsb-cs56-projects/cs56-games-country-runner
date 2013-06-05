@@ -20,17 +20,16 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
     Sheep sheep = new Sheep(20,20);
     Thread jt; //jump thread for the runner
     Thread ot; //object thread for objects
-    boolean boyTrue = true;
-    boolean kp = false;
+    boolean boyTrue = true; //boolean to decide
+    boolean kp = false; //keypressed boolean
     boolean crash;
     public Graphics2D g2;
     public static int sheepX = 630;
-
     public static final boolean debug = true;
 
-    `    /** Constructor adds the keyListener
-	  */
-	public CountryRunnerJPanel(){
+    /** Constructor adds the keyListener
+     */
+    public CountryRunnerJPanel(){
 	jt = new Thread(this);
 	setFocusable(true);
 	requestFocusInWindow();
@@ -84,6 +83,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
 	g2 = (Graphics2D) g;
 	Image image = new ImageIcon("background.jpg").getImage();
+	Image heaven = new ImageIcon("heaven.jpg").getImage();
 	g.drawImage(image, 0, 0, this);
 	g2.setStroke(new BasicStroke(3));
 	g2.setColor(Color.black);
@@ -97,8 +97,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	g2.setColor(Color.white);
 	g2.draw(sheep);
 	if ( crash ) {
-	    g2.setColor(Color.black);
-	    g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+	    g.drawImage(heaven, 0, 0, this);
+	   
 	}
     }
     

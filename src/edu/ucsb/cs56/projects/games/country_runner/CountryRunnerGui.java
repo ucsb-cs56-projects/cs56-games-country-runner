@@ -24,6 +24,7 @@ public class CountryRunnerGui extends JFrame {
 	this.add(cp);
 	this.setVisible(true);
 	cp.runOnGround();
+
     }
 
     public static void main(String [] args){
