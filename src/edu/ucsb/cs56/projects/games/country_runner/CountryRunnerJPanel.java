@@ -86,8 +86,10 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
     
     public void paintComponent(Graphics g){
 	g2 = (Graphics2D) g;
-	g2.setColor(Color.white);
-	g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+	Image image = new ImageIcon("background.jpg").getImage();
+	g.drawImage(image, 0, 0, this);
+	//	g2.setColor(Color.white);
+	//	g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 	g2.setColor(Color.black);
 	if(boy.onGround() && boyTrue)
 	    g2.draw(girl);
