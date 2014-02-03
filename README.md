@@ -5,3 +5,5 @@ Running game with obstacles.
 
 Compare: http://www.addictinggames.com/action-games/cityjumper.jsp
 
+
+![](http://i.imgur.com/fARdUfZ.jpg)
