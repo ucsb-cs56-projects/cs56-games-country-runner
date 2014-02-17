@@ -38,6 +38,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	addKeyListener(new KeyAdapter() {
 		@Override
 		public void keyTyped(KeyEvent e) {
+
 		    myKeyEvt(e, "keyTyped");
 		}
 
@@ -77,9 +78,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
     }
 
     /**The Paint Component method is required for any graphics on a
-       JPanel. It draws the Runner and obstacles.       
+       JPanel. It draws the Runner and obstacles.
     */
-    
+
     public void paintComponent(Graphics g){
 	g2 = (Graphics2D) g;
 	Image image = new ImageIcon("background.jpg").getImage();
@@ -98,22 +99,22 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	g2.draw(sheep);
 	if ( crash ) {
 	    g.drawImage(heaven, 0, 0, this);
-	   
+
 	}
     }
-    
+
     /**This moves the Obstacles
      * Uses the ot thread
      */
     public class ObstacleThread implements Runnable {
 	Thread ot;
-	
+
 	public ObstacleThread () {
 	    ot = new Thread(this);
 	    ot.start();
 	}
-	
-	/**A run method for the Obstacles Thread 
+
+	/**A run method for the Obstacles Thread
 	 */
 	public void run(){
 	    while( true )
@@ -132,7 +133,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 		    }
 		}
 	}
-	
+
     }
     /**Repaints the Obstacles
      */
@@ -167,16 +168,16 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 		try{
 		    Thread.sleep(500); //changed to main thread
 		}catch (InterruptedException ex){
-		}	
+		}
 	    }
 	}
     }
-    
+
     /**
      *@param j the amount the runner jumps by each time jump is called, negative moves up, positive moves down
      * Uses the a seperate thread jt
      */
-    
+
     public synchronized void jumpRun(int j){
 	for(int i = 0; i<100; i++){
 	    boy.jump(j);
@@ -195,7 +196,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	jt = new Thread(this);
 	jt.start();
     }
-    
+
     /**Determines if the runner hits the sheep object
      *@param c sheep object
      *@param r runner object
@@ -224,12 +225,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 		boyTrue = true;
 		this.repaint();
 		try{
-		    
+
 		    Thread.sleep(250);
 		}catch(Exception e){
 		}
 	    }
-	
+
 	}
     }//runOnGround
 }//JPanel
