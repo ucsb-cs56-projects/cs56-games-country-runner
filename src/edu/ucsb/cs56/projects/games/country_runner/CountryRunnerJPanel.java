@@ -10,7 +10,8 @@ import java.util.*;
 /**
    This class makes the JPanel for the Country Runner game
    @author Mathew Glodack, Christina Morris
-   @version cs56 S13 proj3
+   @author Sidney Rhoads, Tom Craig
+   @version cs56  W14 proj1
 */
 
 
