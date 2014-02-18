@@ -80,21 +80,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    upArrowPressed = true;
 
 		    //Makes a new thread so runner can jump
-
-			   makeThread();
-
+		    if (boy.isOnGround())
+		    {
+				makeThread();
+			}
 		}
-		/*
-				//(Not using this right now)
-				Releases (currently) should not do anything
-			    else if (key == KeyEvent.KEY_RELEASED)
-			    {
-					System.out.println("key released");
-					upArrowPressed = false;
-					if(boy.onGround())
-					    runOnGround();
-			    }
-				*/
 	}
 
 	/**This method makes a new thread for the
@@ -115,12 +105,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		{
 		    jump(-1);
 		    jump(1);
-			if (boy.onGround())
+			if (boy.isOnGround())
 			{
 				runOnGround();
 			}
 		}
-		/*while ( boy.onGround() ){
+		/*while ( boy.isOnGround() ){
 		    if(boyTrue && !upArrowPressed){
 			boyTrue = false;
 			this.repaint();
@@ -146,18 +136,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      * negative moves up, positive moves down.
      * Uses the jumpThread
      */
-
     public synchronized void jump(int j)
     {
 		for(int i = 0; i<100; i++)
 		{
 		    boy.translateY(j);
 		    this.repaint();
-
-		    try
-		    {
-				jumpThread.sleep(10);
-		    } catch (InterruptedException ex){}
+		    jumpThread.sleep(10);
 		}
     }
 
@@ -185,9 +170,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	g.drawImage(image, 0, 0, this);
 	g2.setStroke(new BasicStroke(3));
 	g2.setColor(Color.black);
-	if(boy.onGround() && boyTrue)
+	if(boy.isOnGround() && boyTrue)
 	    g2.draw(girl);
-	else if(girl.onGround() && !boyTrue)
+	else if(girl.isOnGround() && !boyTrue)
 	    g2.draw(boy);
 	else
 	    g2.draw(boy);
@@ -255,7 +240,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      * Uses the main Thread
      */
     public void runOnGround(){
-	while ( boy.onGround() ) {
+	while ( boy.isOnGround() ) {
 	    if( boyTrue){
 		boyTrue = false;
 		this.repaint();

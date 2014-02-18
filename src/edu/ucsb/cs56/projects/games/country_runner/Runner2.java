@@ -37,7 +37,7 @@ public class Runner2 extends GeneralPathWrapper implements Shape {
 	    new Line2D.Double (x, y + 30, x - 2.5 , y + 40);
 	Line2D.Double lowerRightLeg =
 	    new Line2D.Double (x  -2.5, y + 40, x + 2.5 , y + 50);
-		
+
 	GeneralPath r = this.get();
 	r.append(head, false);
 	r.append(body, false);
@@ -65,10 +65,10 @@ public class Runner2 extends GeneralPathWrapper implements Shape {
 
     /**Checks whether the runner2 is on the ground
      */
-    public boolean onGround(){
+    public boolean isOnGround(){
 	if ( this.y == 300.0 )
 	    return true;
 	return false;
-    } 
+    }
 
 }

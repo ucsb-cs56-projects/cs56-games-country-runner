@@ -76,7 +76,7 @@ Line2D.Double lowerRightLeg =
 
     /**Check whether the Runner is on the ground
      */
-    public boolean onGround()
+    public boolean isOnGround()
     {
 		if ( this.y == GROUND )
 		{
