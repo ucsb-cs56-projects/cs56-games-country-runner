@@ -14,13 +14,14 @@ import java.awt.geom.Ellipse2D;
 /**Draws the runner object on the screen
  * @author Christina Morris, Mathew Glodack
  * @version CS56, S13, project3
- * 
+ *
  */
 
 public class Runner extends GeneralPathWrapper implements Shape {
 
     private static final double x = 500.0;
     private double y = 300.0;
+    private static final double GROUND = 300.0;
 
     /** Default Constructor makes the Runner
      */
@@ -45,7 +46,7 @@ Line2D.Double upperRightLeg =
             new Line2D.Double (x, y + 30, x + 5 , y + 40);
 Line2D.Double lowerRightLeg =
             new Line2D.Double (x + 5, y + 40, x + 15 , y + 45);
-	
+
 	GeneralPath r = this.get();
 	r.append(head, false);
 	r.append(body, false);
@@ -62,25 +63,27 @@ Line2D.Double lowerRightLeg =
 	public double getY(){ return this.y;}
 
     /**
-       @param dy delta y, how much to jump by, negative moves up, positive mves down
+       @param dy delta y, how much to translateY by, negative moves up, positive moves down
     */
-    public void jump(double dy){
-	GeneralPath temp = this.get();
-	Shape t = ShapeTransforms.translatedCopyOf(temp, 0, dy);
-	this.set(new GeneralPath(t));
+    public void translateY(double dy)
+    {
+		GeneralPath temp = this.get();
+		Shape t = ShapeTransforms.translatedCopyOf(temp, 0, dy);
+		this.set(new GeneralPath(t));
 
-	System.out.println("got into the jump");
-	this.y = y+dy;
-	System.out.println("y is: " + y);
+		this.y = y+dy;
     }
 
-    /**Checks whether the Runner is on the ground
-     */  
-    public boolean onGround(){
-	if ( this.y == 300.0 )
-	    return true;
-	return false;
-    } 
+    /**Check whether the Runner is on the ground
+     */
+    public boolean onGround()
+    {
+		if ( this.y == GROUND )
+		{
+			return true;
+		}
+		return false;
+    }
 }
 
-    
+

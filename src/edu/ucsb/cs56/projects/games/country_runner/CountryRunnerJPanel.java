@@ -15,68 +15,164 @@ import java.util.*;
 */
 
 
-public class CountryRunnerJPanel extends JPanel implements Runnable{
+public class CountryRunnerJPanel extends JPanel implements Runnable
+{
     Runner boy = new Runner(); //Displays an image of a runner
     Runner2 girl = new Runner2(); //Displays an image
     Sheep sheep = new Sheep(20,20);
-    Thread jt; //jump thread for the runner
-    Thread ot; //object thread for objects
+    Thread jumpThread; //jump thread for the runner
+    Thread objectThread; //object thread for objects
     boolean boyTrue = true; //boolean to decide
-    boolean kp = false; //keypressed boolean
+    boolean upArrowPressed = false; //keypressed boolean
     boolean crash;
     public Graphics2D g2;
     public static int sheepX = 630;
     public static final boolean debug = true;
 
-    /** Constructor adds the keyListener
+    /**
+    Constructor adds the keyListener
      */
-    public CountryRunnerJPanel(){
-	jt = new Thread(this);
-	setFocusable(true);
-	requestFocusInWindow();
-	ObstacleThread obtd = new ObstacleThread();
+    public CountryRunnerJPanel()
+    {
+    	/* Give CountryRunnerJPanel the focus of the application; it will be the field that receives the keyboard input.*/
+		setFocusable(true);
+		requestFocusInWindow();
 
-	addKeyListener(new KeyAdapter() {
-		@Override
-		public void keyTyped(KeyEvent e) {
+		ObstacleThread obstacleThread = new ObstacleThread();
 
-		    myKeyEvt(e, "keyTyped");
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-		    //  myKeyEvt(e, "keyReleased");
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-		    myKeyEvt(e, "keyPressed");
-		}
-
-		private void myKeyEvt(KeyEvent e, String text) {
-		    int key = e.getKeyCode();
-		    System.out.println("TEST");
-
-		    if (key == KeyEvent.VK_KP_LEFT || key == KeyEvent.VK_LEFT)
+		/*
+		keyPressed - when the key goes down
+		keyReleased - when the key comes up
+		keyTyped - when the unicode character represented
+		by this key is sent by the keyboard to system input.
+		*/
+		addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
 			{
-			    System.out.println(text + " LEFT");
-			    //Makes a new thread so runner can jump
-			    kp = true;
-			    makeThread();
+			    pressed(e, "keyPressed");
 			}
-		    else if (key == KeyEvent.KEY_RELEASED){
-			System.out.println("key released");
-			kp = false;
-			if(boy.onGround())
-			    runOnGround();
-		    }
-		    else if (key == KeyEvent.VK_KP_RIGHT || key == KeyEvent.VK_RIGHT)
+			@Override
+			public void keyReleased(KeyEvent e)
 			{
-			    System.out.println(text + " RIGHT");
+			    //keyEvt(e, "keyReleased");
 			}
-		}
+			@Override
+			public void keyTyped(KeyEvent e)
+			{
+				//keyEvt(e, "keyTyped");
+			}
+
 	    });
     }
+
+	/**
+	  *Handles all key pressed events
+     */
+	private void pressed(KeyEvent e, String text)
+	{
+	    int key = e.getKeyCode();
+
+	    //VK_UP = Up arrow
+	    if (key == KeyEvent.VK_UP)
+		{
+		    upArrowPressed = true;
+
+		    //Makes a new thread so runner can jump
+
+			   makeThread();
+
+		}
+		/*
+				//(Not using this right now)
+				Releases (currently) should not do anything
+			    else if (key == KeyEvent.KEY_RELEASED)
+			    {
+					System.out.println("key released");
+					upArrowPressed = false;
+					if(boy.onGround())
+					    runOnGround();
+			    }
+				*/
+	}
+
+	/**This method makes a new thread for the
+	 * jumper and the moving object
+     */
+    public void makeThread()
+    {
+		jumpThread = new Thread(this);
+		jumpThread.start();
+    }
+
+    /**The run method is required by the Runnable interface
+     *
+     */
+    public void run()
+    {
+		if (upArrowPressed)
+		{
+		    jump(-1);
+		    jump(1);
+			if (boy.onGround())
+			{
+				runOnGround();
+			}
+		}
+		/*while ( boy.onGround() ){
+		    if(boyTrue && !upArrowPressed){
+			boyTrue = false;
+			this.repaint();
+			try{
+			    Thread.sleep(500); //changed this to main thread
+			}catch (InterruptedException ex){
+			}
+		    }
+		    else if (!boyTrue && !upArrowPressed){
+			boyTrue = true;
+			this.repaint();
+			try{
+			    Thread.sleep(500); //changed to main thread
+			}catch (InterruptedException ex){
+			}
+		    }
+		}*/
+    }
+
+
+	/**
+     *@param j the distance the runner jumps;
+     * negative moves up, positive moves down.
+     * Uses the jumpThread
+     */
+
+    public synchronized void jump(int j)
+    {
+		for(int i = 0; i<100; i++)
+		{
+		    boy.translateY(j);
+		    this.repaint();
+
+		    try
+		    {
+				jumpThread.sleep(10);
+		    } catch (InterruptedException ex){}
+		}
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**The Paint Component method is required for any graphics on a
        JPanel. It draws the Runner and obstacles.
@@ -104,20 +200,22 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 	}
     }
 
-    /**This moves the Obstacles
-     * Uses the ot thread
-     */
-    public class ObstacleThread implements Runnable {
-	Thread ot;
 
-	public ObstacleThread () {
-	    ot = new Thread(this);
-	    ot.start();
+    /**This moves the Obstacles
+     * Uses the objectThread thread
+     */
+    public class ObstacleThread implements Runnable
+    {
+		Thread objectThread;
+
+		public ObstacleThread () {
+	    objectThread = new Thread(this);
+	    objectThread.start();
 	}
 
-	/**A run method for the Obstacles Thread
-	 */
-	public void run(){
+		/**A run method for the Obstacles Thread
+		 */
+		public void run(){
 	    while( true )
 		{
 		    if(crash(sheep, boy)) {
@@ -129,73 +227,17 @@ public class CountryRunnerJPanel extends JPanel implements Runnable{
 		    sheep.move(10);
 		    paintObstacles();
 		    try{
-			jt.sleep(100);
+			jumpThread.sleep(100);
 		    }catch(Exception e){
 		    }
 		}
 	}
 
-    }
+		}
     /**Repaints the Obstacles
      */
     public void paintObstacles(){
 	this.repaint();
-    }
-
-    /**The run method is required by the Runnable interface
-     *
-     */
-
-    public void run(){
-	if ( kp ){
-	    jumpRun(-1);
-	    jumpRun(1);
-	    if ( boy.onGround() ) {
-		runOnGround();
-	    }
-	}
-	while ( boy.onGround() ){
-	    if(boyTrue && !kp){
-		boyTrue = false;
-		this.repaint();
-		try{
-		    Thread.sleep(500); //changed this to main thread
-		}catch (InterruptedException ex){
-		}
-	    }
-	    else if (!boyTrue && !kp){
-		boyTrue = true;
-		this.repaint();
-		try{
-		    Thread.sleep(500); //changed to main thread
-		}catch (InterruptedException ex){
-		}
-	    }
-	}
-    }
-
-    /**
-     *@param j the amount the runner jumps by each time jump is called, negative moves up, positive moves down
-     * Uses the a seperate thread jt
-     */
-
-    public synchronized void jumpRun(int j){
-	for(int i = 0; i<100; i++){
-	    boy.jump(j);
-	    this.repaint();
-	    try{
-		jt.sleep(10);
-	    }catch (InterruptedException ex){
-	    }
-	}
-    }
-
-    /**This method makes a new thread or the jumper and the moving
-     * object
-     */
-    public void makeThread(){
-	jt = new Thread(this);
-	jt.start();
     }
 
     /**Determines if the runner hits the sheep object
