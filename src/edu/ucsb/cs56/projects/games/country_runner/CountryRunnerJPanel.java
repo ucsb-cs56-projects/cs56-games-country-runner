@@ -142,7 +142,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		{
 		    boy.translateY(j);
 		    this.repaint();
-		    jumpThread.sleep(10);
+
+			//Sleeping this thread *must* be in a try block
+		    try
+		    {
+				jumpThread.sleep(10);
+		    } catch (InterruptedException ex){}
 		}
     }
 
@@ -163,26 +168,28 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
        JPanel. It draws the Runner and obstacles.
     */
 
-    public void paintComponent(Graphics g){
-	g2 = (Graphics2D) g;
-	Image image = new ImageIcon("background.jpg").getImage();
-	Image heaven = new ImageIcon("heaven.jpg").getImage();
-	g.drawImage(image, 0, 0, this);
-	g2.setStroke(new BasicStroke(3));
-	g2.setColor(Color.black);
-	if(boy.isOnGround() && boyTrue)
-	    g2.draw(girl);
-	else if(girl.isOnGround() && !boyTrue)
-	    g2.draw(boy);
-	else
-	    g2.draw(boy);
-	g2.setStroke(new BasicStroke(3));
-	g2.setColor(Color.white);
-	g2.draw(sheep);
-	if ( crash ) {
-	    g.drawImage(heaven, 0, 0, this);
-
-	}
+    public void paintComponent(Graphics g)
+    {
+        	System.out.println("TEST");
+		g2 = (Graphics2D) g;
+		Image image = new ImageIcon("background.jpg").getImage();
+		Image heaven = new ImageIcon("heaven.jpg").getImage();
+		g.drawImage(image, 0, 0, this);
+		g2.setStroke(new BasicStroke(3));
+		g2.setColor(Color.black);
+		if(boy.isOnGround() && boyTrue)
+		    g2.draw(girl);
+		else if(girl.isOnGround() && !boyTrue)
+		    g2.draw(boy);
+		else
+		    g2.draw(boy);
+		g2.setStroke(new BasicStroke(3));
+		g2.setColor(Color.white);
+		g2.draw(sheep);
+		if ( crash )
+		{
+		    g.drawImage(heaven, 0, 0, this);
+		}
     }
 
 
