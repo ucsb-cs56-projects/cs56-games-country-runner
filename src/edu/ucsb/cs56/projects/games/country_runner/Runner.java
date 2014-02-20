@@ -8,6 +8,7 @@ import java.awt.Shape; // general class for shapes
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 
@@ -21,12 +22,15 @@ import javax.imageio.ImageIO;
 public class Runner extends GeneralPathWrapper implements Shape
 {
 
+	private Sprite sprite;
+
     private static final double X_POSITION = 500.0;
     private static final double GROUND = 300.0;
     //Set the initial y position to GROUND
     private double yPosition = GROUND;
 
 	//Load the sprite images (soon to be a Spritesheet class)
+	private static ArrayList<BufferedImage> runningImages;
     BufferedImage running0;
     BufferedImage running1;
 
@@ -35,13 +39,8 @@ public class Runner extends GeneralPathWrapper implements Shape
      */
     public Runner()
     {
-		try {
-            running0 = ImageIO.read(new File("res/test.png"));
-			running1 = ImageIO.read(new File("res/test2.png"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		running0 = sprite.getSprite(0, 0);
+		running1 = sprite.getSprite(1, 0);
     }
 
 	/**returns the runner's x position
