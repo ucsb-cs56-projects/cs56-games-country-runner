@@ -1,94 +1,99 @@
 package edu.ucsb.cs56.projects.games.country_runner;
+
 import java.awt.geom.GeneralPath; // combinations of lines and curves
 import java.awt.geom.AffineTransform; // translation, rotation, scale
 import java.awt.Shape; // general class for shapes
-// all imports below this line needed if you are implementing Shape
-import java.awt.geom.Point2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.Rectangle;
-import java.awt.geom.PathIterator;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
+
+//imports for the sprites
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 
 /**Draws the runner object on the screen
  * @author Christina Morris, Mathew Glodack
- * @version CS56, S13, project3
+ * @author Sidney Rhoads, Tom Craig
+ * @version CS56, W14
  *
  */
 
 public class Runner extends GeneralPathWrapper implements Shape
 {
 
-    private static final double x = 500.0;
-    private double y = 300.0;
+    private static final double X_POSITION = 500.0;
     private static final double GROUND = 300.0;
+    //Set the initial y position to GROUND
+    private double yPosition = GROUND;
+
+	//Load the sprite images (soon to be a Spritesheet class)
+    BufferedImage running0;
+    BufferedImage running1;
+
 
     /** Default Constructor makes the Runner
      */
     public Runner()
     {
+		try {
+            running0 = ImageIO.read(new File("res/test.png"));
+			running1 = ImageIO.read(new File("res/test2.png"));
 
-		Ellipse2D.Double head = new Ellipse2D.Double(x-5, y, 10, 10);
-		Line2D.Double body =
-	            new Line2D.Double (x, y + 10, x , y + 30);
-		Line2D.Double upperLeftArm =
-	            new Line2D.Double (x, y + 15, x -5 , y + 20);
-		Line2D.Double lowerLeftArm =
-	            new Line2D.Double (x - 5, y + 20, x-10 , y + 15);
-		Line2D.Double upperRightArm =
-	            new Line2D.Double (x, y + 15, x + 5 , y + 20);
-		Line2D.Double lowerRightArm =
-	            new Line2D.Double (x + 5, y + 20, x , y + 25);
-		Line2D.Double upperLeftLeg =
-	            new Line2D.Double (x, y + 30, x-5 , y + 40);
-		Line2D.Double lowerLeftLeg =
-		            new Line2D.Double (x -5, y + 40, x , y + 50);
-		Line2D.Double upperRightLeg =
-		            new Line2D.Double (x, y + 30, x + 5 , y + 40);
-		Line2D.Double lowerRightLeg =
-		            new Line2D.Double (x + 5, y + 40, x + 15 , y + 45);
-
-		GeneralPath r = this.get();
-		r.append(head, false);
-		r.append(body, false);
-		r.append(upperLeftArm, false);
-		r.append(lowerLeftArm, false);
-		r.append(upperRightArm, false);
-		r.append(lowerRightArm, false);
-		r.append(upperLeftLeg, false);
-		r.append(lowerLeftLeg, false);
-		r.append(upperRightLeg, false);
-		r.append(lowerRightLeg, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+	/**returns the runner's x position
+	*/
 	public double getX()
 	{
-		return this.x;
+		return this.X_POSITION;
 	}
 
+	/**returns the runner's y position
+	*/
 	public double getY()
 	{
-		return this.y;
+		return this.yPosition;
+	}
+	/**sets the runner's y position to newY
+	*/
+	public void setY(double newY)
+	{
+		this.yPosition = newY;
 	}
 
-    /**
-       @param dy delta y, how much to translateY by, negative moves up, positive moves down
+	/**returns the first sprite in running sequence
+	*/
+	public BufferedImage getRunning0()
+	{
+		return this.running0;
+	}
+	/**returns the second sprite in running sequence
+	*/
+	public BufferedImage getRunning1()
+	{
+		return this.running1;
+	}
+
+    /**moves the runner in y direction
+       @param yIncrement, how much to translate by, negative moves up, positive moves down
     */
-    public void translateY(double dy)
+    public void translateY(double yIncrement)
     {
 		GeneralPath temp = this.get();
-		Shape t = ShapeTransforms.translatedCopyOf(temp, 0, dy);
+		Shape t = ShapeTransforms.translatedCopyOf(temp, 0, yIncrement);
 		this.set(new GeneralPath(t));
 
-		this.y = y+dy;
+		this.setY(this.getY() + yIncrement);
     }
 
     /**Check whether the Runner is on the ground
      */
     public boolean isOnGround()
     {
-		if ( this.y == GROUND )
+		if ( this.getY() == GROUND )
 		{
 			return true;
 		}

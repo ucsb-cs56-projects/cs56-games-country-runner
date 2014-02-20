@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.*;
 
+
 /**
    This class makes the JPanel for the Country Runner game
    @author Mathew Glodack, Christina Morris
@@ -17,12 +18,11 @@ import java.util.*;
 
 public class CountryRunnerJPanel extends JPanel implements Runnable
 {
-    Runner boy = new Runner(); //Displays an image of a runner
-    Runner2 girl = new Runner2(); //Displays an image
+    Runner runner = new Runner(); //Displays an image of a runner
     Sheep sheep = new Sheep(20,20);
     Thread jumpThread; //jump thread for the runner
     Thread objectThread; //object thread for objects
-    boolean boyTrue = true; //boolean to decide
+    boolean runnerTrue = true; //boolean to decide
     boolean upArrowPressed = false; //keypressed boolean
     boolean crash;
     public Graphics2D g2;
@@ -80,7 +80,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    upArrowPressed = true;
 
 		    //Makes a new thread so runner can jump
-		    if (boy.isOnGround())
+		    if (runner.isOnGround())
 		    {
 				makeThread();
 			}
@@ -105,22 +105,22 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		{
 		    jump(-1);
 		    jump(1);
-			if (boy.isOnGround())
+			if (runner.isOnGround())
 			{
 				runOnGround();
 			}
 		}
-		/*while ( boy.isOnGround() ){
-		    if(boyTrue && !upArrowPressed){
-			boyTrue = false;
+		/*while ( runner.isOnGround() ){
+		    if(runnerTrue && !upArrowPressed){
+			runnerTrue = false;
 			this.repaint();
 			try{
 			    Thread.sleep(500); //changed this to main thread
 			}catch (InterruptedException ex){
 			}
 		    }
-		    else if (!boyTrue && !upArrowPressed){
-			boyTrue = true;
+		    else if (!runnerTrue && !upArrowPressed){
+			runnerTrue = true;
 			this.repaint();
 			try{
 			    Thread.sleep(500); //changed to main thread
@@ -140,7 +140,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
 		for(int i = 0; i<100; i++)
 		{
-		    boy.translateY(j);
+		    runner.translateY(j);
 		    this.repaint();
 
 			//Sleeping this thread *must* be in a try block
@@ -170,22 +170,28 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
     public void paintComponent(Graphics g)
     {
-        	System.out.println("TEST");
+
+
 		g2 = (Graphics2D) g;
-		Image image = new ImageIcon("background.jpg").getImage();
-		Image heaven = new ImageIcon("heaven.jpg").getImage();
+		Image image = new ImageIcon("res/background.jpg").getImage();
+		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
 		g.drawImage(image, 0, 0, this);
 		g2.setStroke(new BasicStroke(3));
 		g2.setColor(Color.black);
-		if(boy.isOnGround() && boyTrue)
-		    g2.draw(girl);
-		else if(girl.isOnGround() && !boyTrue)
-		    g2.draw(boy);
+
+		if(runner.isOnGround() && runnerTrue)
+		{
+			g2.drawImage(runner.getRunning1(), (int)runner.getX(), (int)runner.getY(), null);
+		}
 		else
-		    g2.draw(boy);
+		{
+			g2.drawImage(runner.getRunning0(), (int)runner.getX(), (int)runner.getY(), null);
+		}
+
 		g2.setStroke(new BasicStroke(3));
 		g2.setColor(Color.white);
 		g2.draw(sheep);
+
 		if ( crash )
 		{
 		    g.drawImage(heaven, 0, 0, this);
@@ -210,7 +216,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		public void run(){
 	    while( true )
 		{
-		    if(crash(sheep, boy)) {
+		    if(crash(sheep, runner)) {
 			crash = true;
 			System.out.println("CRASH!!!!!");
 		    }
@@ -247,17 +253,17 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      * Uses the main Thread
      */
     public void runOnGround(){
-	while ( boy.isOnGround() ) {
-	    if( boyTrue){
-		boyTrue = false;
+	while ( runner.isOnGround() ) {
+	    if( runnerTrue){
+		runnerTrue = false;
 		this.repaint();
 		try{
 		    Thread.sleep(250);
 		}catch(Exception e){
 		}
 	    }
-	    if ( !boyTrue){
-		boyTrue = true;
+	    if ( !runnerTrue){
+		runnerTrue = true;
 		this.repaint();
 		try{
 
