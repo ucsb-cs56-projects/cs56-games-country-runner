@@ -28,20 +28,49 @@ public class Runner extends GeneralPathWrapper implements Shape
     private static final double GROUND = 300.0;
     //Set the initial y position to GROUND
     private double yPosition = GROUND;
-
-	//Load the sprite images (soon to be a Spritesheet class)
-	//private static ArrayList<BufferedImage> runningImages;
-    BufferedImage running0;
-    BufferedImage running1;
-
+	
+	SpriteSequence running;
+	private int currentIndex;
+	private ArrayList<BufferedImage> currentSpriteSequence;
+	private BufferedImage currentSprite; 
 
     /** Default Constructor makes the Runner
      */
     public Runner()
     {
-		running0 = sprite.getSprite(0, 0);
-		running1 = sprite.getSprite(1, 0);
-
+    	int currentSequenceIndex = 0;
+		//Runner has a running sequence
+		running = new SpriteSequence("runnerSheet", 0 , 2);
+		currentSpriteSequence = running.getSequence();
+		
+    }
+    
+    public BufferedImage getCurrentSprite()
+    {
+	    return currentSprite; 
+    }
+    
+    public ArrayList<BufferedImage> getCurrentSpriteSequence()
+    {
+	    return currentSpriteSequence;
+    }
+    public void setNextSprite(boolean startSequenceOver)
+    {
+    	/*
+    	if(startSequenceOver)
+    	{
+	    	this.currentIndex = 0;
+    	}
+    	else
+    	{
+	    	this.currentIndex++;
+    	}
+    	
+    	if(this.currentIndex == running.getNumOfImages())
+    	{
+	    	this.currentIndex = 0;
+    	}
+    	*/
     }
 
 	/**returns the runner's x position
@@ -64,18 +93,7 @@ public class Runner extends GeneralPathWrapper implements Shape
 		this.yPosition = newY;
 	}
 
-	/**returns the first sprite in running sequence
-	*/
-	public BufferedImage getRunning0()
-	{
-		return this.running0;
-	}
-	/**returns the second sprite in running sequence
-	*/
-	public BufferedImage getRunning1()
-	{
-		return this.running1;
-	}
+	
 
     /**moves the runner in y direction
        @param yIncrement, how much to translate by, negative moves up, positive moves down

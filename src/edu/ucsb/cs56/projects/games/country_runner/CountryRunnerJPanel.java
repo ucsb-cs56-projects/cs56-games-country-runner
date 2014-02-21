@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.*;
 
+import java.awt.image.BufferedImage;
+
 
 /**
    This class makes the JPanel for the Country Runner game
@@ -18,7 +20,7 @@ import java.util.*;
 
 public class CountryRunnerJPanel extends JPanel implements Runnable
 {
-    Runner runner = new Runner(); //Displays an image of a runner
+    Runner runner = new Runner();
     Sheep sheep = new Sheep(20,20);
     Thread jumpThread; //jump thread for the runner
     Thread objectThread; //object thread for objects
@@ -170,22 +172,23 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
     public void paintComponent(Graphics g)
     {
-
-
 		g2 = (Graphics2D) g;
 		Image image = new ImageIcon("res/background.jpg").getImage();
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
 		g.drawImage(image, 0, 0, this);
-		g2.setStroke(new BasicStroke(3));
-		g2.setColor(Color.black);
+		
+		 
+		ArrayList<BufferedImage> sequence = runner.getCurrentSpriteSequence();
 
 		if(runner.isOnGround() && runnerTrue)
 		{
-			g2.drawImage(runner.getRunning1(), (int)runner.getX(), (int)runner.getY(), null);
+			//g2.drawImage(runner.getRunning1(), (int)runner.getX(), (int)runner.getY(), null);
+			g2.drawImage(sequence.get(0), (int)runner.getX(), (int)runner.getY(), null);
 		}
 		else
 		{
-			g2.drawImage(runner.getRunning0(), (int)runner.getX(), (int)runner.getY(), null);
+		//g2.drawImage(runner.getRunning0(), (int)runner.getX(), (int)runner.getY(), null);
+			g2.drawImage(sequence.get(1), (int)runner.getX(), (int)runner.getY(), null);
 		}
 
 		g2.setStroke(new BasicStroke(3));
@@ -252,27 +255,32 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     /**Switches the runners position on while on the ground
      * Uses the main Thread
      */
-    public void runOnGround(){
-	while ( runner.isOnGround() ) {
-	    if( runnerTrue){
-		runnerTrue = false;
-		this.repaint();
-		try{
-		    Thread.sleep(250);
-		}catch(Exception e){
-		}
-	    }
-	    if ( !runnerTrue){
-		runnerTrue = true;
-		this.repaint();
-		try{
-
-		    Thread.sleep(250);
-		}catch(Exception e){
-		}
-	    }
-
-	}
+    public void runOnGround()
+    {
+		while (runner.isOnGround()) 
+		{
+		    if(runnerTrue)
+		    {
+				runnerTrue = false;
+				this.repaint();
+				try
+				{
+				    Thread.sleep(250);
+				}
+				catch(Exception e){}
+			}
+	    
+		    if (!runnerTrue)
+		    {
+				runnerTrue = true;
+				this.repaint();
+				try
+				{
+				    Thread.sleep(250);
+				}
+				catch(Exception e){}
+			}
+		}//while loop
     }//runOnGround
 }//JPanel
 
