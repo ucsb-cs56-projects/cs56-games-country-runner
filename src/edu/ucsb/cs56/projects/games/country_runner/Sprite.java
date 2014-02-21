@@ -9,7 +9,7 @@ public class Sprite
 {
     private static BufferedImage spriteSheet;
     private static final int TILE_SIZE = 64;
-  	private static ArrayList<BufferedImage> runningImages;
+  	private static ArrayList<BufferedImage> ;
 
     public static BufferedImage loadSpriteSheet(String file)
     {
@@ -24,6 +24,7 @@ public class Sprite
         }
 
         return sprite;
+
     }
 
     public static BufferedImage getSprite(int xGrid, int yGrid)

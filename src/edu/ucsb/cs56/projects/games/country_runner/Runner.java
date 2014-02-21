@@ -22,7 +22,7 @@ import javax.imageio.ImageIO;
 public class Runner extends GeneralPathWrapper implements Shape
 {
 
-	private Sprite sprite;
+	private SpriteSequence sprite;
 
     private static final double X_POSITION = 500.0;
     private static final double GROUND = 300.0;
@@ -30,7 +30,7 @@ public class Runner extends GeneralPathWrapper implements Shape
     private double yPosition = GROUND;
 
 	//Load the sprite images (soon to be a Spritesheet class)
-	private static ArrayList<BufferedImage> runningImages;
+	//private static ArrayList<BufferedImage> runningImages;
     BufferedImage running0;
     BufferedImage running1;
 
@@ -41,6 +41,7 @@ public class Runner extends GeneralPathWrapper implements Shape
     {
 		running0 = sprite.getSprite(0, 0);
 		running1 = sprite.getSprite(1, 0);
+
     }
 
 	/**returns the runner's x position
