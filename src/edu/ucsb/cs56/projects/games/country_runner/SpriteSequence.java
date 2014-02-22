@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
+/** Class SpriteSheet loads a sequence of related images from a spritesheet
+*	(i.e a running or jumping)
+*	
+*/
 public class SpriteSequence
 {
     private static BufferedImage spriteSheet;
@@ -27,7 +31,6 @@ public class SpriteSequence
         {
 	       sequence.add(getSprite(i, row));
         }
-
 
         
   	}
