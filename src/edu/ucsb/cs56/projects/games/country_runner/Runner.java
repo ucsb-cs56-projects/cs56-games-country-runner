@@ -21,56 +21,34 @@ import javax.imageio.ImageIO;
 
 public class Runner extends GeneralPathWrapper implements Shape
 {
-
-	private SpriteSequence sprite;
-
     private static final double X_POSITION = 500.0;
     private static final double GROUND = 300.0;
     //Set the initial y position to GROUND
     private double yPosition = GROUND;
-	
-	SpriteSequence running;
-	private int currentIndex;
-	private ArrayList<BufferedImage> currentSpriteSequence;
-	private BufferedImage currentSprite; 
+
+	private RunnerImageManager runnerImageManager;
+	private boolean running;
+	private boolean jumping;
+
+	private BufferedImage currentSprite;
+
 
     /** Default Constructor makes the Runner
      */
     public Runner()
     {
-    	int currentSequenceIndex = 0;
-		//Runner has a running sequence
-		running = new SpriteSequence("runnerSheet", 0 , 2);
-		currentSpriteSequence = running.getSequence();
-		
+		runnerImageManager = new RunnerImageManager("runnerSheet");
     }
-    
+
+	public void updateCurrentSprite()
+	{
+		currentSprite = runnerImageManager.getNextRunningImage();
+
+	}
+
     public BufferedImage getCurrentSprite()
     {
-	    return currentSprite; 
-    }
-    
-    public ArrayList<BufferedImage> getCurrentSpriteSequence()
-    {
-	    return currentSpriteSequence;
-    }
-    public void setNextSprite(boolean startSequenceOver)
-    {
-    	/*
-    	if(startSequenceOver)
-    	{
-	    	this.currentIndex = 0;
-    	}
-    	else
-    	{
-	    	this.currentIndex++;
-    	}
-    	
-    	if(this.currentIndex == running.getNumOfImages())
-    	{
-	    	this.currentIndex = 0;
-    	}
-    	*/
+	    return currentSprite;
     }
 
 	/**returns the runner's x position
@@ -92,8 +70,6 @@ public class Runner extends GeneralPathWrapper implements Shape
 	{
 		this.yPosition = newY;
 	}
-
-	
 
     /**moves the runner in y direction
        @param yIncrement, how much to translate by, negative moves up, positive moves down
