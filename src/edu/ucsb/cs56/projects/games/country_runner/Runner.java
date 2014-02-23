@@ -43,6 +43,7 @@ public class Runner extends GeneralPathWrapper implements Shape
 	public void updateCurrentSprite()
 	{
 		currentSprite = runnerImageManager.getNextRunningImage();
+    	//currentSprite = runnerImageManager.getNextJumpingImage();
 
 	}
 
@@ -69,6 +70,11 @@ public class Runner extends GeneralPathWrapper implements Shape
 	public void setY(double newY)
 	{
 		this.yPosition = newY;
+	}
+
+	public void startJump()
+	{
+		runnerImageManager.currentSequenceIndex = 0;
 	}
 
     /**moves the runner in y direction

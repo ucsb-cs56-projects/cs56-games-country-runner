@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class RunnerImageManager extends ImageManager
 {
-	private int currentSequenceIndex = 0;
+	public int currentSequenceIndex = 0;
 	private ArrayList<BufferedImage> running;
 	private ArrayList<BufferedImage> jumping;
 
@@ -14,7 +14,7 @@ public class RunnerImageManager extends ImageManager
 		super(sheetName);
 
 		running = new ArrayList<BufferedImage>();
-		loadSequence(running, 0, 2);
+		loadSequence(running, 0, 4);
 		//Not yet implemented
 		/*
 		jumping = new ArrayList<BufferedImage>();
@@ -38,6 +38,17 @@ public class RunnerImageManager extends ImageManager
 	}
 
 	public BufferedImage getNextRunningImage()
+	{
+		currentSequenceIndex++;
+		if (currentSequenceIndex == running.size())
+		{
+			currentSequenceIndex = 0;
+		}
+
+		return running.get(currentSequenceIndex);
+	}
+
+	public BufferedImage getNextJumpingImage()
 	{
 		currentSequenceIndex++;
 		if (currentSequenceIndex == running.size())
