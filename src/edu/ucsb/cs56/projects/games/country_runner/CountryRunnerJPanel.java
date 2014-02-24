@@ -105,10 +105,31 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
 		if (upArrowPressed)
 		{
-		    jump(-1);
-		    jump(1);
+		    jump(-.5);
+		    jump(.5);
+			if (runner.isOnGround())
+			{
+				runOnGround();
+			}
 		}
-
+		while ( runner.isOnGround() ){
+		    if(runnerTrue && !upArrowPressed){
+			runnerTrue = false;
+			this.repaint();
+			try{
+			    Thread.sleep(500); //changed this to main thread
+			}catch (InterruptedException ex){
+			}
+		    }
+		    else if (!runnerTrue && !upArrowPressed){
+			runnerTrue = true;
+			this.repaint();
+			try{
+			    Thread.sleep(500); //changed to main thread
+			}catch (InterruptedException ex){
+			}
+		    }
+		}
     }
 
 
@@ -117,20 +138,34 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      * negative moves up, positive moves down.
      * Uses the jumpThread
      */
-    public synchronized void jump(int j)
+    public synchronized void jump(double j)
     {
-		for(int i = 0; i<100; i++)
+		for(int i = 0; i<150; i++)
 		{
 		    runner.translateY(j);
-		    this.repaint();
+		    //this.repaint();
+
 
 			//Sleeping this thread *must* be in a try block
 		    try
 		    {
-				jumpThread.sleep(10);
+				jumpThread.sleep(5);
 		    } catch (InterruptedException ex){}
 		}
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**The Paint Component method is required for any graphics on a
        JPanel. It draws the Runner and obstacles.
@@ -139,11 +174,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     public void paintComponent(Graphics g)
     {
 		g2 = (Graphics2D) g;
-		Image background = new ImageIcon("res/background.jpg").getImage();
+		Image image = new ImageIcon("res/background.jpg").getImage();
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
-		g.drawImage(background, 0, 0, this);
+		g.drawImage(image, 0, 0, this);
+
 
 		runner.updateCurrentSprite();
+
 		g2.drawImage(runner.getCurrentSprite(), (int)runner.getX(), (int)runner.getY(), null);
 
 
@@ -156,19 +193,6 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    g.drawImage(heaven, 0, 0, this);
 		}
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**This moves the Obstacles
@@ -221,6 +245,34 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	return false;
     }
 
+    /**Switches the runners position on while on the ground
+     * Uses the main Thread
+     */
+    public void runOnGround()
+    {
+		while (runner.isOnGround())
+		{
+		    if(runnerTrue)
+		    {
+				runnerTrue = false;
+				this.repaint();
+				try
+				{
+				    Thread.sleep(250);
+				}
+				catch(Exception e){}
+			}
 
+		    if (!runnerTrue)
+		    {
+				runnerTrue = true;
+				this.repaint();
+				try
+				{
+				    Thread.sleep(250);
+				}
+				catch(Exception e){}
+			}
+		}//while loop
+    }//runOnGround
 }//JPanel
-

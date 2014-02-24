@@ -23,16 +23,17 @@ public class Runner extends GeneralPathWrapper implements Shape
 {
     private static final double X_POSITION = 500.0;
     private static final double GROUND = 300.0;
+    private static final double TOP_OF_JUMP = 200;
     //Set the initial y position to GROUND
     private double yPosition = GROUND;
 
 	private RunnerImageManager runnerImageManager;
 	private boolean running;
-	private boolean jumping;
+	private boolean jumpingUp;
+	private boolean fallingDown;
+	private int jumpIncrement = 1;
 
 	private BufferedImage currentSprite;
-
-
     /** Default Constructor makes the Runner
      */
     public Runner()
@@ -42,8 +43,22 @@ public class Runner extends GeneralPathWrapper implements Shape
 
 	public void updateCurrentSprite()
 	{
-		currentSprite = runnerImageManager.getNextRunningImage();
-    	//currentSprite = runnerImageManager.getNextJumpingImage();
+		if (jumpingUp)
+		{
+			currentSprite = runnerImageManager.getNextJumpingImage();
+			//updateJumpingUp();
+		}
+
+		else if (fallingDown)
+		{
+			currentSprite = runnerImageManager.getNextJumpingImage();
+			//updateFallingDown();
+		}
+
+		else
+		{
+			currentSprite = runnerImageManager.getNextRunningImage();
+		}
 
 	}
 
@@ -75,6 +90,27 @@ public class Runner extends GeneralPathWrapper implements Shape
 	public void startJump()
 	{
 		runnerImageManager.currentSequenceIndex = 0;
+		jumpingUp = true;
+	}
+
+	public void updateJumpingUp()
+	{
+		this.setY(this.getY() - jumpIncrement);
+		if (this.getY() <= TOP_OF_JUMP)
+		{
+			jumpingUp = false;
+			fallingDown = true;
+		}
+	}
+
+	public void updateFallingDown()
+	{
+		this.setY(this.getY() + jumpIncrement);
+		if (this.getY() >= GROUND)
+		{
+			jumpingUp = false;
+			fallingDown = false;
+		}
 	}
 
     /**moves the runner in y direction
