@@ -9,8 +9,8 @@ Country Runner is an "avoid-the-obstacles" sidescroller game. Ride your piggy th
 Title Screen
 
 Use the <b>UP</b> and <b>DOWN</b> arrow keys to cycle through your options. Press <b>RIGHT</b> to select. 
-Select <b>Play</b> to start the game.<br>
-Select <b>Instructions</b> to learn how to play.<br>
+Select <b>Play</b> to start the game. 
+Select <b>Instructions</b> to learn how to play.
 (The HighScores will be displayed on Title Page)
 
 
