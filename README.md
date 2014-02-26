@@ -1,12 +1,12 @@
 cs56-games-country-runner
 =========================
 
-<i>Game Description</i>
+Game Description
 
 Country Runner is an "avoid-the-obstacles" sidescroller game. Ride your piggy through the countryside landscape while dodging livestock and other obstacles in your way. Crash into anything, and you'll fall off your pig...thats Gameover. The farther you get and the more obstacles you skillfully avoid the higher your score. View your highest scores on the title page...and try to beat them of course!
 
 
-Title Screen
+<i>Title Screen</i>
 
 Use the <b>UP</b> and <b>DOWN</b> arrow keys to cycle through your options. Press <b>RIGHT</b> to select. 
 Select <b>Play</b> to start the game. 
@@ -14,7 +14,7 @@ Select <b>Instructions</b> to learn how to play.
 (The HighScores will be displayed on Title Page)
 
 
-Instuctions
+<i>Instuctions</i>
 
 Avoid all obstacles that come into the screen. Could be a stationary scarecrow, or a dashing sheep. Some crows could be overhead so time your jumps carefully. 
 
@@ -25,7 +25,7 @@ Developer Notes
 
 These notes will help the current or future developers understand the overall goals for Country Runner as well as some suggestions on how to imlement some of the main features. 
 
-Country Runner Version 1.0 
+<i>Country Runner Version 1.0 </i>
 
 Country Runner is a sidescroller game developed in Java. 
 
@@ -41,7 +41,7 @@ We want the motion of the runner "feel good." Jumping should models simple physi
 
 
 
-Ideas Future Versions of Country Runner
+<i>Ideas Future Versions of Country Runner</i>
 
 Apply a scoring system to the game. Your score increases the farther you get without colliding with an obstacle. Keep a record of scores so that Highecores can be displayed on the Title Screen. 
 
