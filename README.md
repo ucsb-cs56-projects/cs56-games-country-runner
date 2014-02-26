@@ -1,35 +1,35 @@
 cs56-games-country-runner
 =========================
 
-Player Notes 
+<i>Game Description</i>
 
-Game Description
+Country Runner is an "avoid-the-obstacles" sidescroller game. Ride your piggy through the countryside landscape while dodging livestock and other obstacles in your way. Crash into anything, and you'll fall off your pig...thats Gameover. The farther you get and the more obstacles you skillfully avoid the higher your score. View your highest scores on the title page...and try to beat them of course!
 
-Country Runner is an "avoid-the-obstacles" sidescroller game. Ride your piggy through the countryside landscape while dodging livestock and other obstacles in your way. Crash into anything, and you'll fall off your pig...thats Gameover. The farther you get and the more obstacles you skillfully avoid the higher your score. View your highest scores on the title page... and try to beat them of course!
 
 Title Screen
 
-Use the <b>UP</b> and <b>Down</b> arrow keys to cycle through your options. Press <b>RIGHT</b> to select. 
-Select <b>Play</b> to start the game
-Select <b>Instructions</b> to learn how to play
-
+Use the <b>UP</b> and <b>DOWN</b> arrow keys to cycle through your options. Press <b>RIGHT</b> to select. 
+Select <b>Play</b> to start the game.<br>
+Select <b>Instructions</b> to learn how to play.<br>
 (The HighScores will be displayed on Title Page)
 
 
 Instuctions
 
-Avoid all obstacles that come into the screen. Could be a stationary scarecrow, or a dashing sheep. Some crows could be overhead so time your jumps carefully.  
+Avoid all obstacles that come into the screen. Could be a stationary scarecrow, or a dashing sheep. Some crows could be overhead so time your jumps carefully. 
 
-Press <b>UP</b> arrow key to jump
+Press the <b>UP</b> arrow key to jump
 
 --------------------------
 Developer Notes
+
+These notes will help the current or future developers understand the overall goals for Country Runner as well as some suggestions on how to imlement some of the main features. 
 
 Country Runner Version 1.0 
 
 Country Runner is a sidescroller game developed in Java. 
 
-General Mechanics of the Game:
+General Mechanics of the Game
 
 The runner is fixed at a constant X coordinate and translates his Y coordinate. 
 To make the runner look like he is moving in the X direction, the background's X coordinate translates  at the speed that you want the runner to appear to move.  
