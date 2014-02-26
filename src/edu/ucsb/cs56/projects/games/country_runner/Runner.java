@@ -18,29 +18,60 @@ import javax.imageio.ImageIO;
  * @version CS56, W14
  *
  */
-
 public class Runner extends GeneralPathWrapper implements Shape
 {
+	//---------------------------------------------------------------------
+	//The X_POSITION - pos. of the runner
+	//GROUND - the position of the ground, where the runner rests
+	//TOP_OF_JUMP - How high the runner jumps
+	//These are values are specific to the window
+	//
+    //Set the initial y position of the runner to GROUND
+	//---------------------------------------------------------------------
     private static final double X_POSITION = 500.0;
     private static final double GROUND = 300.0;
     private static final double TOP_OF_JUMP = 200;
-    //Set the initial y position to GROUND
     private double yPosition = GROUND;
 
+	//---------------------------------------------------------------------
+	//We have a RunnerImageManager
+	//And several booleans that help determine his current image
+	//
+	//The jumpIncrement may need to be refactored out, but it
+	//is how much the runner moves in his jump loop
+	//---------------------------------------------------------------------
 	private RunnerImageManager runnerImageManager;
 	private boolean running;
 	private boolean jumpingUp;
 	private boolean fallingDown;
 	private int jumpIncrement = 1;
-
+	//---------------------------------------------------------------------
+	//The current image of the runner,
+	//This is mutated byt the runner's methods and
+	//determiend by the JPanel
+	//This saves us from having to maange every single
+	//part of the sprite sheet in the runner class
+	//---------------------------------------------------------------------
 	private BufferedImage currentSprite;
+
+
     /** Default Constructor makes the Runner
+     * sets up the RunnerImageManager with the
+     * appropriate resource image
      */
     public Runner()
     {
 		runnerImageManager = new RunnerImageManager("runnerSheet");
     }
 
+	/** updateCurrentSprite
+	 * Changes the currentSprite instance variable,
+	 * dependent upon the boolean we defined above
+	 * This takes needless logic out of the JPanel, because
+	 * it will mostly call only this method on the runner
+	 * and the runner himself will decide what his image
+	 * should be
+     */
 	public void updateCurrentSprite()
 	{
 		if (jumpingUp)
@@ -62,37 +93,55 @@ public class Runner extends GeneralPathWrapper implements Shape
 
 	}
 
+	/** get CurrentSprite
+	 * Returns the currentSprite
+	 */
     public BufferedImage getCurrentSprite()
     {
 	    return currentSprite;
     }
 
-	/**returns the runner's x position
-	*/
+	/** getX
+	 * Returns the runner's x position
+     */
 	public double getX()
 	{
 		return this.X_POSITION;
 	}
 
-	/**returns the runner's y position
-	*/
+	/** getY
+	 * Returns the runner's y position
+	 */
 	public double getY()
 	{
 		return this.yPosition;
 	}
-	/**sets the runner's y position to newY
-	*/
+
+	/** setY
+	 * Sets the runner's x position
+	 */
 	public void setY(double newY)
 	{
 		this.yPosition = newY;
 	}
 
+	/** startJump
+	 * Resets the current index of the sprite sequence and
+	 * sets the approparte boolean to be picked up by the
+	 * updating method
+	 */
 	public void startJump()
 	{
 		runnerImageManager.currentSequenceIndex = 0;
 		jumpingUp = true;
 	}
 
+	/** updateJumpingUp
+	 * this is called to make the jump happen
+	 * NOTE: This is not currently in use, but should
+	 * be used when the JPanel multhreading is replaced
+	 * with proper timing calculations
+	 */
 	public void updateJumpingUp()
 	{
 		this.setY(this.getY() - jumpIncrement);
@@ -103,6 +152,13 @@ public class Runner extends GeneralPathWrapper implements Shape
 		}
 	}
 
+	/** updateFallingDown
+	 * (as per above function)
+	 * this is called to make the jump happen
+	 * NOTE: This is not currently in use, but should
+	 * be used when the JPanel multhreading is replaced
+	 * with proper timing calculations
+	 */
 	public void updateFallingDown()
 	{
 		this.setY(this.getY() + jumpIncrement);
@@ -113,9 +169,10 @@ public class Runner extends GeneralPathWrapper implements Shape
 		}
 	}
 
-    /**moves the runner in y direction
-       @param yIncrement, how much to translate by, negative moves up, positive moves down
-    */
+    /**translateY
+     * moves the runner in y direction
+     * @param yIncrement, how much to translate by, negative moves up, positive moves down
+     */
     public void translateY(double yIncrement)
     {
 		GeneralPath temp = this.get();
@@ -125,7 +182,10 @@ public class Runner extends GeneralPathWrapper implements Shape
 		this.setY(this.getY() + yIncrement);
     }
 
-    /**Check whether the Runner is on the ground
+    /** isOnGround
+     * Check whether the Runner is on the ground
+     * Just checks if the runner position is the same
+     * as the predefined ground coordinate
      */
     public boolean isOnGround()
     {

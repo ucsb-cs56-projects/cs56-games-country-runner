@@ -17,6 +17,9 @@ public class ImageManager
 	//Subclasses will have instance varaiebls of this form:
  	//private static ArrayList<BufferedImage> sequence;
 
+	/**Contructor
+	 * Loads an entire sprite sheet
+	 */
   	public ImageManager(String sheetName)
   	{
 	  	try {
@@ -26,6 +29,9 @@ public class ImageManager
          }
   	}
 
+  	/**Returns a single sprite, pulled
+  	 * from the sprite sheet
+  	 */
     public BufferedImage getSubImage(int xGrid, int yGrid)
     {
         return spriteSheet.getSubimage(xGrid * TILE_SIZE, yGrid * TILE_SIZE, TILE_SIZE, TILE_SIZE);

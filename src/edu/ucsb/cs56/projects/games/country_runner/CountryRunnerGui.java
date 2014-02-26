@@ -16,7 +16,7 @@ public class CountryRunnerGui extends JFrame
 {
     CountryRunnerJPanel cp;
 
-    /**Constructor for the CountryRunnerGui JFrame
+    /** Constructor for the CountryRunnerGui JFrame
      */
     public CountryRunnerGui()
     {
