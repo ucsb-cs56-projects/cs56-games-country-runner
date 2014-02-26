@@ -5,7 +5,7 @@ Player Notes
 
 Game Description
 
-Country Runner is an "avoid-the-obstacles" sidescroller game. Ride your piggy through the countryside landscape while dodging livestock and other obstacles in your way. Crash into anything, and you'll fall off your pig...thats Gameover. The farther you get and the more obstacles you skillfully avoid, the higher your score. View your highest scores on the title page... and try to beat them of course!
+Country Runner is an "avoid-the-obstacles" sidescroller game. Ride your piggy through the countryside landscape while dodging livestock and other obstacles in your way. Crash into anything, and you'll fall off your pig...thats Gameover. The farther you get and the more obstacles you skillfully avoid the higher your score. View your highest scores on the title page... and try to beat them of course!
 
 Title Screen
 
@@ -20,7 +20,7 @@ Instuctions
 
 Avoid all obstacles that come into the screen. Could be a stationary scarecrow, or a dashing sheep. Some crows could be overhead so time your jumps carefully.  
 
-Press UP arrow key to jump
+Press <b>UP</b> arrow key to jump
 
 --------------------------
 Developer Notes
@@ -44,6 +44,8 @@ We want the motion of the runner "feel good." Jumping should models simple physi
 Ideas Future Versions of Country Runner
 
 Apply a scoring system to the game. Your score increases the farther you get without colliding with an obstacle. Keep a record of scores so that Highecores can be displayed on the Title Screen. 
+
+Runner jumps longer by holding down the <b>UP</b> button. Quickly tapping the <b>UP</b> button will result in shorter jumps. 
 
 Layer the background to create depth. Layering wil consist of of several backgrounds (some of which have transparent parts) that each scroll slightly faster then one behind it. 
 
