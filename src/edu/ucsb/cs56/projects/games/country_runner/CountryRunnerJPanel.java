@@ -157,27 +157,29 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	/** jump
      * negative moves up, positive moves down.
      * Uses the jumpThread
+     * Currently implements gravity, such that the jump
+     * slows until reaching the top, then speeds up again
+     * until reaching the ground.
      */
     public synchronized void jump()
     {
-    	//TESTING...
-    	//Time counter
-    	int t = 0;
+
     	//Piggy velocity
 		double v = 1.8;
+		//Acceleration
 		double a = .01;
 		while (runner.getY() > 10)
 		{
-			//Physics n' stuff
+			//Descrease the velocity every round
 			v = v-a;
 			runner.setY((runner.getY() - v));
 
-			t++;
 			try
 		    {
 				jumpThread.sleep(5);
 		    } catch (InterruptedException ex){}
 
+			//Once we return to the ground, stop moving
 		    if (runner.isOnGround())
 		    {
 			    break;
