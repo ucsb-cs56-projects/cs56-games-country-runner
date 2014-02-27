@@ -127,8 +127,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
 		if (upArrowPressed)
 		{
-		    jump(-.5);
-		    jump(.5);
+		    jump();
 			if (runner.isOnGround())
 			{
 				runOnGround();
@@ -156,21 +155,35 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 
 	/** jump
-     * @param j the distance the runner jumps;
      * negative moves up, positive moves down.
      * Uses the jumpThread
      */
-    public synchronized void jump(double j)
+    public synchronized void jump()
     {
-		for(int i = 0; i<150; i++)
+    	//TESTING...
+    	//Time counter
+    	int t = 0;
+    	//Piggy velocity
+		double v = 1.8;
+		double a = .01;
+		while (runner.getY() > 10)
 		{
-		    runner.translateY(j);
+			//Physics n' stuff
+			v = v-a;
+			runner.setY((runner.getY() - v));
 
-			//Sleeping this thread *must* be in a try block
-		    try
+			t++;
+			try
 		    {
 				jumpThread.sleep(5);
 		    } catch (InterruptedException ex){}
+
+		    if (runner.isOnGround())
+		    {
+			    break;
+		    }
+
+
 		}
     }
 

@@ -189,7 +189,7 @@ public class Runner extends GeneralPathWrapper implements Shape
      */
     public boolean isOnGround()
     {
-		if ( this.getY() == GROUND )
+		if ( this.getY() >= GROUND )
 		{
 			return true;
 		}
