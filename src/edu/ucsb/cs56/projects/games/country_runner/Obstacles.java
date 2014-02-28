@@ -20,19 +20,30 @@ public class Obstacles extends GeneralPathWrapper implements Shape{
     private double width;
     private double height;
 
-    public double getX(){return this.x;}
-    public double getY(){return this.y;}
-    public void setX(double x){this.x += x;}
+    public double getX()
+    {
+	    return this.x;
+    }
+    public double getY()
+    {
+    	return this.y;
+    }
+
+    public void setX(double x)
+    {
+    	this.x += x;
+    }
 
     /**Constructor for the Obstacles
      * @param width
      * @param height
      */
-    public Obstacles(double width, double height){
-	this.x = 0; 
-	this.y=300;
-	this.width = width; 
-	this.height = height;
+    public Obstacles(double width, double height)
+    {
+		this.x = 0;
+		this.y=300;
+		this.width = width;
+		this.height = height;
     }
 
 }
