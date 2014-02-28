@@ -191,6 +191,7 @@ public class Runner extends GeneralPathWrapper implements Shape
     {
 		if ( this.getY() >= GROUND )
 		{
+			this.setY(GROUND);
 			return true;
 		}
 		return false;
