@@ -2,6 +2,7 @@
   
   <!-- build.xml for Country Runner, cs56, S13
        name: Mathew Glodack, Christina Morris
+       name: Sidney Rhoads, Tom Craig
   -->
 
   
@@ -49,7 +50,7 @@
     <delete dir="javadoc" quiet="true" />
   </target>
     
-  <!-- target that generates javadoc files for MemoryCardGame -->
+  <!-- target that generates javadoc files -->
   <target name="javadoc" description="Generates JavaDoc files for Country Runner" depends="compile">
     <delete dir="javadoc"  quiet="true" />
     <javadoc destdir="javadoc" author="true" version="true" use="true">
