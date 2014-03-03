@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 /**Sprite an abstract class form which all particular sprites inherit.
  * @author Sidney Rhoads, Tom Craig
  * @version CS56, W14
- *
  */
 
 public class Sprite extends GeneralPathWrapper implements Shape
@@ -26,27 +25,27 @@ public class Sprite extends GeneralPathWrapper implements Shape
 	
 	/** Constuctor for the Sprite
 	*	creates a generic sprite instance at an initial (x,y) position
-	*	and the name of the sprite sheets
+	*	and the name of the sprite sheet it uses
 	*/	
 	public Sprite(double x, double y, String sheetName)
 	{
-		//@@@ Stub
+		this.xPosition = x;
+		this.yPosition = y;
+		this.spriteImageManager = new ImageManager(sheetName);
 	}
 	/** @return returns the sprite's current x position on JPanel
 	* 	
 	*/
 	public double getX()
 	{
-		//@@@ Stub
-		return -1;
+		return this.xPosition;
 	}
 	/** @return returns the sprite's current y position on JPanel
 	* 	
 	*/
 	public double getY()
 	{
-		//@@@ Stub
-		return -1;
+		return this.yPosition;
 	}
 	
 	/** sets the sprite's current x position on JPanel
@@ -54,14 +53,14 @@ public class Sprite extends GeneralPathWrapper implements Shape
 	*/
 	public void setX(double newXPosition)
 	{
-		//@@@ Stub
+		this.xPosition = newXPosition;
 	}
 	/** sets the sprite's current y position on JPanel
 	* 	
 	*/
 	public void setY(double newYPosition)
 	{
-		//@@@ Stub
+		this.yPosition = newYPosition;
 	}
 	
 	/** @return returns the sprite's current Image that is 
@@ -69,8 +68,7 @@ public class Sprite extends GeneralPathWrapper implements Shape
 	*/
 	public BufferedImage getCurrentImage()
 	{
-		//@@@ Stub cant test this. 
-		return null;
+		return this.currentImage;
 	}
 	
 	/** sets the sprite's current Image that is 
@@ -78,8 +76,7 @@ public class Sprite extends GeneralPathWrapper implements Shape
 	*/
 	public void setCurrentImage(BufferedImage newImage)
 	{
-		//@@@ Stub cant test this. 
+		this.currentImage = newImage;
 	}
-	
 	
 }

@@ -25,7 +25,14 @@ public class ImageManager
 	  	try {
             spriteSheet = ImageIO.read(new File("res/" + sheetName + ".png"));
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            
+            //While testing, use this so that testing objects 
+            //do not have to be initialized to an actual image
+            if(sheetName == null)
+            {
+	            return;
+            }
          }
   	}
 
