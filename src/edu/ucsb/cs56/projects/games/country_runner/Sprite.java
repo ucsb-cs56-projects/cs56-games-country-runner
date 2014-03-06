@@ -4,7 +4,7 @@ import java.awt.geom.GeneralPath; // combinations of lines and curves
 import java.awt.geom.AffineTransform; // translation, rotation, scale
 import java.awt.Shape; // general class for shapes
 
-//imports for the sprites
+//imports for the images
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,19 +20,51 @@ public class Sprite extends GeneralPathWrapper implements Shape
 {
 	double xPosition;
 	double yPosition;
+	
+	private static BufferedImage spriteSheet; 
 	BufferedImage currentImage;
-	ImageManager spriteImageManager; 
+	public int tileSize; 
+
 	
 	/** Constuctor for the Sprite
 	*	creates a generic sprite instance at an initial (x,y) position
-	*	and the name of the sprite sheet it uses
+	*	and the name of the sprite sheet it uses.
+	* 	Loads and manages a sprite sheet
+	*	cause we aren't sure ahead of tiem how many images
+	*	each sprite will have
 	*/	
 	public Sprite(double x, double y, String sheetName)
 	{
 		this.xPosition = x;
 		this.yPosition = y;
-		this.spriteImageManager = new ImageManager(sheetName);
+		
+		
+		//If we ever need a bigger Sprite, make a 2nd constructor that take this as param and you choose the tile size.
+		//The size of the sheet is YOUR job to not derp up. Sheet dimensions HAVE to be divisible by tilesize 
+		tileSize = 64;		
+		try {
+			spriteSheet = ImageIO.read(new File("res/" + sheetName + ".png"));
+		} 
+	    catch (IOException e) {
+	        //e.printStackTrace();
+	        
+	        //While testing, use this so that testing objects 
+	        //do not have to be initialized to an actual image
+	        if(sheetName == null)
+	        {
+	            return;
+	        }
+		}
 	}
+	
+	/** Returns a single image, pulled
+	* from the sprite sheet
+  	*/
+    public BufferedImage getSubImage(int xGrid, int yGrid)
+    {
+        return spriteSheet.getSubimage(xGrid * tileSize, yGrid * tileSize, tileSize, tileSize);
+    }
+    
 	/** @return returns the sprite's current x position on JPanel
 	* 	
 	*/
