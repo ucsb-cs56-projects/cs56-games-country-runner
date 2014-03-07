@@ -62,10 +62,13 @@ public class Runner extends Sprite
     {
     	super(X_POSITION, GROUND, "runnerSheet");
 
+		runningSequence = new ArrayList<BufferedImage>();
+
     	for (int i = 0; i < 4; i++)
 		{
-			this.runningSequence.add(getSubImage(0, 0));
+			this.runningSequence.add(getSubImage(i, 0));
 		}
+
     }
 
 	/** updateCurrentSprite

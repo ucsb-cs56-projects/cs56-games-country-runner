@@ -81,11 +81,10 @@ public class Sprite extends GeneralPathWrapper implements Shape
 	 */
 	public BufferedImage getNextImage(ArrayList<BufferedImage>sequence, Integer currentSequenceIndex)
 	{
+
 		//Fancy auto-unboxing
 		int nextIndex = currentSequenceIndex + 1;
 		if (nextIndex == sequence.size()) nextIndex = 0;
-
-		nextIndex = 0;
 
 		BufferedImage nextImage = sequence.get(nextIndex);
 
