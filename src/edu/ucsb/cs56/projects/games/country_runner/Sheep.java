@@ -38,8 +38,6 @@ public class Sheep extends Obstacles
 
 		currentSprite = sheepyImageManager.getSubImage(0,0);
 
-
-
     }
 
     /**This method moves the Sheep

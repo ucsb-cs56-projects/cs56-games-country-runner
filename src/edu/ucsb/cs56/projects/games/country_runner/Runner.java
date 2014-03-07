@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
  * @version CS56, W14
  *
  */
-public class Runner extends GeneralPathWrapper implements Shape
+public class Runner extends Sprite
 {
 	//---------------------------------------------------------------------
 	//The X_POSITION - pos. of the runner
@@ -34,26 +34,25 @@ public class Runner extends GeneralPathWrapper implements Shape
     private double yPosition = GROUND;
 
 	//---------------------------------------------------------------------
-	//We have a RunnerImageManager
-	//And several booleans that help determine his current image
+	//Several booleans that help determine his current image
 	//
 	//The jumpIncrement may need to be refactored out, but it
 	//is how much the runner moves in his jump loop
 	//---------------------------------------------------------------------
-	private RunnerImageManager runnerImageManager;
 	private boolean running;
 	private boolean jumpingUp;
 	private boolean fallingDown;
 	private int jumpIncrement = 1;
-	//---------------------------------------------------------------------
-	//The current image of the runner,
-	//This is mutated byt the runner's methods and
-	//determiend by the JPanel
-	//This saves us from having to maange every single
-	//part of the sprite sheet in the runner class
-	//---------------------------------------------------------------------
-	private BufferedImage currentSprite;
 
+	//---------------------------------------------------------------------
+	//These are the arrayLists that hold all the images for the runner's
+	//animation sequences.  They are loaded by reading from the super's
+	//spriteSheet (Sprite class)
+	//---------------------------------------------------------------------
+	private ArrayList<BufferedImage> runningSequence;  //4 images
+	private Integer currentRunningSequenceIndex = 0;
+	private ArrayList<BufferedImage> jumpingSequence;  //? images
+	private Integer currentJumpingSequenceIndex = 0;
 
     /** Default Constructor makes the Runner
      * sets up the RunnerImageManager with the
@@ -61,7 +60,12 @@ public class Runner extends GeneralPathWrapper implements Shape
      */
     public Runner()
     {
-		runnerImageManager = new RunnerImageManager("runnerSheet");
+    	super(X_POSITION, GROUND, "runnerSheet");
+
+    	for (int i = 0; i < 4; i++)
+		{
+			this.runningSequence.add(getSubImage(0, 0));
+		}
     }
 
 	/** updateCurrentSprite
@@ -76,64 +80,22 @@ public class Runner extends GeneralPathWrapper implements Shape
 	{
 		if (jumpingUp)
 		{
-			currentSprite = runnerImageManager.getNextJumpingImage();
+			//currentSprite = runnerImageManager.getNextJumpingImage();
 			//updateJumpingUp();
 		}
 
 		else if (fallingDown)
 		{
-			currentSprite = runnerImageManager.getNextJumpingImage();
+			//currentSprite = runnerImageManager.getNextJumpingImage();
 			//updateFallingDown();
 		}
 
 		else
 		{
-			currentSprite = runnerImageManager.getNextRunningImage();
+			//currentSprite = runnerImageManager.getNextRunningImage();
 		}
 
-	}
-
-	/** get CurrentSprite
-	 * Returns the currentSprite
-	 */
-    public BufferedImage getCurrentSprite()
-    {
-	    return currentSprite;
-    }
-
-	/** getX
-	 * Returns the runner's x position
-     */
-	public double getX()
-	{
-		return this.X_POSITION;
-	}
-
-	/** getY
-	 * Returns the runner's y position
-	 */
-	public double getY()
-	{
-		return this.yPosition;
-	}
-
-	/** setY
-	 * Sets the runner's x position
-	 */
-	public void setY(double newY)
-	{
-		this.yPosition = newY;
-	}
-
-	/** startJump
-	 * Resets the current index of the sprite sequence and
-	 * sets the approparte boolean to be picked up by the
-	 * updating method
-	 */
-	public void startJump()
-	{
-		runnerImageManager.currentSequenceIndex = 0;
-		jumpingUp = true;
+		this.setCurrentImage(this.getNextImage(this.runningSequence, this.currentRunningSequenceIndex));
 	}
 
 	/** updateJumpingUp
@@ -197,5 +159,3 @@ public class Runner extends GeneralPathWrapper implements Shape
 		return false;
     }
 }
-
-
