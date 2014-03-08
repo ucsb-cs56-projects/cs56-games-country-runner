@@ -202,7 +202,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		g.drawImage(image, 0, 0, this);
 
 		//Runner stuff
-		runner.updateCurrentSprite();
+		runner.updateCurrentImage();
 		g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
 
 		g2.drawImage(sheep.getCurrentSprite(), (int)sheep.getX(), (int)sheep.getY(), null);

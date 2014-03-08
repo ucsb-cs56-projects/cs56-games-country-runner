@@ -45,65 +45,49 @@ public class Runner extends Sprite
 	private int jumpIncrement = 1;
 
 	//---------------------------------------------------------------------
-	//These are the arrayLists that hold all the images for the runner's
-	//animation sequences.  They are loaded by reading from the super's
-	//spriteSheet (Sprite class)
+	//These are the sequences (arrays) that hold all the images for a
+	//specific sequence (running, jumping, etc)
 	//---------------------------------------------------------------------
-	//private ArrayList<BufferedImage> runningSequence;  //4 images
-	//private Integer currentRunningSequenceIndex = 0;
-	private ArrayList<BufferedImage> jumpingSequence;  //? images
-	private Integer currentJumpingSequenceIndex = 0;
-
 	private SpriteSequence runningSequence;
 
+
     /** Default Constructor makes the Runner
-     * sets up the RunnerImageManager with the
-     * appropriate resource image
+     * sets up the spriteSheet and fills the
+     * sequences with images from it
      */
     public Runner()
     {
+    	//Open the spriteSheet
     	super(X_POSITION, GROUND, "runnerSheet");
 
-		//runningSequence = new ArrayList<BufferedImage>();
+		//Initilize the sequences
 		runningSequence = new SpriteSequence();
 
-		//Works
-    	for (int i = 0; i < 4; i++)
+		//Fill the sequences
+		//NOTE: we have to explicitly say the number of
+		//images in the sequence
+		int numImages = 4;
+    	for (int i = 0; i < numImages; i++)
 		{
 			this.runningSequence.addImage(getSubImage(i, 0));
 		}
 
     }
 
-	/** updateCurrentSprite
-	 * Changes the currentSprite instance variable,
-	 * dependent upon the boolean we defined above
+	/** updateCurrentImage
+	 * Uses the state values (booleans) to figure out
+	 * what the guy should do next.
 	 * This takes needless logic out of the JPanel, because
 	 * it will mostly call only this method on the runner
 	 * and the runner himself will decide what his image
 	 * should be
      */
-	public void updateCurrentSprite()
+	public void updateCurrentImage()
 	{
-		if (jumpingUp)
-		{
-			//currentSprite = runnerImageManager.getNextJumpingImage();
-			//updateJumpingUp();
-		}
-
-		else if (fallingDown)
-		{
-			//currentSprite = runnerImageManager.getNextJumpingImage();
-			//updateFallingDown();
-		}
-
-		else
-		{
-			//currentSprite = runnerImageManager.getNextRunningImage();
-		}
-
+		/*TESTING THE WITH THE BOOLEANS WILL HAPPEN HERE*/
+		//For now, we make him run
+		//Could be any number of
 		setCurrentImage(runningSequence.getNextImage());
-
 	}
 
 	/** updateJumpingUp

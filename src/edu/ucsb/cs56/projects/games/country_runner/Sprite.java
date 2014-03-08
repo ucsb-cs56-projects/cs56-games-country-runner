@@ -66,6 +66,14 @@ public class Sprite extends GeneralPathWrapper implements Shape
 		}
 	}
 
+	/** updateCurrentImage
+	 */
+	public void updateCurrentImage()
+	{
+		//STUB.  This is a placeholder,
+		//each subclass will implement this differently
+	}
+
 	/** Returns a single image, pulled
 	* from the sprite sheet
   	*/
