@@ -70,12 +70,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
-			    //keyEvt(e, "keyReleased");
+			    //Not currently using
 			}
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
-				//keyEvt(e, "keyTyped");
+			    //Not currently using
 			}
 
 	    });
