@@ -123,19 +123,6 @@ public class Runner extends Sprite
 		}
 	}
 
-    /**translateY
-     * moves the runner in y direction
-     * @param yIncrement, how much to translate by, negative moves up, positive moves down
-     */
-    public void translateY(double yIncrement)
-    {
-		GeneralPath temp = this.get();
-		Shape t = ShapeTransforms.translatedCopyOf(temp, 0, yIncrement);
-		this.set(new GeneralPath(t));
-
-		this.setY(this.getY() + yIncrement);
-    }
-
     /** isOnGround
      * Check whether the Runner is on the ground
      * Just checks if the runner position is the same
