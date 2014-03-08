@@ -49,10 +49,12 @@ public class Runner extends Sprite
 	//animation sequences.  They are loaded by reading from the super's
 	//spriteSheet (Sprite class)
 	//---------------------------------------------------------------------
-	private ArrayList<BufferedImage> runningSequence;  //4 images
-	private Integer currentRunningSequenceIndex = 0;
+	//private ArrayList<BufferedImage> runningSequence;  //4 images
+	//private Integer currentRunningSequenceIndex = 0;
 	private ArrayList<BufferedImage> jumpingSequence;  //? images
 	private Integer currentJumpingSequenceIndex = 0;
+
+	private SpriteSequence runningSequence;
 
     /** Default Constructor makes the Runner
      * sets up the RunnerImageManager with the
@@ -62,11 +64,13 @@ public class Runner extends Sprite
     {
     	super(X_POSITION, GROUND, "runnerSheet");
 
-		runningSequence = new ArrayList<BufferedImage>();
+		//runningSequence = new ArrayList<BufferedImage>();
+		runningSequence = new SpriteSequence();
 
+		//Works
     	for (int i = 0; i < 4; i++)
 		{
-			this.runningSequence.add(getSubImage(i, 0));
+			this.runningSequence.addImage(getSubImage(i, 0));
 		}
 
     }
@@ -98,7 +102,8 @@ public class Runner extends Sprite
 			//currentSprite = runnerImageManager.getNextRunningImage();
 		}
 
-		this.setCurrentImage(this.getNextImage(this.runningSequence, this.currentRunningSequenceIndex));
+		setCurrentImage(runningSequence.getNextImage());
+
 	}
 
 	/** updateJumpingUp

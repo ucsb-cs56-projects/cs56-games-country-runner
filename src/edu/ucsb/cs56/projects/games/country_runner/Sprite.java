@@ -82,15 +82,22 @@ public class Sprite extends GeneralPathWrapper implements Shape
 	public BufferedImage getNextImage(ArrayList<BufferedImage>sequence, Integer currentSequenceIndex)
 	{
 
+		System.out.println(currentSequenceIndex);
+
 		//Fancy auto-unboxing
-		int nextIndex = currentSequenceIndex + 1;
+		int nextIndex = currentSequenceIndex;
+		nextIndex++;
 		if (nextIndex == sequence.size()) nextIndex = 0;
 
 		BufferedImage nextImage = sequence.get(nextIndex);
 
 		//Fancy auto-boxing
-		currentSequenceIndex = nextIndex;
+		currentSequenceIndex = new Integer(nextIndex);
+
+				System.out.println(currentSequenceIndex);
+
 		return nextImage;
+
 	}
 
 	/** @return returns the sprite's current x position on JPanel
