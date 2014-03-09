@@ -29,7 +29,6 @@ public class Sheep extends Sprite
     //Set the initial y position of the Sheep to GROUND
 	//---------------------------------------------------------------------
     private static final double X_POSITION = 20.0;
-    private static final double GROUND = 300.0;
     private double yPosition = GROUND;
 
 	//---------------------------------------------------------------------
@@ -55,7 +54,7 @@ public class Sheep extends Sprite
     public Sheep()
     {
     	//Open the spriteSheet
-    	super(X_POSITION, GROUND, "sheepSheet");
+    	super(X_POSITION, "sheepSheet");
 
 		//Initilize the sequences
 		runningSequence = new SpriteSequence();

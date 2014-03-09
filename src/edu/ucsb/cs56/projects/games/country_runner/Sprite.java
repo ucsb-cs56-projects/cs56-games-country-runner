@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 
 public class Sprite extends GeneralPathWrapper implements Shape
 {
+    final double GROUND = 275.0;
 	double xPosition;
 	double yPosition;
 
@@ -41,10 +42,10 @@ public class Sprite extends GeneralPathWrapper implements Shape
 	*	cause we aren't sure ahead of tiem how many images
 	*	each sprite will have
 	*/
-	public Sprite(double x, double y, String sheetName)
+	public Sprite(double x, String sheetName)
 	{
 		this.xPosition = x;
-		this.yPosition = y;
+		this.yPosition = GROUND;
 
 		//If we ever need a bigger Sprite, make a 2nd constructor that take
 		//this as param and you choose the tile size.

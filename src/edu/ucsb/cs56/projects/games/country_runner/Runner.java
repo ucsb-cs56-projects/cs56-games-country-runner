@@ -29,9 +29,8 @@ public class Runner extends Sprite
     //Set the initial y position of the runner to GROUND
 	//---------------------------------------------------------------------
     private static final double X_POSITION = 500.0;
-    private static final double GROUND = 300.0;
     private static final double TOP_OF_JUMP = 200;
-    private double yPosition = GROUND;
+    private double yPosition;
 
 	//---------------------------------------------------------------------
 	//Several booleans that help determine his current image
@@ -58,7 +57,7 @@ public class Runner extends Sprite
     public Runner()
     {
     	//Open the spriteSheet
-    	super(X_POSITION, GROUND, "runnerSheet");
+    	super(X_POSITION, "runnerSheet");
 
 		//Initilize the sequences
 		runningSequence = new SpriteSequence();
@@ -130,6 +129,8 @@ public class Runner extends Sprite
      */
     public boolean isOnGround()
     {
+
+
 		if ( this.getY() >= GROUND )
 		{
 			this.setY(GROUND);

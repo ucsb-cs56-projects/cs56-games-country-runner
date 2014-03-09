@@ -163,7 +163,6 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      */
     public synchronized void jump()
     {
-
     	//Piggy velocity
 		double v = 1.8;
 		//Acceleration
@@ -237,14 +236,16 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			System.out.println("CRASH!!!!!");
 		    }
 		    if(sheep.getX()==sheepX)
+			sheep.setX(sheep.getX() - 10);
 
-
+		    sheep.setX(sheep.getX() + 10);
 		    paintObstacles();
 		    try{
 			jumpThread.sleep(100);
 		    }catch(Exception e){
 		    }
-		}
+
+	}
 	}
 
 		}
