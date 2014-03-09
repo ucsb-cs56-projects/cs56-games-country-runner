@@ -50,7 +50,7 @@ public class Sprite extends GeneralPathWrapper implements Shape
 		//this as param and you choose the tile size.
 		//The size of the sheet is YOUR job to not derp up.
 		//Sheet dimensions HAVE to be divisible by tilesize
-		tileSize = 64;
+		tileSize = 100;
 		try {
 			spriteSheet = ImageIO.read(new File("res/" + sheetName + ".png"));
 		}

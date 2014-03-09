@@ -29,7 +29,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	//be moved to the runner class
 	//---------------------------------------------------------------------
     Runner runner = new Runner();
-    Sheep sheep = new Sheep(20,20);
+    Sheep sheep = new Sheep();
     Thread jumpThread;
     Thread objectThread;
     boolean runnerTrue = true;
@@ -204,8 +204,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		//Runner stuff
 		runner.updateCurrentImage();
 		g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
-
-		g2.drawImage(sheep.getCurrentSprite(), (int)sheep.getX(), (int)sheep.getY(), null);
+		sheep.updateCurrentImage();
+		g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
 
 		if ( crash )
 		{
@@ -237,8 +237,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			System.out.println("CRASH!!!!!");
 		    }
 		    if(sheep.getX()==sheepX)
-			sheep.move(-sheepX);
-		    sheep.move(10);
+
+
 		    paintObstacles();
 		    try{
 			jumpThread.sleep(100);
