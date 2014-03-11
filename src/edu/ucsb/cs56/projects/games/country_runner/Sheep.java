@@ -20,46 +20,26 @@ import javax.imageio.ImageIO;
  */
 public class Sheep extends Sprite
 {
-	//---------------------------------------------------------------------
-	//The X_POSITION - pos. of the Sheep
-	//GROUND - the position of the ground, where the Sheep rests
-	//TOP_OF_JUMP - How high the Sheep jumps
-	//These are values are specific to the window
-	//
-    //Set the initial y position of the Sheep to GROUND
-	//---------------------------------------------------------------------
-    private static final double X_POSITION = 20.0;
-    private double yPosition = GROUND;
+	//initialXPosition goes into the super constructor
+    private static final double initialXPosition = 20.0;
 
-	//---------------------------------------------------------------------
-	//Several booleans that help determine his current image
-	//
-	//The jumpIncrement may need to be refactored out, but it
-	//is how much the Sheep moves in his jump loop
-	//---------------------------------------------------------------------
-	private boolean running;
-	private int jumpIncrement = 1;
-
-	//---------------------------------------------------------------------
-	//These are the sequences (arrays) that hold all the images for a
-	//specific sequence (running, jumping, etc)
-	//---------------------------------------------------------------------
+	//The sequence that holds the running images
 	private SpriteSequence runningSequence;
 
 
-    /** Default Constructor makes the Sheep
+    /** Default Constructor makes the Sheep.
      * sets up the spriteSheet and fills the
      * sequences with images from it
      */
     public Sheep()
     {
-    	//Open the spriteSheet
-    	super(X_POSITION, "sheepSheet");
+    	//Call super constructor
+    	super(initialXPosition, "sheepSheet");
 
-		//Initilize the sequences
+		//Initilize the sequence
 		runningSequence = new SpriteSequence();
 
-		//Fill the sequences
+		//Fill the sequence
 		//NOTE: we have to explicitly say the number of
 		//images in the sequence
 		int numImages = 4;
@@ -70,18 +50,27 @@ public class Sheep extends Sprite
 
     }
 
+	/** updateCurrentPosition
+	 * Moves the sheep to left until it is off screen.
+	 * Once it is, we mov it back to the left,
+	 * simulating a line of sheeps
+	*/
+	public void updateCurrentPosition()
+    {
+    	//Right now, using the actual size of the window.
+    	//Will want to change this later...
+		this.setX(this.getX() + 10);
+		if (this.getX() == 600)
+		{
+			this.setX(-100);
+		}
+    }
+
 	/** updateCurrentImage
-	 * Uses the state values (booleans) to figure out
-	 * what the guy should do next.
-	 * This takes needless logic out of the JPanel, because
-	 * it will mostly call only this method on the Sheep
-	 * and the Sheep himself will decide what his image
-	 * should be
+	 * Moves to the next image in the running sequence
      */
 	public void updateCurrentImage()
 	{
 		setCurrentImage(runningSequence.getNextImage());
 	}
-
-
 }

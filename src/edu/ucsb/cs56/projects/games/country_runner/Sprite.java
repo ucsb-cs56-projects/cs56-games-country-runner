@@ -1,8 +1,11 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 
-import java.awt.geom.GeneralPath; // combinations of lines and curves
-import java.awt.geom.AffineTransform; // translation, rotation, scale
-import java.awt.Shape; // general class for shapes
+// combinations of lines and curves
+import java.awt.geom.GeneralPath;
+// translation, rotation, scale
+import java.awt.geom.AffineTransform;
+// general class for shapes
+import java.awt.Shape;
 
 //imports for the images
 import java.awt.image.BufferedImage;
@@ -15,23 +18,29 @@ import javax.imageio.ImageIO;
  * @author Sidney Rhoads, Tom Craig
  * @version CS56, W14
  */
-
 public class Sprite extends GeneralPathWrapper implements Shape
 {
+	//The ground, where the sprites rest
+	//x and y positions that every sprite needs
     final double GROUND = 275.0;
 	double xPosition;
 	double yPosition;
 
+	//The sheet for the sprite and the current
+	//image that is pulled from the sheet
 	private static BufferedImage spriteSheet;
 	BufferedImage currentImage;
+	//Tile size is the size of the square subimages
+	//in the sprite sheet
 	public int tileSize;
+
 	//---------------------------------------------------------------------
 	//Every class that inherites from this class will have some number of
-	//arraylists for animation.  They will be loaded from the spriteSheet
-	//and the getNextImage will cycle through them, using a saved index
-	//value.  It  will look like this:
-		//ArrayList<BufferedImage>sequenceName;
-		//Integer currentSequenceNameIndex = 0;
+	//SpriteSequences for animation.  The sprite sequence class is
+	//essentially an arrayList and a saved index.
+	//Later on, the sprites will call the getNextImage() method to
+	//update the sequences.  The runner for example has this object:
+		//runningSequence = new SpriteSequence();
 	//---------------------------------------------------------------------
 
 
@@ -45,14 +54,16 @@ public class Sprite extends GeneralPathWrapper implements Shape
 	public Sprite(double x, String sheetName)
 	{
 		this.xPosition = x;
+		//They always start at the ground
 		this.yPosition = GROUND;
 
-		//If we ever need a bigger Sprite, make a 2nd constructor that take
+		//If we ever need a bigger Sprite, make a 2nd constructor that takes
 		//this as param and you choose the tile size.
-		//The size of the sheet is YOUR job to not derp up.
-		//Sheet dimensions HAVE to be divisible by tilesize
+		//The tiles size is YOUR job to not fuck up.  You must make sheets
+		//with the proper dimensions that are divisible by the tile size
 		tileSize = 100;
-		try {
+		try
+		{
 			spriteSheet = ImageIO.read(new File("res/" + sheetName + ".png"));
 		}
 	    catch (IOException e) {
@@ -67,7 +78,19 @@ public class Sprite extends GeneralPathWrapper implements Shape
 		}
 	}
 
+	/** updateCurrentPosition
+	 * Each class that ISA sprite will have
+	 * its own way of updating its position
+	 */
+	public void updateCurrentPosition()
+	{
+		//STUB.  This is a placeholder,
+		//each subclass will implement this differently
+	}
+
 	/** updateCurrentImage
+	 * Each class that ISA sprite will have
+	 * its own way of updating its image
 	 */
 	public void updateCurrentImage()
 	{
@@ -82,32 +105,6 @@ public class Sprite extends GeneralPathWrapper implements Shape
     {
         return spriteSheet.getSubimage(xGrid * tileSize, yGrid * tileSize, tileSize, tileSize);
     }
-
-    /** getNextImage
-	 * retrieves the next image from whatever sequence
-	 * the sprite is looping through.  Makes this image
-	 * the currentSprite
-	 */
-	public BufferedImage getNextImage(ArrayList<BufferedImage>sequence, Integer currentSequenceIndex)
-	{
-
-		System.out.println(currentSequenceIndex);
-
-		//Fancy auto-unboxing
-		int nextIndex = currentSequenceIndex;
-		nextIndex++;
-		if (nextIndex == sequence.size()) nextIndex = 0;
-
-		BufferedImage nextImage = sequence.get(nextIndex);
-
-		//Fancy auto-boxing
-		currentSequenceIndex = new Integer(nextIndex);
-
-				System.out.println(currentSequenceIndex);
-
-		return nextImage;
-
-	}
 
 	/** @return returns the sprite's current x position on JPanel
 	*
