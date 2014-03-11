@@ -32,6 +32,7 @@ public class Runner extends Sprite
 	private boolean running;
 	private boolean jumping;
 	private boolean falling;
+	private double jumpDistance;
 
 	//These are the sequences (arrays) that hold all the
 	//images for a specific sequence (running, jumping, etc)
@@ -51,6 +52,7 @@ public class Runner extends Sprite
     	this.running = true;
     	this.jumping = false;
     	this.falling = false;
+    	this.jumpDistance = 20.0;
 
 		//Initilize the sequences
 		runningSequence = new SpriteSequence();
@@ -73,7 +75,7 @@ public class Runner extends Sprite
      */
     public void updateCurrentPosition()
     {
-		updateJumpPosition(200);
+		updateJumpPosition(100);
     }
 
 	/** updateCurrentImage
@@ -133,7 +135,8 @@ public class Runner extends Sprite
 		    }
 		    else
 		    {
-				this.setY((this.getY() - 10));
+		    	this.jumpDistance -= .10;
+				this.setY((this.getY() - this.jumpDistance));
 			}
 		}
 
@@ -145,12 +148,14 @@ public class Runner extends Sprite
 			//state appropriately
 			if (this.isOnGround())
 		    {
+		    	this.jumpDistance = 15.0;
 			    this.falling = false;
 			    this.running = true;
 		    }
 		    else
 		    {
-				this.setY((this.getY() + 10));
+		    	this.jumpDistance += .10;
+				this.setY((this.getY() + this.jumpDistance));
 		    }
 		}
     }
