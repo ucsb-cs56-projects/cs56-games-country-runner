@@ -32,7 +32,12 @@ public class Runner extends Sprite
 	private boolean running;
 	private boolean jumping;
 	private boolean falling;
-	private double jumpDistance;
+
+	//Testing physics equations
+	private double d;
+	private double v;
+	private double a;
+	private double t;
 
 	//These are the sequences (arrays) that hold all the
 	//images for a specific sequence (running, jumping, etc)
@@ -52,7 +57,6 @@ public class Runner extends Sprite
     	this.running = true;
     	this.jumping = false;
     	this.falling = false;
-    	this.jumpDistance = 20.0;
 
 		//Initilize the sequences
 		runningSequence = new SpriteSequence();
@@ -108,9 +112,26 @@ public class Runner extends Sprite
 	/** startJump
 	 * Called by the JPanel, changes the runner's state so he
 	 * knows he should be jumping when the image gets updated
+	 * We set the jumpDistance to be 30, and it will be
+	 * reduced as the jump progresses.  This constant can
+	 * be altered later
 	 */
 	public void startJump()
 	{
+		//If the runnign is in the middle of a jump, no
+		//need to change anything about his state
+		if ((this.jumping) || (this.falling))
+		{
+			return;
+		}
+
+
+
+		this.v = 7;
+		this.a = .4;
+		this.t = 0;
+
+
 		this.jumping = true;
 		this.running = false;
 	}
@@ -122,21 +143,30 @@ public class Runner extends Sprite
 	 */
 	public void updateJumpPosition(int topOfJump)
 	{
+		this.t = this.t + 1;
+		this.d = v*t + -.5*a*(Math.pow(t,2));
+
+
+
+//System.out.println(this.d);
+
 		//If he is moving updward, and not at the
 		//peak of his jump, move him more up
 		if (this.jumping)
 		{
+System.out.println("jumping");
+
 			//If he is at the top, change
 			//state appropriately
-			if (this.getY() <= topOfJump)
+			if (this.d == 0)
 		    {
+System.out.println("jump peak");
 			    this.jumping = false;
 			    this.falling = true;
 		    }
 		    else
 		    {
-		    	this.jumpDistance -= .30;
-				this.setY((this.getY() - this.jumpDistance));
+				this.setY((this.getY() - this.d));
 			}
 		}
 
@@ -144,18 +174,18 @@ public class Runner extends Sprite
 		//ground, keep moving down
 		else if (this.falling)
 		{
+System.out.println("falling");
+
 			//If he is at the ground, change
 			//state appropriately
 			if (this.isOnGround())
 		    {
-		    	this.jumpDistance = 15.0;
 			    this.falling = false;
 			    this.running = true;
 		    }
 		    else
 		    {
-		    	this.jumpDistance += .30;
-				this.setY((this.getY() + this.jumpDistance));
+				this.setY((this.getY() + this.d));
 		    }
 		}
     }

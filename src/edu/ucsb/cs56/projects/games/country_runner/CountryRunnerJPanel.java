@@ -146,17 +146,21 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		sheep.updateCurrentPosition();
 
 		//Collision check, did the runner hit anything?
-		if (runnerHasCollided)
+		if (this.runnerHasCollided(sheep, runner))
 		{
 		    g.drawImage(heaven, 0, 0, this);
+		    this.gameIsRunning = false;
 		}
 
-		//Update the sprites' images ad draw them on the panel
-		runner.updateCurrentImage();
-		sheep.updateCurrentImage();
+		else
+		{
+			//Update the sprites' images ad draw them on the panel
+			runner.updateCurrentImage();
+			sheep.updateCurrentImage();
 
-		g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
-		g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
+			g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
+			g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
+		}
     }
 
 	/** runnerHasCollided
