@@ -135,7 +135,7 @@ public class Runner extends Sprite
 		    }
 		    else
 		    {
-		    	this.jumpDistance -= .10;
+		    	this.jumpDistance -= .30;
 				this.setY((this.getY() - this.jumpDistance));
 			}
 		}
@@ -154,7 +154,7 @@ public class Runner extends Sprite
 		    }
 		    else
 		    {
-		    	this.jumpDistance += .10;
+		    	this.jumpDistance += .30;
 				this.setY((this.getY() + this.jumpDistance));
 		    }
 		}
