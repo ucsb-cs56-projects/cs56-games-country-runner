@@ -146,6 +146,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		sheep.updateCurrentPosition();
 
 		//Collision check, did the runner hit anything?
+		//If so, the game is over
 		if (this.runnerHasCollided(sheep, runner))
 		{
 		    g.drawImage(heaven, 0, 0, this);

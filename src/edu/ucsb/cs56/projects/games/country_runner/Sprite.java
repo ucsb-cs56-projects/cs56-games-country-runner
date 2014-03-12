@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
  * @author Sidney Rhoads, Tom Craig
  * @version CS56, W14
  */
-public class Sprite extends GeneralPathWrapper implements Shape
+public abstract class Sprite extends GeneralPathWrapper implements Shape
 {
 	//The ground, where the sprites rest
 	//x and y positions that every sprite needs

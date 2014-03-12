@@ -31,10 +31,14 @@ public class Runner extends Sprite
 	//This constitutes the runner's "state"
 	private boolean running;
 	private boolean jumping;
-	private boolean falling;
 
 	//Testing physics equations
-	private double d;
+	//These are for calculating the runner's jump
+	//He has an jump velocity that can be set, and
+	//gravity can be changed as well, if needed
+	//jumpTime is just incremented in the
+	//updateJumpPosition formula to calculate
+	//the new position
 	private double v;
 	private double a;
 	private double t;
@@ -56,7 +60,6 @@ public class Runner extends Sprite
 		//Set up his initial state
     	this.running = true;
     	this.jumping = false;
-    	this.falling = false;
 
 		//Initilize the sequences
 		runningSequence = new SpriteSequence();
@@ -73,13 +76,13 @@ public class Runner extends Sprite
 
 	/** updateCurrentPosition
 	 * Unlike the sheep, the runner will only ever move
-	 * up and down (if he is jumping/falling).  We can call
+	 * up and down (if he is jumping).  We can call
 	 * updateJumpPosition because it will test if he is
-	 * jumping or falling internally.
+	 * jumping internally.
      */
     public void updateCurrentPosition()
     {
-		updateJumpPosition(100);
+		updateJumpPosition();
     }
 
 	/** updateCurrentImage
@@ -98,12 +101,8 @@ public class Runner extends Sprite
 		}
 
 		//When the sprites sheets are all done, these will
-		//actual update with the jumping and falling sequences
+		//actual update with the jumping sequences
 		else if (this.jumping)
-		{
-			setCurrentImage(runningSequence.getNextImage());
-		}
-		else if (this.falling)
 		{
 			setCurrentImage(runningSequence.getNextImage());
 		}
@@ -120,74 +119,41 @@ public class Runner extends Sprite
 	{
 		//If the runnign is in the middle of a jump, no
 		//need to change anything about his state
-		if ((this.jumping) || (this.falling))
+		if ((this.jumping))
 		{
 			return;
 		}
-
-
-
-		this.v = 7;
-		this.a = .4;
+	  	//Setting up values for jump
+    	this.v = 50;
+		this.a = -9.8;
 		this.t = 0;
-
-
+		//Setting up boolean for jump
 		this.jumping = true;
 		this.running = false;
 	}
 
 	/** updateJumpPosition
 	 * this is called by updateCurrentPosition
-	 * to make the jump happen.  It detemrines the current
-	 * position of the runner and moves him approriately.
+	 * to make the jump happen.  It uses a formula
+	 * to move the runner appropriately, and stops
+	 * him from jupming if he hits the ground
 	 */
-	public void updateJumpPosition(int topOfJump)
+	public void updateJumpPosition()
 	{
-		this.t = this.t + 1;
-		this.d = v*t + -.5*a*(Math.pow(t,2));
+		//Stand back... physics.  This is the position
+		//equation: y = y_0 + v_0 + .5*g*t^2, which I
+		//hope you learnd in physics 1.  It just finds
+		//his correct position, to move him up/down
+		double newXPos = 0 + this.v*this.t + .5*this.a*(Math.pow(this.t,2));
+		this.setY(this.GROUND - newXPos);
+		this.t++;
 
+		if (this.isOnGround())
+	    {
+	    	this.jumping = false;
+		    this.running = true;
+	    }
 
-
-//System.out.println(this.d);
-
-		//If he is moving updward, and not at the
-		//peak of his jump, move him more up
-		if (this.jumping)
-		{
-System.out.println("jumping");
-
-			//If he is at the top, change
-			//state appropriately
-			if (this.d == 0)
-		    {
-System.out.println("jump peak");
-			    this.jumping = false;
-			    this.falling = true;
-		    }
-		    else
-		    {
-				this.setY((this.getY() - this.d));
-			}
-		}
-
-		//If he is falling down, and not at the
-		//ground, keep moving down
-		else if (this.falling)
-		{
-System.out.println("falling");
-
-			//If he is at the ground, change
-			//state appropriately
-			if (this.isOnGround())
-		    {
-			    this.falling = false;
-			    this.running = true;
-		    }
-		    else
-		    {
-				this.setY((this.getY() + this.d));
-		    }
-		}
     }
 
     /** isOnGround
