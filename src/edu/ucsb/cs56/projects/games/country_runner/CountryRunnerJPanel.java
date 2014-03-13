@@ -10,25 +10,30 @@ import java.util.*;
 import java.awt.image.BufferedImage;
 
 
-/**
-   This class makes the JPanel for the Country Runner game
-   @author Mathew Glodack, Christina Morris
-   @author Sidney Rhoads, Tom Craig
-   @version cs56  W14 proj1
+/** CountryRunnerJPanel
+ * @author Mathew Glodack, Christina Morris
+ * @author Sidney Rhoads, Tom Craig
+ * @version cs56, W14, proj2
+ *
+ * This class makes the JPanel for the
+ * Country Runner game
 */
 public class CountryRunnerJPanel extends JPanel implements Runnable
 {
 	//Booleans for the game logic
-	//Main thread of execution.
 	boolean gameIsRunning;
 	boolean upArrowPressed;
     boolean runnerHasCollided;
-
+    //GROUND is for positioning
+    //ths sprites.  Note that this
+    //is also defined in the Sprite class
     final double GROUND = 375.0;
     public Graphics2D g2;
+	//Main thread of execution.
     Thread mainThread;
 
-	//The runner and the sheep, there is only one sheep right now, may want
+	//The runner and the sheep, there
+	//is only one sheep right now, may want
 	//to add more in the future.
     Runner runner = new Runner();
     Sheep sheep = new Sheep();
@@ -40,6 +45,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      */
     public CountryRunnerJPanel()
     {
+    	//These are just for making the
+    	//JPanel and JFrame place nice, and
+    	//accept keyboard input
         setFocusable(true);
 		requestFocusInWindow();
 
@@ -48,27 +56,28 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	this.upArrowPressed = false;
     	this.runnerHasCollided = false;
 
-    	runner.setY(GROUND - runner.getHeight());
-	    sheep.setY(GROUND - sheep.getHeight());
-
 		//The thrad gets started once and its run method is the main game loop
 		this.mainThread = new Thread(this);
 		mainThread.start();
 
-		//---------------------------------------------------------------------
-		//keyPressed - when the key goes down
-		//keyReleased - when the key comes up
-		//keyTyped - when the unicode character represented
-		//by this key is sent by the keyboard to system input.
-		//NOTE: right now we are only handling the keyPressed actions and don't
-		//care about anything else.  This may change in the future
-		//---------------------------------------------------------------------
+		//This part if ro regestering keyboard keys
+		//each overridden function is used to manage what
+		//happens when keys are pressed and released
+			//keyPressed - when the key goes down
+			//keyReleased - when the key comes up
+			//keyTyped - when the unicode character represented
+				//by this key is sent by the keyboard to system input.
 		addKeyListener(new KeyAdapter()
 		{
 			@Override
 			public void keyPressed(KeyEvent e)
 			{
+				//Here, we say that when a key is pressed,
+				//the "pressed" function should be carried out
 			    pressed(e, "keyPressed");
+			    //NOTE: right now we are only handling the
+				//keyPressed actions and don't care about
+				//anything else.  This may change in the future
 			}
 			@Override
 			public void keyReleased(KeyEvent e)
@@ -86,7 +95,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     /** pressed
 	 * Handles all key pressed events, if the up
 	 * arrow was pressed, we set the upArrowPressed
-	 * boolean to true, so the run method picks
+	 * boolean to true, so the run method picks it up
      */
 	private void pressed(KeyEvent e, String text)
 	{
@@ -103,7 +112,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	 * run
 	 * This is run method for the main thread
 	 * It will run once, but we have a while loop inside
-	 * for the main execution of the the game logic
+	 * for the main execution of the the game logic.  It
+	 * looks like a never-ending while loop, but we can
+	 * control when the gameIsRUnning boolean is ON/OFF
 	*/
 	public void run()
     {
@@ -135,7 +146,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
    	/** paintComponent
 	 * Required for any graphics on a JPanel.
-     * Does all of our drawing.
+     * Does all of our drawing.  It is called when
+     * the program says "this.repaint()"
      */
     public void paintComponent(Graphics g)
     {
@@ -159,10 +171,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 		else
 		{
-			//Update the sprites' images ad draw them on the panel
+			//Update the sprites' images and draw them on the panel
+			//Note that at the beginning of execution of the JPanel,
+			//the sprites are put on the ground, and after that they
+			//handle their own repositionings internally.  We do not
+			//explicitly position them in the JPanel
 			runner.updateCurrentImage();
 			sheep.updateCurrentImage();
-
 			g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
 			g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
 		}

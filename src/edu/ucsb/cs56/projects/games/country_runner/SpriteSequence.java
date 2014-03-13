@@ -2,7 +2,7 @@ package edu.ucsb.cs56.projects.games.country_runner;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
-/**SpriteSequence is an abstract class for looping
+/** SpriteSequence is an abstract class for looping
  * through a sequence of images loaded from a spriteSheet.
  * Every class that inherits from sprite will have an instance
  * of this class, for example "running" or "jumping".
@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
  * This is esentially a glorified arrayList with an index to
  * save the current position
  * @author Sidney Rhoads, Tom Craig
- * @version CS56, W14
+ * @version cs56, W14, proj2
  */
 
 public class SpriteSequence extends ArrayList<BufferedImage>

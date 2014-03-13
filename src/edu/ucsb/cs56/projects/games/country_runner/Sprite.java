@@ -16,11 +16,12 @@ import javax.imageio.ImageIO;
 
 /**Sprite an abstract class form which all particular sprites inherit.
  * @author Sidney Rhoads, Tom Craig
- * @version CS56, W14
+ * @version CS56, W14, proj2
  */
 public abstract class Sprite extends GeneralPathWrapper implements Shape
 {
-	//The ground, where the sprites rest
+	//The GROUND, where the sprites rest. Note
+	//that this is also defined in the JPanel
 	//x and y positions that every sprite needs
     final double GROUND = 375.0;
 	double xPosition;
@@ -30,6 +31,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	//image that is pulled from the sheet
 	private static BufferedImage spriteSheet;
 	BufferedImage currentImage;
+
 	//Tile size is the size of the subimages in
 	//the sprite sheet. The tiles size is YOUR
 	//job to not fuck up.  You must make sheets
@@ -38,37 +40,45 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	public int xTileSize;
 	public int yTileSize;
 
-	//---------------------------------------------------------------------
-	//Every class that inherites from this class will have some number of
-	//SpriteSequences for animation.  The sprite sequence class is
-	//essentially an arrayList and a saved index.
-	//Later on, the sprites will call the getNextImage() method to
-	//update the sequences.  The runner for example has this object:
-		//runningSequence = new SpriteSequence();
-	//---------------------------------------------------------------------
+	/*
+	--------------------------------------------------------------------
+	                     IMPLEMENTATION NOTE:
+	Every class that inherites from this class will have some number of
+	SpriteSequences for animation.  The sprite sequence class is
+	essentially an arrayList and a saved index.
+	Later on, the sprites will call the getNextImage() method to
+	update the sequences.  The runner for example has this object:
+		[runningSequence = new SpriteSequence();]
+	--------------------------------------------------------------------
+	*/
 
 
-	/** Constuctor for the Sprite
-	*	creates a generic sprite instance at an initial (x,y) position
-	*	and the name of the sprite sheet it uses.
-	* 	Loads and manages a sprite sheet
-	*	cause we aren't sure ahead of tiem how many images
-	*	each sprite will have
+	/** Constuctor
+	* creates a generic sprite instance at an initial (x,y) position
+	* and the name of the sprite sheet it uses.
+	* Loads and manages a sprite sheet
+	* cause we aren't sure ahead of time how many images
+	* each sprite will have
+	* Different sprites can have different tile sizes,
+	* so we take the tile size as an input
 	*/
 	public Sprite(int xTileSize, int yTileSize, double x, String sheetName)
 	{
+		//Setting up tile sizes and position
 		this.xTileSize = xTileSize;
 		this.yTileSize = yTileSize;
-
 		this.xPosition = x;
 		//They always start at the ground
-		this.yPosition = GROUND;
+		this.yPosition = GROUND - this.getHeight();
 
+		//Loading the spriteSheet
 		try
 		{
 			spriteSheet = ImageIO.read(new File("res/" + sheetName + ".png"));
 		}
-	    catch (IOException e) {
+	    catch (IOException e)
+	    {
+	    	//This line for testing...
 	        //e.printStackTrace();
 
 	        //While testing, use this so that testing objects
@@ -118,58 +128,64 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 		return this.xTileSize;
 	}
 
-	/** Returns a single image, pulled
-	* from the sprite sheet
-  	*/
+	/** getSubImage
+	 * Returns a single image, pulled
+	 * from the sprite sheet
+  	 */
     public BufferedImage getSubImage(int xGrid, int yGrid)
     {
         return spriteSheet.getSubimage(xGrid * xTileSize, yGrid * yTileSize, xTileSize, yTileSize);
     }
 
-	/** @return returns the sprite's current x position on JPanel
-	*
-	*/
+	/** getX
+	 * @return returns the sprite's current x position on JPanel
+	 *
+	 */
 	public double getX()
 	{
 		return this.xPosition;
 	}
-	/** @return returns the sprite's current y position on JPanel
-	*
-	*/
+	/** getY
+	 * @return returns the sprite's current y position on JPanel
+     *
+	 */
 	public double getY()
 	{
 		return this.yPosition;
 	}
 
-	/** @return returns the sprite's current Image that is
-	*	that is ready to be displayed
-	*/
+	/** getCurrentImage
+	 * returns the sprite's current Image that is
+	 *	that is ready to be displayed
+	 */
 	public BufferedImage getCurrentImage()
 	{
 		return this.currentImage;
 	}
 
-	/** sets the sprite's current x position on JPanel
-	*
-	*/
+	/** setX
+	 * sets the sprite's current
+	 * x position on JPanel
+	 */
 	public void setX(double newXPosition)
 	{
 		this.xPosition = newXPosition;
 	}
-	/** sets the sprite's current y position on JPanel
-	*
-	*/
+
+	/** setY
+	 * sets the sprite's current y position on JPanel
+	 */
 	public void setY(double newYPosition)
 	{
 		this.yPosition = newYPosition;
 	}
 
-	/** sets the sprite's current Image that is
-	*	that is ready to be displayed
-	*/
+	/** setCurrentImage
+	 * sets the sprite's current Image that is
+	 *	that is ready to be displayed
+	 */
 	public void setCurrentImage(BufferedImage newImage)
 	{
 		this.currentImage = newImage;
 	}
-
 }

@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 /**Draws the Sheep object on the screen
  * @author Christina Morris, Mathew Glodack
  * @author Sidney Rhoads, Tom Craig
- * @version CS56, W14
+ * @version cs56, W14, proj2
  *
  */
 public class Sheep extends Sprite

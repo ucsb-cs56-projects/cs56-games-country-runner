@@ -4,6 +4,7 @@ import java.awt.geom.GeneralPath; // combinations of lines and curves
 import java.awt.geom.AffineTransform; // translation, rotation, scale
 import java.awt.Shape; // general class for shapes
 
+
 //imports for the sprites
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,10 +13,12 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 
-/**Draws the runner object on the screen
+
+/** Runner
+ * Draws the runner object on the screen
  * @author Christina Morris, Mathew Glodack
  * @author Sidney Rhoads, Tom Craig
- * @version CS56, W14
+ * @version cs56, W14, proj2
  *
  */
 public class Runner extends Sprite
