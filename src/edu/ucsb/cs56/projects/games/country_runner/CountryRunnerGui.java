@@ -25,7 +25,6 @@ public class CountryRunnerGui extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(cp);
 		this.setVisible(true);
-		//acp.runOnGround();
     }
 
     public static void main(String [] args)
