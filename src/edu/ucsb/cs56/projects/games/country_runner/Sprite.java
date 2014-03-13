@@ -22,7 +22,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 {
 	//The ground, where the sprites rest
 	//x and y positions that every sprite needs
-    final double GROUND = 275.0;
+    final double GROUND = 375.0;
 	double xPosition;
 	double yPosition;
 
@@ -30,9 +30,13 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	//image that is pulled from the sheet
 	private static BufferedImage spriteSheet;
 	BufferedImage currentImage;
-	//Tile size is the size of the square subimages
-	//in the sprite sheet
-	public int tileSize;
+	//Tile size is the size of the subimages in
+	//the sprite sheet. The tiles size is YOUR
+	//job to not fuck up.  You must make sheets
+	//with the proper dimensions that are divisible
+	//by the tile sizes
+	public int xTileSize;
+	public int yTileSize;
 
 	//---------------------------------------------------------------------
 	//Every class that inherites from this class will have some number of
@@ -51,17 +55,15 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	*	cause we aren't sure ahead of tiem how many images
 	*	each sprite will have
 	*/
-	public Sprite(double x, String sheetName)
+	public Sprite(int xTileSize, int yTileSize, double x, String sheetName)
 	{
+		this.xTileSize = xTileSize;
+		this.yTileSize = yTileSize;
+
 		this.xPosition = x;
 		//They always start at the ground
 		this.yPosition = GROUND;
 
-		//If we ever need a bigger Sprite, make a 2nd constructor that takes
-		//this as param and you choose the tile size.
-		//The tiles size is YOUR job to not fuck up.  You must make sheets
-		//with the proper dimensions that are divisible by the tile size
-		tileSize = 100;
 		try
 		{
 			spriteSheet = ImageIO.read(new File("res/" + sheetName + ".png"));
@@ -98,12 +100,30 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 		//each subclass will implement this differently
 	}
 
+	/** getHeight
+	 * Returns the yTileSize, which is
+	 * synonymous with height
+	 */
+	public double getHeight()
+	{
+		return this.yTileSize;
+	}
+
+	/** getWidth
+	 * Returns the xTileSize, which is
+	 * synonymous with width
+	 */
+	public double getWidth()
+	{
+		return this.xTileSize;
+	}
+
 	/** Returns a single image, pulled
 	* from the sprite sheet
   	*/
     public BufferedImage getSubImage(int xGrid, int yGrid)
     {
-        return spriteSheet.getSubimage(xGrid * tileSize, yGrid * tileSize, tileSize, tileSize);
+        return spriteSheet.getSubimage(xGrid * xTileSize, yGrid * yTileSize, xTileSize, yTileSize);
     }
 
 	/** @return returns the sprite's current x position on JPanel

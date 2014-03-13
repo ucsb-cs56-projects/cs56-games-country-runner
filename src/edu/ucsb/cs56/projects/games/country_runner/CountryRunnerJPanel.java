@@ -23,6 +23,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	boolean gameIsRunning;
 	boolean upArrowPressed;
     boolean runnerHasCollided;
+
+    final double GROUND = 375.0;
     public Graphics2D g2;
     Thread mainThread;
 
@@ -30,7 +32,6 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	//to add more in the future.
     Runner runner = new Runner();
     Sheep sheep = new Sheep();
-
 
     /** Constructor
      * Sets up the boolean state variables for the JPanel
@@ -46,6 +47,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	this.gameIsRunning = true;
     	this.upArrowPressed = false;
     	this.runnerHasCollided = false;
+
+    	runner.setY(GROUND - runner.getHeight());
+	    sheep.setY(GROUND - sheep.getHeight());
 
 		//The thrad gets started once and its run method is the main game loop
 		this.mainThread = new Thread(this);
@@ -78,6 +82,22 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			}
 	    });
     }
+
+    /** pressed
+	 * Handles all key pressed events, if the up
+	 * arrow was pressed, we set the upArrowPressed
+	 * boolean to true, so the run method picks
+     */
+	private void pressed(KeyEvent e, String text)
+	{
+	    int key = e.getKeyCode();
+
+	    //VK_UP = Up arrow
+	    if (key == KeyEvent.VK_UP)
+		{
+		    upArrowPressed = true;
+		}
+	}
 
 	/**
 	 * run
@@ -113,23 +133,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		}
     }
 
-    /** pressed
-	 * Handles all key pressed events, if the up
-	 * arrow was pressed, we set the upArrowPressed
-	 * boolean to true, so the run method picks
-     */
-	private void pressed(KeyEvent e, String text)
-	{
-	    int key = e.getKeyCode();
-
-	    //VK_UP = Up arrow
-	    if (key == KeyEvent.VK_UP)
-		{
-		    upArrowPressed = true;
-		}
-	}
-
-	/** paintComponent
+   	/** paintComponent
 	 * Required for any graphics on a JPanel.
      * Does all of our drawing.
      */

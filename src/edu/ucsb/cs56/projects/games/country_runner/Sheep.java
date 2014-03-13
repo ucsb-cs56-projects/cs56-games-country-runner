@@ -34,7 +34,7 @@ public class Sheep extends Sprite
     public Sheep()
     {
     	//Call super constructor
-    	super(initialXPosition, "sheepSheet");
+    	super(100, 50, initialXPosition, "sheepSheet");
 
 		//Initilize the sequence
 		runningSequence = new SpriteSequence();

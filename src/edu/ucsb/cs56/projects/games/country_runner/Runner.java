@@ -55,7 +55,7 @@ public class Runner extends Sprite
     public Runner()
     {
     	//Open the spriteSheet
-    	super(X_POSITION, "runnerSheet");
+    	super(100, 150, X_POSITION, "runnerSheet");
 
 		//Set up his initial state
     	this.running = true;
@@ -119,7 +119,7 @@ public class Runner extends Sprite
 	{
 		//If the runnign is in the middle of a jump, no
 		//need to change anything about his state
-		if ((this.jumping))
+		if (!this.isOnGround())
 		{
 			return;
 		}
@@ -144,8 +144,8 @@ public class Runner extends Sprite
 		//equation: y = y_0 + v_0 + .5*g*t^2, which I
 		//hope you learnd in physics 1.  It just finds
 		//his correct position, to move him up/down
-		double newXPos = 0 + this.v*this.t + .5*this.a*(Math.pow(this.t,2));
-		this.setY(this.GROUND - newXPos);
+		double newYPos = 0 + this.v*this.t + .5*this.a*(Math.pow(this.t,2));
+		this.setY(this.GROUND - this.getHeight() - newYPos);
 		this.t++;
 
 		if (this.isOnGround())
@@ -153,6 +153,14 @@ public class Runner extends Sprite
 	    	this.jumping = false;
 		    this.running = true;
 	    }
+
+		//If he happens to fall farther than the ground, this pulls him up the ground
+	    else if (this.getY() > (GROUND - this.getHeight()))
+		{
+			this.setY(GROUND - this.getHeight());
+			this.jumping = false;
+		    this.running = true;
+		}
 
     }
 
@@ -163,9 +171,8 @@ public class Runner extends Sprite
      */
     public boolean isOnGround()
     {
-		if ( this.getY() >= GROUND )
+		if (this.getY() == (GROUND - this.getHeight()))
 		{
-			this.setY(GROUND);
 			return true;
 		}
 		return false;
