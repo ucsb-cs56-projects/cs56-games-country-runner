@@ -58,7 +58,7 @@ public class Runner extends Sprite
     public Runner()
     {
     	//Open the spriteSheet
-    	super(100, 150, X_POSITION, "runnerSheet");
+    	super(100, 109, X_POSITION, "runnerSheet");
 
 		//Set up his initial state
     	this.running = true;

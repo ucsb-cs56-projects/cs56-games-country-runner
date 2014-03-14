@@ -137,7 +137,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			//Sleep the main thread so its doesn't update everything super quickly
 			try
 			{
-				mainThread.sleep(75);
+				mainThread.sleep(100);
 		    }
 		    catch(Exception e){}
 
@@ -171,7 +171,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 		else
 		{
-			//Update the sprites' images and draw them on the panel
+			//Update the sprites' images and draws them on the panel
 			//Note that at the beginning of execution of the JPanel,
 			//the sprites are put on the ground, and after that they
 			//handle their own repositionings internally.  We do not
@@ -191,9 +191,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      */
     public boolean runnerHasCollided(Sheep c, Runner r)
     {
-		if (c.getY() == r.getY())
+		if ((r.getY() + r.getHeight()) >= c.getY())
 		{
-			return c.getX()==r.getX();
+			return c.getX()== r.getX();
 		}
 		return false;
     }
