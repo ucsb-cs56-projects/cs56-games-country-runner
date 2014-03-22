@@ -4,6 +4,7 @@ import java.awt.geom.GeneralPath; // combinations of lines and curves
 import java.awt.geom.AffineTransform; // translation, rotation, scale
 import java.awt.Shape; // general class for shapes
 
+
 //imports for the sprites
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,190 +13,171 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 
-/**Draws the runner object on the screen
+
+/** Runner
+ * Draws the runner object on the screen
  * @author Christina Morris, Mathew Glodack
  * @author Sidney Rhoads, Tom Craig
- * @version CS56, W14
+ * @version cs56, W14, proj2
  *
  */
-public class Runner extends GeneralPathWrapper implements Shape
+public class Runner extends Sprite
 {
-	//---------------------------------------------------------------------
 	//The X_POSITION - pos. of the runner
-	//GROUND - the position of the ground, where the runner rests
-	//TOP_OF_JUMP - How high the runner jumps
-	//These are values are specific to the window
-	//
-    //Set the initial y position of the runner to GROUND
-	//---------------------------------------------------------------------
+	//The yPosition will get set to GROUND in the
+	//super constructor
     private static final double X_POSITION = 500.0;
-    private static final double GROUND = 300.0;
-    private static final double TOP_OF_JUMP = 200;
-    private double yPosition = GROUND;
+    private double yPosition;
 
-	//---------------------------------------------------------------------
-	//We have a RunnerImageManager
-	//And several booleans that help determine his current image
-	//
-	//The jumpIncrement may need to be refactored out, but it
-	//is how much the runner moves in his jump loop
-	//---------------------------------------------------------------------
-	private RunnerImageManager runnerImageManager;
+	//Several booleans that help determine his current
+	//image and position
+	//This constitutes the runner's "state"
 	private boolean running;
-	private boolean jumpingUp;
-	private boolean fallingDown;
-	private int jumpIncrement = 1;
-	//---------------------------------------------------------------------
-	//The current image of the runner,
-	//This is mutated byt the runner's methods and
-	//determiend by the JPanel
-	//This saves us from having to maange every single
-	//part of the sprite sheet in the runner class
-	//---------------------------------------------------------------------
-	private BufferedImage currentSprite;
+	private boolean jumping;
+
+	//Testing physics equations
+	//These are for calculating the runner's jump
+	//He has an jump velocity that can be set, and
+	//gravity can be changed as well, if needed
+	//jumpTime is just incremented in the
+	//updateJumpPosition formula to calculate
+	//the new position
+	private double v;
+	private double a;
+	private double t;
+
+	//These are the sequences (arrays) that hold all the
+	//images for a specific sequence (running, jumping, etc)
+	private SpriteSequence runningSequence;
 
 
     /** Default Constructor makes the Runner
-     * sets up the RunnerImageManager with the
-     * appropriate resource image
+     * sets up the spriteSheet and fills the
+     * sequences with images from it
      */
     public Runner()
     {
-		runnerImageManager = new RunnerImageManager("runnerSheet");
+    	//Open the spriteSheet
+    	super(100, 109, X_POSITION, "runnerSheet");
+
+		//Set up his initial state
+    	this.running = true;
+    	this.jumping = false;
+
+		//Initilize the sequences
+		runningSequence = new SpriteSequence();
+
+		//Fill the sequences
+		//NOTE: we have to explicitly say the number of
+		//images in the sequence
+		int numImages = 4;
+    	for (int i = 0; i < numImages; i++)
+		{
+			this.runningSequence.addImage(getSubImage(i, 0));
+		}
     }
 
-	/** updateCurrentSprite
-	 * Changes the currentSprite instance variable,
-	 * dependent upon the boolean we defined above
+	/** updateCurrentPosition
+	 * Unlike the sheep, the runner will only ever move
+	 * up and down (if he is jumping).  We can call
+	 * updateJumpPosition because it will test if he is
+	 * jumping internally.
+     */
+    public void updateCurrentPosition()
+    {
+		updateJumpPosition();
+    }
+
+	/** updateCurrentImage
+	 * Uses the state values (booleans) to figure out
+	 * what the guy should do next.
 	 * This takes needless logic out of the JPanel, because
 	 * it will mostly call only this method on the runner
 	 * and the runner himself will decide what his image
 	 * should be
      */
-	public void updateCurrentSprite()
+	public void updateCurrentImage()
 	{
-		if (jumpingUp)
+		if (this.running)
 		{
-			currentSprite = runnerImageManager.getNextJumpingImage();
-			//updateJumpingUp();
+			setCurrentImage(runningSequence.getNextImage());
 		}
 
-		else if (fallingDown)
+		//When the sprites sheets are all done, these will
+		//actual update with the jumping sequences
+		else if (this.jumping)
 		{
-			currentSprite = runnerImageManager.getNextJumpingImage();
-			//updateFallingDown();
+			setCurrentImage(runningSequence.getNextImage());
 		}
-
-		else
-		{
-			currentSprite = runnerImageManager.getNextRunningImage();
-		}
-
-	}
-
-	/** get CurrentSprite
-	 * Returns the currentSprite
-	 */
-    public BufferedImage getCurrentSprite()
-    {
-	    return currentSprite;
-    }
-
-	/** getX
-	 * Returns the runner's x position
-     */
-	public double getX()
-	{
-		return this.X_POSITION;
-	}
-
-	/** getY
-	 * Returns the runner's y position
-	 */
-	public double getY()
-	{
-		return this.yPosition;
-	}
-
-	/** setY
-	 * Sets the runner's x position
-	 */
-	public void setY(double newY)
-	{
-		this.yPosition = newY;
 	}
 
 	/** startJump
-	 * Resets the current index of the sprite sequence and
-	 * sets the approparte boolean to be picked up by the
-	 * updating method
+	 * Called by the JPanel, changes the runner's state so he
+	 * knows he should be jumping when the image gets updated
+	 * We set the jumpDistance to be 30, and it will be
+	 * reduced as the jump progresses.  This constant can
+	 * be altered later
 	 */
 	public void startJump()
 	{
-		runnerImageManager.currentSequenceIndex = 0;
-		jumpingUp = true;
-	}
-
-	/** updateJumpingUp
-	 * this is called to make the jump happen
-	 * NOTE: This is not currently in use, but should
-	 * be used when the JPanel multhreading is replaced
-	 * with proper timing calculations
-	 */
-	public void updateJumpingUp()
-	{
-		this.setY(this.getY() - jumpIncrement);
-		if (this.getY() <= TOP_OF_JUMP)
+		//If the runnign is in the middle of a jump, no
+		//need to change anything about his state
+		if (!this.isOnGround())
 		{
-			jumpingUp = false;
-			fallingDown = true;
+			return;
 		}
+	  	//Setting up values for jump
+    	this.v = 50;
+		this.a = -9.8;
+		this.t = 0;
+		//Setting up boolean for jump
+		this.jumping = true;
+		this.running = false;
 	}
 
-	/** updateFallingDown
-	 * (as per above function)
-	 * this is called to make the jump happen
-	 * NOTE: This is not currently in use, but should
-	 * be used when the JPanel multhreading is replaced
-	 * with proper timing calculations
+	/** updateJumpPosition
+	 * this is called by updateCurrentPosition
+	 * to make the jump happen.  It uses a formula
+	 * to move the runner appropriately, and stops
+	 * him from jupming if he hits the ground
 	 */
-	public void updateFallingDown()
+	public void updateJumpPosition()
 	{
-		this.setY(this.getY() + jumpIncrement);
-		if (this.getY() >= GROUND)
+		//Stand back... physics.  This is the position
+		//equation: y = y_0 + v_0 + .5*g*t^2, which I
+		//hope you learnd in physics 1.  It just finds
+		//his correct position, to move him up/down
+		double newYPos = 0 + this.v*this.t + .5*this.a*(Math.pow(this.t,2));
+		this.setY(this.GROUND - this.getHeight() - newYPos);
+		this.t++;
+
+		if (this.isOnGround())
+	    {
+	    	this.jumping = false;
+		    this.running = true;
+	    }
+
+		//If he happens to fall farther than the ground, this pulls him up the ground
+	    else if (this.getY() > (GROUND - this.getHeight()))
 		{
-			jumpingUp = false;
-			fallingDown = false;
+			this.setY(GROUND - this.getHeight());
+			this.jumping = false;
+		    this.running = true;
 		}
-	}
 
-    /**translateY
-     * moves the runner in y direction
-     * @param yIncrement, how much to translate by, negative moves up, positive moves down
-     */
-    public void translateY(double yIncrement)
-    {
-		GeneralPath temp = this.get();
-		Shape t = ShapeTransforms.translatedCopyOf(temp, 0, yIncrement);
-		this.set(new GeneralPath(t));
-
-		this.setY(this.getY() + yIncrement);
     }
 
     /** isOnGround
      * Check whether the Runner is on the ground
      * Just checks if the runner position is the same
-     * as the predefined ground coordinate
+     * as the predefined ground coordinate (From sprite)
      */
     public boolean isOnGround()
     {
-		if ( this.getY() >= GROUND )
+		if (this.getY() == (GROUND - this.getHeight()))
 		{
-			this.setY(GROUND);
 			return true;
 		}
 		return false;
     }
 }
-
-

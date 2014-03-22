@@ -1,63 +1,76 @@
 package edu.ucsb.cs56.projects.games.country_runner;
+
 import java.awt.geom.GeneralPath; // combinations of lines and curves
 import java.awt.geom.AffineTransform; // translation, rotation, scale
 import java.awt.Shape; // general class for shapes
-// all imports below this line needed if you are implementing Shape
-import java.awt.geom.Point2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.Rectangle;
-import java.awt.geom.PathIterator;
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
-
+//imports for the sprites
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
 
 
-/**
-   This class makes the Sheep for the Country Runner game
-   @author Mathew Glodack, Christina Morris
-   @version cs56 S13 proj3
-*/
-
-public class Sheep extends Obstacles
+/**Draws the Sheep object on the screen
+ * @author Christina Morris, Mathew Glodack
+ * @author Sidney Rhoads, Tom Craig
+ * @version cs56, W14, proj2
+ *
+ */
+public class Sheep extends Sprite
 {
+	//initialXPosition goes into the super constructor
+    private static final double initialXPosition = 20.0;
 
-	private BufferedImage currentSprite;
-	ImageManager sheepyImageManager = new ImageManager("sheepSheet");
-    /** Constructor for the Circle
-     *@param width sets the width
-     *@param height sets the height
+	//The sequence that holds the running images
+	private SpriteSequence runningSequence;
+
+
+    /** Default Constructor makes the Sheep.
+     * sets up the spriteSheet and fills the
+     * sequences with images from it
      */
-
-    public Sheep(double width, double height)
+    public Sheep()
     {
-		super(width, height);
+    	//Call super constructor
+    	super(100, 50, initialXPosition, "sheepSheet");
 
+		//Initilize the sequence
+		runningSequence = new SpriteSequence();
 
-		currentSprite = sheepyImageManager.getSubImage(0,0);
-
-
+		//Fill the sequence
+		//NOTE: we have to explicitly say the number of
+		//images in the sequence
+		int numImages = 4;
+    	for (int i = 0; i < numImages; i++)
+		{
+			this.runningSequence.addImage(getSubImage(i, 0));
+		}
 
     }
 
-    /**This method moves the Sheep
-     *@param dx amount x moves, positive moves to the right
+	/** updateCurrentPosition
+	 * Moves the sheep to left until it is off screen.
+	 * Once it is, we mov it back to the left,
+	 * simulating a line of sheeps
+	*/
+	public void updateCurrentPosition()
+    {
+    	//Right now, using the actual size of the window.
+    	//Will want to change this later...
+		this.setX(this.getX() + 20);
+		if (this.getX() == 600)
+		{
+			this.setX(-100);
+		}
+    }
+
+	/** updateCurrentImage
+	 * Moves to the next image in the running sequence
      */
-
-	public void move(double dx)
+	public void updateCurrentImage()
 	{
-	    GeneralPath temp = this.get();
-	    Shape t = ShapeTransforms.translatedCopyOf(temp, dx, 0);
-	    this.set(new GeneralPath(t));
-	    setX(dx);
-
+		setCurrentImage(runningSequence.getNextImage());
 	}
-
-	public BufferedImage getCurrentSprite()
-	{
-		return this.currentSprite;
-	}
-
 }

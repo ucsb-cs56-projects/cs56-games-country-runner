@@ -16,8 +16,8 @@ public class SpriteTest
 	*/
 	@Test
 		public void test_getX() {
-		Sprite piggy = new Sprite(300, 400, null);
-		assertEquals(300, piggy.getX(), 0.00);
+		Runner piggy = new Runner();
+		assertEquals(500, piggy.getX(), 0.00);
 	}
 	
 	/** Test for Sprite.getY()
@@ -25,8 +25,9 @@ public class SpriteTest
 	*/
 	@Test 
 		public void test_getY() {
-		Sprite piggy = new Sprite(300, 400, null);
-		assertEquals(400, piggy.getY(), 0.00);
+		Runner piggy = new Runner();
+		piggy.setY(0);
+		assertEquals(0, piggy.getY(), 0.00);
 	}
 	
 	/** Test for Sprite.setX()
@@ -34,7 +35,7 @@ public class SpriteTest
 	*/
 	@Test 
 		public void test_setX() {
-		Sprite piggy = new Sprite(300, 400, null);
+		Runner piggy = new Runner();
 		piggy.setX(350);
 		assertEquals(350, piggy.getX(), 0.00);
 	}
@@ -43,7 +44,7 @@ public class SpriteTest
 	*/
 	@Test 
 		public void test_setY() {
-		Sprite piggy = new Sprite(300, 400, null);
+		Runner piggy = new Runner();
 		piggy.setY(350);
 		assertEquals(350, piggy.getY(), 0.00);
 	}

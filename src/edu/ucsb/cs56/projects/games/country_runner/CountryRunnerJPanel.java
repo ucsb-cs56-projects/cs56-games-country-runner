@@ -10,80 +10,92 @@ import java.util.*;
 import java.awt.image.BufferedImage;
 
 
-/**
-   This class makes the JPanel for the Country Runner game
-   @author Mathew Glodack, Christina Morris
-   @author Sidney Rhoads, Tom Craig
-   @version cs56  W14 proj1
+/** CountryRunnerJPanel
+ * @author Mathew Glodack, Christina Morris
+ * @author Sidney Rhoads, Tom Craig
+ * @version cs56, W14, proj2
+ *
+ * This class makes the JPanel for the
+ * Country Runner game
 */
-
-
 public class CountryRunnerJPanel extends JPanel implements Runnable
 {
-	//---------------------------------------------------------------------
-	//The runner and the sheep, there is only one sheep right now, may want
-	//to add more in the future.
-	//There is a running and a jumping thread here, this may be taken out
-	//in favor of timing calculations
-	//"runnerTrue" is for decicing on animation later on, this logic should
-	//be moved to the runner class
-	//---------------------------------------------------------------------
-    Runner runner = new Runner();
-    Sheep sheep = new Sheep(20,20);
-    Thread jumpThread;
-    Thread objectThread;
-    boolean runnerTrue = true;
-    boolean upArrowPressed = false;
-
-    boolean crash;
+	//Booleans for the game logic
+	boolean gameIsRunning;
+	boolean upArrowPressed;
+    boolean runnerHasCollided;
+    //GROUND is for positioning
+    //ths sprites.  Note that this
+    //is also defined in the Sprite class
+    final double GROUND = 375.0;
     public Graphics2D g2;
-    public static int sheepX = 630;
+	//Main thread of execution.
+    Thread mainThread;
+
+	//The runner and the sheep, there
+	//is only one sheep right now, may want
+	//to add more in the future.
+    Runner runner = new Runner();
+    Sheep sheep = new Sheep();
 
     /** Constructor
+     * Sets up the boolean state variables for the JPanel
+     * Sets up the main thread of execution
      * Adds the keylistener and creates the obstacle thread
-     * to be run for the duration of the program
      */
     public CountryRunnerJPanel()
     {
-    	//Give CountryRunnerJPanel the focus of the application;
-    	//it will be the field that receives the keyboard input.
-		setFocusable(true);
+    	//These are just for making the
+    	//JPanel and JFrame place nice, and
+    	//accept keyboard input
+        setFocusable(true);
 		requestFocusInWindow();
 
-		ObstacleThread obstacleThread = new ObstacleThread();
+		//These booleans determine the "state" of the JPanel/game
+    	this.gameIsRunning = true;
+    	this.upArrowPressed = false;
+    	this.runnerHasCollided = false;
 
-		//---------------------------------------------------------------------
-		//keyPressed - when the key goes down
-		//keyReleased - when the key comes up
-		//keyTyped - when the unicode character represented
-		//by this key is sent by the keyboard to system input.
-		//NOTE: right now we are only handling the keyPressed actions and don't
-		//care about anything else.  This may change in the future
-		//---------------------------------------------------------------------
+		//The thrad gets started once and its run method is the main game loop
+		this.mainThread = new Thread(this);
+		mainThread.start();
+
+		//This part if ro regestering keyboard keys
+		//each overridden function is used to manage what
+		//happens when keys are pressed and released
+			//keyPressed - when the key goes down
+			//keyReleased - when the key comes up
+			//keyTyped - when the unicode character represented
+				//by this key is sent by the keyboard to system input.
 		addKeyListener(new KeyAdapter()
 		{
 			@Override
 			public void keyPressed(KeyEvent e)
 			{
+				//Here, we say that when a key is pressed,
+				//the "pressed" function should be carried out
 			    pressed(e, "keyPressed");
+			    //NOTE: right now we are only handling the
+				//keyPressed actions and don't care about
+				//anything else.  This may change in the future
 			}
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
-			    //keyEvt(e, "keyReleased");
+			    //Not currently using
 			}
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
-				//keyEvt(e, "keyTyped");
+			    //Not currently using
 			}
-
 	    });
     }
 
-	/** pressed
-	 * Handles all key pressed events, if the up arrow was pressed,
-	 * we make him jump
+    /** pressed
+	 * Handles all key pressed events, if the up
+	 * arrow was pressed, we set the upArrowPressed
+	 * boolean to true, so the run method picks it up
      */
 	private void pressed(KeyEvent e, String text)
 	{
@@ -93,206 +105,96 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	    if (key == KeyEvent.VK_UP)
 		{
 		    upArrowPressed = true;
-
-		    //Makes a new thread so runner can jump
-		    //This is because after the jump finishes,
-		    //the jumping thread dies and it must be
-		    //made again for each jump
-		    if (runner.isOnGround())
-		    {
-				makeThread();
-			}
 		}
 	}
 
-	/**makeThrad
-	 * Makes a new thread for the
-	 * jumper and the moving object
-     */
-    public void makeThread()
+	/**
+	 * run
+	 * This is run method for the main thread
+	 * It will run once, but we have a while loop inside
+	 * for the main execution of the the game logic.  It
+	 * looks like a never-ending while loop, but we can
+	 * control when the gameIsRUnning boolean is ON/OFF
+	*/
+	public void run()
     {
-		jumpThread = new Thread(this);
-		jumpThread.start();
-    }
-
-    /**run
-     * The method MUST be defined for something implementing runnable,
-     * this runs continuously, and can be thought of as the "main"
-     * for all of the animation tasks
-	 *
-     * Here, we make the runner jump if the up arrow has been pressed
-     * if not, we call "this.repaint()" which updates the images
-     */
-    public void run()
-    {
-		if (upArrowPressed)
+    	//While gameIsRunning is true, the game
+    	//does all of its updating
+		while(this.gameIsRunning)
 		{
-		    jump();
-			if (runner.isOnGround())
+			//If the up arrow has been pressed,
+			//we tell the runner to jump. This happens once.
+			if (upArrowPressed)
 			{
-				runOnGround();
+			    runner.startJump();
+			    upArrowPressed = false;
 			}
-		}
-		while ( runner.isOnGround() ){
-		    if(runnerTrue && !upArrowPressed){
-			runnerTrue = false;
+
+			//Every iteration of the main loop, we want
+			//to call this to redraw all of the images
 			this.repaint();
-			try{
-			    Thread.sleep(500); //changed this to main thread
-			}catch (InterruptedException ex){
-			}
-		    }
-		    else if (!runnerTrue && !upArrowPressed){
-			runnerTrue = true;
-			this.repaint();
-			try{
-			    Thread.sleep(500); //changed to main thread
-			}catch (InterruptedException ex){
-			}
-		    }
-		}
-    }
 
-
-	/** jump
-     * negative moves up, positive moves down.
-     * Uses the jumpThread
-     * Currently implements gravity, such that the jump
-     * slows until reaching the top, then speeds up again
-     * until reaching the ground.
-     */
-    public synchronized void jump()
-    {
-
-    	//Piggy velocity
-		double v = 1.8;
-		//Acceleration
-		double a = .01;
-		while (runner.getY() > 10)
-		{
-			//Descrease the velocity every round
-			v = v-a;
-			runner.setY((runner.getY() - v));
-
+			//Sleep the main thread so its doesn't update everything super quickly
 			try
-		    {
-				jumpThread.sleep(5);
-		    } catch (InterruptedException ex){}
-
-			//Once we return to the ground, stop moving
-		    if (runner.isOnGround())
-		    {
-			    break;
+			{
+				mainThread.sleep(100);
 		    }
-
+		    catch(Exception e){}
 
 		}
     }
 
-    /** paintComponent
-     * Required for any graphics on a JPanel.
-     * Does all of our drawing.
-    */
+   	/** paintComponent
+	 * Required for any graphics on a JPanel.
+     * Does all of our drawing.  It is called when
+     * the program says "this.repaint()"
+     */
     public void paintComponent(Graphics g)
     {
-    	//Background stuff
+    	//Draw the background
 		g2 = (Graphics2D) g;
 		Image image = new ImageIcon("res/background.jpg").getImage();
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
 		g.drawImage(image, 0, 0, this);
 
-		//Runner stuff
-		runner.updateCurrentSprite();
-		g2.drawImage(runner.getCurrentSprite(), (int)runner.getX(), (int)runner.getY(), null);
+		//Update the sprites' positions
+		runner.updateCurrentPosition();
+		sheep.updateCurrentPosition();
 
-		g2.drawImage(sheep.getCurrentSprite(), (int)sheep.getX(), (int)sheep.getY(), null);
-
-		if ( crash )
+		//Collision check, did the runner hit anything?
+		//If so, the game is over
+		if (this.runnerHasCollided(sheep, runner))
 		{
 		    g.drawImage(heaven, 0, 0, this);
+		    this.gameIsRunning = false;
 		}
-    }
 
-
-/*Tom, Sidney - we have not looked at the code below... We are refactoring the runner first*/
-    /**This moves the Obstacles
-     * Uses the objectThread thread
-     */
-    public class ObstacleThread implements Runnable
-    {
-		Thread objectThread;
-
-		public ObstacleThread () {
-	    objectThread = new Thread(this);
-	    objectThread.start();
-	}
-
-		/**A run method for the Obstacles Thread
-		 */
-		public void run(){
-	    while( true )
+		else
 		{
-		    if(crash(sheep, runner)) {
-			crash = true;
-			System.out.println("CRASH!!!!!");
-		    }
-		    if(sheep.getX()==sheepX)
-			sheep.move(-sheepX);
-		    sheep.move(10);
-		    paintObstacles();
-		    try{
-			jumpThread.sleep(100);
-		    }catch(Exception e){
-		    }
+			//Update the sprites' images and draws them on the panel
+			//Note that at the beginning of execution of the JPanel,
+			//the sprites are put on the ground, and after that they
+			//handle their own repositionings internally.  We do not
+			//explicitly position them in the JPanel
+			runner.updateCurrentImage();
+			sheep.updateCurrentImage();
+			g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
+			g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
 		}
-	}
-
-		}
-    /**Repaints the Obstacles
-     */
-    public void paintObstacles(){
-	this.repaint();
     }
 
-    /**Determines if the runner hits the sheep object
-     *@param c sheep object
-     *@param r runner object
-     *@return boolean true if there is a crash, false if not
+	/** runnerHasCollided
+	 * Determines if the runner hits the sheep object
+     * @param c sheep object
+     * @param r runner object
+     * @return boolean true if there is a runnerHasCollided, false if not
      */
-    public boolean crash(Sheep c, Runner r){
-	if ( c.getY() == r.getY() )
-	    return c.getX()==r.getX();
-	return false;
-    }
-
-    /**Switches the runners position on while on the ground
-     * Uses the main Thread
-     */
-    public void runOnGround()
+    public boolean runnerHasCollided(Sheep c, Runner r)
     {
-		while (runner.isOnGround())
+		if ((r.getY() + r.getHeight()) >= c.getY())
 		{
-		    if(runnerTrue)
-		    {
-				runnerTrue = false;
-				this.repaint();
-				try
-				{
-				    Thread.sleep(250);
-				}
-				catch(Exception e){}
-			}
-
-		    if (!runnerTrue)
-		    {
-				runnerTrue = true;
-				this.repaint();
-				try
-				{
-				    Thread.sleep(250);
-				}
-				catch(Exception e){}
-			}
-		}//while loop
-    }//runOnGround
+			return c.getX()== r.getX();
+		}
+		return false;
+    }
 }//JPanel

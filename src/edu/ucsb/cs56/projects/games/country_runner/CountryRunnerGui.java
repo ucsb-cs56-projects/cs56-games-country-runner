@@ -7,16 +7,22 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.*;
 
-/**Creates a JFrame for Country Runner Game
- *@author Mathew Glodack, Christina Morris
- *@version CS56, S13, proj3
+/** CountryRunnerGui
+ * @author Mathew Glodack, Christina Morris
+ * @author Tom Craig, Sidney Rhoads
+ * @version cs56, W14, proj2
+ *
+ * Creates a JFrame for CountrRunnerJPannel.
+ * This represents the actual on screen window,
+ * and holds the JPanel, which handle game logic
+ * Think of this like a "main" for the game operations,
+ * fixing windowing issues will happen in this class.
  */
-
 public class CountryRunnerGui extends JFrame
 {
     CountryRunnerJPanel cp;
 
-    /** Constructor for the CountryRunnerGui JFrame
+    /** Constructor
      */
     public CountryRunnerGui()
     {
@@ -25,7 +31,6 @@ public class CountryRunnerGui extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(cp);
 		this.setVisible(true);
-		//acp.runOnGround();
     }
 
     public static void main(String [] args)
