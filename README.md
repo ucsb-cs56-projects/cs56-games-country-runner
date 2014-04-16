@@ -1,6 +1,13 @@
 cs56-games-country-runner
 =========================
 
+
+project history
+===============
+```
+ W14 | andrewberls 4pm | thetomcraig, sdrhoads | Running game with obstacles.
+```
+
 #Game Description
 
 Country Runner is an "avoid-the-obstacles" sidescroller game. Ride your piggy through the countryside landscape while dodging livestock and other obstacles in your way. Crash into anything, and you'll fall off your pig...thats Gameover. The farther you get and the more obstacles you skillfully avoid the higher your score. View your highest scores on the title page...and try to beat them of course!
