@@ -12,7 +12,7 @@ import java.util.*;
  * @author Tom Craig, Sidney Rhoads
  * @version cs56, W14, proj2
  *
- * Creates a JFrame for CountrRunnerJPannel.
+ * Creates a JFrame for CounterRunnerJPanel.
  * This represents the actual on screen window,
  * and holds the JPanel, which handle game logic
  * Think of this like a "main" for the game operations,
@@ -22,12 +22,13 @@ public class CountryRunnerGui extends JFrame
 {
     CountryRunnerJPanel cp;
 
-    /** Constructor
-     */
+    /** Constructor **/
     public CountryRunnerGui()
     {
 		cp = new CountryRunnerJPanel();
 		this.setSize(600,400);
+        this.setResizable(false);
+        this.setTitle("Country Runner");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(cp);
 		this.setVisible(true);
