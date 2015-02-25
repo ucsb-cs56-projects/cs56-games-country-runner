@@ -153,7 +153,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
     	//Draw the background
 		g2 = (Graphics2D) g;
-		Image image = new ImageIcon("res/background.jpg").getImage();
+		Image image = new ImageIcon("res/600x400maplebackground.jpg").getImage();
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
 		g.drawImage(image, 0, 0, this);
 
