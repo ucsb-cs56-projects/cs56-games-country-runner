@@ -165,7 +165,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		{
 		    g.drawImage(heaven, 0, 0, this);
 		    this.gameIsRunning = false;
-            //CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
+            CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
 		}
 
 		else
