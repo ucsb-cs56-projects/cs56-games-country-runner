@@ -24,7 +24,6 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     //is also defined in the Sprite class
      final double GROUND = 375.0;
     public Graphics2D g2;
-    final int SHEEP_HITBOX = 50;
 	//Main thread of execution.
     Thread mainThread;
 
@@ -196,7 +195,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
 		if ((r.getY() + r.getHeight()) >= c.getY())
 		{
-			return c.getX() + SHEEP_HITBOX >= r.getX();
+			return c.getX() == r.getX();
 		}
 		return false;
     }
