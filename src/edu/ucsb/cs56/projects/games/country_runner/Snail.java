@@ -60,7 +60,7 @@ public class Snail extends Sprite
     {
     	//Right now, using the actual size of the window.
     	//Will want to change this later...
-		this.setX(this.getX() + 20);
+		this.setX(this.getX() + 10);
 		if (this.getX() == 600)
 		{
 			this.setX(-100);

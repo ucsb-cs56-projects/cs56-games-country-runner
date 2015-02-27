@@ -26,7 +26,7 @@ public class Runner extends Sprite
 	//The X_POSITION - pos. of the runner
 	//The yPosition will get set to GROUND in the
 	//super constructor
-    private static final double X_POSITION = 500.0;
+    private static final double X_POSITION = 480.0;
     private double yPosition;
 
 	//Several booleans that help determine his current
