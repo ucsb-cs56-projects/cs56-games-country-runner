@@ -164,7 +164,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		{
 		    g.drawImage(heaven, 0, 0, this);
 		    this.gameIsRunning = false;
-            CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
+            //CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
 		}
 
 		else
@@ -179,7 +179,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			snail.updateCurrentImage();
 			g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
 			g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
-			g2.drawImage(snail.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
+			g2.drawImage(snail.getCurrentImage(), (int)snail.getX(), (int)snail.getY(), null);
 			
 
 		}
