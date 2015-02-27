@@ -18,7 +18,7 @@ public class CountryRunnerGui
     //GUI Constants
     public static JFrame mainWindow;
     public static final int WIDTH = 600;
-    public static final int HEIGHT = 400;
+    public static final int HEIGHT = 425;
 
     CountryRunnerJPanel cp;
 

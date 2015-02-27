@@ -27,6 +27,9 @@ public class Snail extends Sprite
 	//The sequence that holds the running images
 	private SpriteSequence runningSequence;
 
+    //holds score for amount of times user jumped over this object
+    private int score;
+
 
     /** Default Constructor makes the Sheep.
      * sets up the spriteSheet and fills the
@@ -64,6 +67,7 @@ public class Snail extends Sprite
 		if (this.getX() == 600)
 		{
 			this.setX(-100);
+            score++;
 		}
     }
 
@@ -74,4 +78,8 @@ public class Snail extends Sprite
 	{
 		setCurrentImage(runningSequence.getNextImage());
 	}
+
+    public int getScore() {
+        return score;
+    }
 }

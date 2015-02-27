@@ -22,7 +22,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     //GROUND is for positioning
     //ths sprites.  Note that this
     //is also defined in the Sprite class
-     final double GROUND = 375.0;
+    final double GROUND = 375.0;
     public Graphics2D g2;
 	//Main thread of execution.
     Thread mainThread;
@@ -34,6 +34,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     Sheep sheep = new Sheep();
     Snail snail = new Snail();
 
+    //Score Overlay
+    JLabel scoreLabel;
+    int score;
+
+
     /** Constructor
      * Sets up the boolean state variables for the JPanel
      * Sets up the main thread of execution
@@ -44,17 +49,27 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	//These are just for making the
     	//JPanel and JFrame place nice, and
     	//accept keyboard input
+        //sets panel layout to no layout manager
         setFocusable(true);
 		requestFocusInWindow();
+        setLayout(null);
 
 		//These booleans determine the "state" of the JPanel/game
     	this.gameIsRunning = true;
     	this.upArrowPressed = false;
     	this.runnerHasCollided = false;
+        this.score = 0;
 
 		//The thrad gets started once and its run method is the main game loop
 		this.mainThread = new Thread(this);
 		mainThread.start();
+
+        //add score overlay
+        scoreLabel = new JLabel("Score: " + Integer.toString(score));
+        scoreLabel.setFont(new Font("Arial",Font.BOLD,24));
+        scoreLabel.setForeground(Color.BLACK);
+        scoreLabel.setBounds(475,1,200,100);
+        add(scoreLabel);
 
 		//This part if ro regestering keyboard keys
 		//each overridden function is used to manage what
@@ -63,29 +78,27 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			//keyReleased - when the key comes up
 			//keyTyped - when the unicode character represented
 				//by this key is sent by the keyboard to system input.
-		addKeyListener(new KeyAdapter()
-		{
-			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				//Here, we say that when a key is pressed,
-				//the "pressed" function should be carried out
-			    pressed(e, "keyPressed");
-			    //NOTE: right now we are only handling the
-				//keyPressed actions and don't care about
-				//anything else.  This may change in the future
-			}
-			@Override
-			public void keyReleased(KeyEvent e)
-			{
-			    //Not currently using
-			}
-			@Override
-			public void keyTyped(KeyEvent e)
-			{
-			    //Not currently using
-			}
-	    });
+		addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                //Here, we say that when a key is pressed,
+                //the "pressed" function should be carried out
+                pressed(e, "keyPressed");
+                //NOTE: right now we are only handling the
+                //keyPressed actions and don't care about
+                //anything else.  This may change in the future
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //Not currently using
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                //Not currently using
+            }
+        });
     }
 
     /** pressed
@@ -126,6 +139,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			    upArrowPressed = false;
 			}
 
+            //update scores
+            score = sheep.getScore() + snail.getScore();
+
 			//Every iteration of the main loop, we want
 			//to call this to redraw all of the images
 			this.repaint();
@@ -133,7 +149,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			//Sleep the main thread so its doesn't update everything super quickly
 			try
 			{
-				mainThread.sleep(100);
+				mainThread.sleep(85);
 		    }
 		    catch(Exception e){}
 
@@ -180,6 +196,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
 			g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
 			g2.drawImage(snail.getCurrentImage(), (int)snail.getX(), (int)snail.getY(), null);
+
+            scoreLabel.setText("Score: " + Integer.toString(score));
 			
 
 		}
