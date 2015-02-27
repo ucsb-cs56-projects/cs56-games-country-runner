@@ -176,8 +176,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 		//Collision check, did the runner hit anything?
 		//If so, the game is over
-		if (this.runnerHasCollided(sheep, runner)) // need to add snail to this later
+		if (this.runnerHasCollided(snail, sheep, runner)) // need to add snail to this later
 		{
+		    // can add death animation here
 		    g.drawImage(heaven, 0, 0, this);
 		    this.gameIsRunning = false;
             CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
@@ -209,11 +210,15 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      * @param r runner object
      * @return boolean true if there is a runnerHasCollided, false if not
      */
-    public boolean runnerHasCollided(Sheep c, Runner r) // need to add snail to this function too
+    public boolean runnerHasCollided(Snail s, Sheep c, Runner r) // need to add snail to this function too
     {
 		if ((r.getY() + r.getHeight()) >= c.getY())
 		{
 			return c.getX() == r.getX();
+		}
+		if((r.getY() + r.getHeight()) >= s.getY())
+		{
+			return s.getX() == r.getX();
 		}
 		return false;
     }
