@@ -37,6 +37,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	//to add more in the future.
     Runner runner = new Runner();
     Sheep sheep = new Sheep();
+    Snail snail = new Snail();
 
     /** Constructor
      * Sets up the boolean state variables for the JPanel
@@ -160,10 +161,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		//Update the sprites' positions
 		runner.updateCurrentPosition();
 		sheep.updateCurrentPosition();
+		snail.updateCurrentPosition();
 
 		//Collision check, did the runner hit anything?
 		//If so, the game is over
-		if (this.runnerHasCollided(sheep, runner))
+		if (this.runnerHasCollided(sheep, runner)) // need to add snail to this later
 		{
 		    g.drawImage(heaven, 0, 0, this);
 		    this.gameIsRunning = false;
@@ -178,8 +180,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			//explicitly position them in the JPanel
 			runner.updateCurrentImage();
 			sheep.updateCurrentImage();
+			snail.updateCurrentImage();
 			g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
 			g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
+			g2.drawImage(snail.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
+			
+
 		}
     }
 
@@ -189,7 +195,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      * @param r runner object
      * @return boolean true if there is a runnerHasCollided, false if not
      */
-    public boolean runnerHasCollided(Sheep c, Runner r)
+    public boolean runnerHasCollided(Sheep c, Runner r) // need to add snail to this function too
     {
 		if ((r.getY() + r.getHeight()) >= c.getY())
 		{
