@@ -68,7 +68,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
         scoreLabel = new JLabel("Score: " + Integer.toString(score));
         scoreLabel.setFont(new Font("Arial",Font.BOLD,24));
         scoreLabel.setForeground(Color.BLACK);
-        scoreLabel.setBounds(475,1,200,100);
+        scoreLabel.setBounds(470,1,200,100);
         add(scoreLabel);
 
 		//This part if ro regestering keyboard keys
