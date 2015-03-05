@@ -1,5 +1,7 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 
+import sun.audio.AudioPlayer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -26,6 +28,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     public Graphics2D g2;
 	//Main thread of execution.
     Thread mainThread;
+    Thread musicThread;
 
 	//The runner and the sheep, there
 	//is only one sheep right now, may want
@@ -62,7 +65,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 		//The thrad gets started once and its run method is the main game loop
 		this.mainThread = new Thread(this);
+        this.musicThread = new Thread(new BackgroundMusic());
 		mainThread.start();
+        musicThread.start();
 
         //add score overlay
         scoreLabel = new JLabel("Score: " + Integer.toString(score));
@@ -181,6 +186,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    // can add death animation here
 		    g.drawImage(heaven, 0, 0, this);
 		    this.gameIsRunning = false;
+            AudioPlayer.player.stop(BackgroundMusic.song);
             CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
 		}
 
