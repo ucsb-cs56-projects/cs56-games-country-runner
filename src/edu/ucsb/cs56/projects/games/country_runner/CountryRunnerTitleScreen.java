@@ -2,6 +2,8 @@ package edu.ucsb.cs56.projects.games.country_runner;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CountryRunnerTitleScreen extends JPanel{
     // Java GUI Components
@@ -12,10 +14,11 @@ public class CountryRunnerTitleScreen extends JPanel{
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
+    JFrame instuctionsFrame;
 
     public CountryRunnerTitleScreen(){
         playGameButton = new JButton("Play Game");
-        helpButton = new JButton("Help");
+        helpButton = new JButton("Instructions");
         highscoreButton = new JButton("High Score");
         titleLabel = new JLabel("Country Runner");
         gbc = new GridBagConstraints();
@@ -49,5 +52,19 @@ public class CountryRunnerTitleScreen extends JPanel{
         //add bot and top panel to this.panel
         add(topPanel);
         add(botPanel);
+
+        //event managers
+        playGameButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                CountryRunnerGui.setCurrentPanelTo(new CountryRunnerJPanel());
+            }
+        });
+        helpButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                JOptionPane.showMessageDialog(instuctionsFrame, "THis is a test","Instructions",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
 }

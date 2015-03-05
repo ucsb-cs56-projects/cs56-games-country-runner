@@ -20,13 +20,13 @@ public class CountryRunnerGui
     public static final int WIDTH = 600;
     public static final int HEIGHT = 400;
 
-    CountryRunnerJPanel cp;
+    CountryRunnerTitleScreen cp;
 
     /** Constructor **/
     public CountryRunnerGui()
     {
         mainWindow = new JFrame();
-		cp = new CountryRunnerJPanel();
+		cp = new CountryRunnerTitleScreen();
 
 		mainWindow.setSize(WIDTH, HEIGHT);
         mainWindow.setResizable(false);
