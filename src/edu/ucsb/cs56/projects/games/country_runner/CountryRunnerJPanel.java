@@ -218,7 +218,10 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		}
 		if((r.getY() + r.getHeight()) >= s.getY())
 		{
-			return s.getX() == r.getX();
+			if(Math.abs(s.getX()-r.getX())<=20)
+			{
+			return true;
+			}
 		}
 		return false;
     }
