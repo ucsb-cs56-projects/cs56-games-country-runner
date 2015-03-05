@@ -25,6 +25,11 @@ public class CountryRunnerTitleScreen extends JPanel{
         topPanel = new JPanel(new BorderLayout());
         botPanel = new JPanel(new GridBagLayout());
 
+        // instructions
+        final String instructions = "Avoid all obstacles that come into the screen. Could be a stationary scarecrow, or a dashing sheep.\n" +
+                "Some crows could be overhead so time your jumps carefully." +
+                "Press the UP arrow key to jump";
+
         //set layout manager for this panel
         setLayout(new GridLayout(2,1));
 
@@ -63,7 +68,7 @@ public class CountryRunnerTitleScreen extends JPanel{
         helpButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                JOptionPane.showMessageDialog(instuctionsFrame, "THis is a test","Instructions",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(instuctionsFrame, instructions,"Instructions",JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }

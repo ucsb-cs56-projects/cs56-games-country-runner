@@ -32,6 +32,7 @@ public class CountryRunnerGui
         mainWindow.setResizable(false);
         mainWindow.setTitle("Country Runner");
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setLocationRelativeTo(null);
 		mainWindow.add(cp);
 		mainWindow.setVisible(true);
     }
