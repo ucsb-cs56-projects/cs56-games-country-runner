@@ -12,7 +12,7 @@ public class GameOverJPanel extends JPanel {
     JButton backToMenuButton;
 
     public GameOverJPanel() {
-        backgroundImage = new ImageIcon("res/heaven.jpg").getImage();
+        backgroundImage = new ImageIcon("res/gameover.png").getImage();
         this.repaint();
 
         playAgainButton = new JButton("Play Again?");
