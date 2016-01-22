@@ -1,13 +1,10 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 
+import sun.audio.AudioPlayer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.*;
-
-import java.awt.image.BufferedImage;
 
 
 /** CountryRunnerJPanel
@@ -31,12 +28,19 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     public Graphics2D g2;
 	//Main thread of execution.
     Thread mainThread;
+    Thread musicThread;
 
 	//The runner and the sheep, there
 	//is only one sheep right now, may want
 	//to add more in the future.
     Runner runner = new Runner();
     Sheep sheep = new Sheep();
+    Snail snail = new Snail();
+
+    //Score Overlay
+    JLabel scoreLabel;
+    int score;
+
 
     /** Constructor
      * Sets up the boolean state variables for the JPanel
@@ -48,17 +52,29 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	//These are just for making the
     	//JPanel and JFrame place nice, and
     	//accept keyboard input
+        //sets panel layout to no layout manager
         setFocusable(true);
 		requestFocusInWindow();
+        setLayout(null);
 
 		//These booleans determine the "state" of the JPanel/game
     	this.gameIsRunning = true;
     	this.upArrowPressed = false;
     	this.runnerHasCollided = false;
+        this.score = 0;
 
 		//The thrad gets started once and its run method is the main game loop
 		this.mainThread = new Thread(this);
+        this.musicThread = new Thread(new BackgroundMusic());
 		mainThread.start();
+        musicThread.start();
+
+        //add score overlay
+        scoreLabel = new JLabel("Score: " + Integer.toString(score));
+        scoreLabel.setFont(new Font("Arial",Font.BOLD,24));
+        scoreLabel.setForeground(Color.BLACK);
+        scoreLabel.setBounds(450,1,200,100);
+        add(scoreLabel);
 
 		//This part if ro regestering keyboard keys
 		//each overridden function is used to manage what
@@ -67,29 +83,27 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			//keyReleased - when the key comes up
 			//keyTyped - when the unicode character represented
 				//by this key is sent by the keyboard to system input.
-		addKeyListener(new KeyAdapter()
-		{
-			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				//Here, we say that when a key is pressed,
-				//the "pressed" function should be carried out
-			    pressed(e, "keyPressed");
-			    //NOTE: right now we are only handling the
-				//keyPressed actions and don't care about
-				//anything else.  This may change in the future
-			}
-			@Override
-			public void keyReleased(KeyEvent e)
-			{
-			    //Not currently using
-			}
-			@Override
-			public void keyTyped(KeyEvent e)
-			{
-			    //Not currently using
-			}
-	    });
+		addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                //Here, we say that when a key is pressed,
+                //the "pressed" function should be carried out
+                pressed(e, "keyPressed");
+                //NOTE: right now we are only handling the
+                //keyPressed actions and don't care about
+                //anything else.  This may change in the future
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //Not currently using
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                //Not currently using
+            }
+        });
     }
 
     /** pressed
@@ -130,6 +144,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			    upArrowPressed = false;
 			}
 
+            //update scores
+            score = sheep.getScore() + snail.getScore();
+
 			//Every iteration of the main loop, we want
 			//to call this to redraw all of the images
 			this.repaint();
@@ -137,7 +154,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			//Sleep the main thread so its doesn't update everything super quickly
 			try
 			{
-				mainThread.sleep(100);
+				mainThread.sleep(85);
 		    }
 		    catch(Exception e){}
 
@@ -153,20 +170,24 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
     	//Draw the background
 		g2 = (Graphics2D) g;
-		Image image = new ImageIcon("res/background.jpg").getImage();
+		Image image = new ImageIcon("res/600x400maplebackground.jpg").getImage();
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
 		g.drawImage(image, 0, 0, this);
 
 		//Update the sprites' positions
 		runner.updateCurrentPosition();
 		sheep.updateCurrentPosition();
+		snail.updateCurrentPosition();
 
 		//Collision check, did the runner hit anything?
 		//If so, the game is over
-		if (this.runnerHasCollided(sheep, runner))
+		if (this.runnerHasCollided(snail, sheep, runner)) // need to add snail to this later
 		{
+		    // can add death animation here
 		    g.drawImage(heaven, 0, 0, this);
 		    this.gameIsRunning = false;
+            AudioPlayer.player.stop(BackgroundMusic.song);
+            CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
 		}
 
 		else
@@ -178,8 +199,14 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			//explicitly position them in the JPanel
 			runner.updateCurrentImage();
 			sheep.updateCurrentImage();
+			snail.updateCurrentImage();
 			g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
 			g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
+			g2.drawImage(snail.getCurrentImage(), (int)snail.getX(), (int)snail.getY(), null);
+
+            scoreLabel.setText("Score: " + Integer.toString(score));
+			
+
 		}
     }
 
@@ -189,11 +216,18 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      * @param r runner object
      * @return boolean true if there is a runnerHasCollided, false if not
      */
-    public boolean runnerHasCollided(Sheep c, Runner r)
+    public boolean runnerHasCollided(Snail s, Sheep c, Runner r) // need to add snail to this function too
     {
 		if ((r.getY() + r.getHeight()) >= c.getY())
 		{
-			return c.getX()== r.getX();
+			return c.getX() == r.getX();
+		}
+		if((r.getY() + r.getHeight()) >= s.getY())
+		{
+			if(Math.abs(s.getX()-r.getX())<=20)
+			{
+			return true;
+			}
 		}
 		return false;
     }

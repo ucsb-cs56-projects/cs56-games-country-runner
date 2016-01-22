@@ -1,40 +1,51 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.*;
 
 /** CountryRunnerGui
  * @author Mathew Glodack, Christina Morris
  * @author Tom Craig, Sidney Rhoads
  * @version cs56, W14, proj2
  *
- * Creates a JFrame for CountrRunnerJPannel.
+ * Creates a JFrame for CounterRunnerJPanel.
  * This represents the actual on screen window,
  * and holds the JPanel, which handle game logic
  * Think of this like a "main" for the game operations,
  * fixing windowing issues will happen in this class.
  */
-public class CountryRunnerGui extends JFrame
+public class CountryRunnerGui
 {
-    CountryRunnerJPanel cp;
+    //GUI Constants
+    public static JFrame mainWindow;
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 400;
 
-    /** Constructor
-     */
+    CountryRunnerTitleScreen cp;
+
+    /** Constructor **/
     public CountryRunnerGui()
     {
-		cp = new CountryRunnerJPanel();
-		this.setSize(600,400);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.add(cp);
-		this.setVisible(true);
+        mainWindow = new JFrame();
+		cp = new CountryRunnerTitleScreen();
+
+		mainWindow.setSize(WIDTH, HEIGHT);
+        mainWindow.setResizable(false);
+        mainWindow.setTitle("Country Runner");
+		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setLocationRelativeTo(null);
+		mainWindow.add(cp);
+		mainWindow.setVisible(true);
     }
 
     public static void main(String [] args)
     {
-		new CountryRunnerGui();
+        new CountryRunnerGui();
+    }
+
+    public static void setCurrentPanelTo(JPanel panel){
+        mainWindow.setContentPane(panel);
+        mainWindow.revalidate();
+        mainWindow.repaint();
+        panel.requestFocusInWindow();
     }
 }
