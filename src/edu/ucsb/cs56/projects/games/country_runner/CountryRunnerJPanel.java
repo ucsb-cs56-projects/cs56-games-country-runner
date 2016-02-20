@@ -18,9 +18,10 @@ import java.awt.event.*;
 public class CountryRunnerJPanel extends JPanel implements Runnable
 {
 	//Booleans for the game logic
-	boolean gameIsRunning;
-	boolean upArrowPressed;
+    boolean gameIsRunning;
+    boolean upArrowPressed;
     boolean runnerHasCollided;
+    boolean superJumpPressed;
     //GROUND is for positioning
     //ths sprites.  Note that this
     //is also defined in the Sprite class
@@ -54,7 +55,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	//accept keyboard input
         //sets panel layout to no layout manager
         setFocusable(true);
-		requestFocusInWindow();
+	requestFocusInWindow();
         setLayout(null);
 
 		//These booleans determine the "state" of the JPanel/game
@@ -64,9 +65,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
         this.score = 0;
 
 		//The thrad gets started once and its run method is the main game loop
-		this.mainThread = new Thread(this);
+	this.mainThread = new Thread(this);
         this.musicThread = new Thread(new BackgroundMusic());
-		mainThread.start();
+	mainThread.start();
         musicThread.start();
 
         //add score overlay
@@ -120,6 +121,10 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		{
 		    upArrowPressed = true;
 		}
+            if (key== KeyEvent.VK_X)
+                {
+                    superJumpPressed = true;
+                }
 	}
 
 	/**
@@ -143,6 +148,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			    runner.startJump();
 			    upArrowPressed = false;
 			}
+                        if (superJumpPressed)
+			{
+			    runner.superJump();
+                            superJumpPressed = false;
+                        }
 
             //update scores
             score = sheep.getScore() + snail.getScore();

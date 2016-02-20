@@ -63,7 +63,7 @@ public class Runner extends Sprite
 		//Set up his initial state
     	this.running = true;
     	this.jumping = false;
-
+      
 		//Initilize the sequences
 		runningSequence = new SpriteSequence();
 
@@ -127,13 +127,30 @@ public class Runner extends Sprite
 			return;
 		}
 	  	//Setting up values for jump
-    	this.v = 50;
+    	        this.v = 50;
 		this.a = -9.8;
 		this.t = 0;
 		//Setting up boolean for jump
 		this.jumping = true;
 		this.running = false;
 	}
+      /**
+        called by the jpanel, changes the runner's state so he 
+        knows  he should be super jumping when the image gets updated
+        we set the jumpDistance to be 60.
+      */
+    public void superJump()
+    { if (!this.isOnGround())
+	    return;
+	this.a=-16;
+        this.v=80;
+	this.t=0;
+        this.jumping= true;
+        this.running=false;
+    }
+
+
+
 
 	/** updateJumpPosition
 	 * this is called by updateCurrentPosition
@@ -154,7 +171,7 @@ public class Runner extends Sprite
 		if (this.isOnGround())
 	    {
 	    	this.jumping = false;
-		    this.running = true;
+		this.running = true;
 	    }
 
 		//If he happens to fall farther than the ground, this pulls him up the ground
