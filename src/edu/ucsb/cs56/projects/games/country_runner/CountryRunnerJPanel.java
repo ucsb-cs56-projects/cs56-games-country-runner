@@ -97,7 +97,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
             @Override
             public void keyReleased(KeyEvent e) {
-                //Not currently using
+                released(e,"keyReleased");
             }
 
             @Override
@@ -125,8 +125,19 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
                 {
                     superJumpPressed = true;
                 }
+            if (key== KeyEvent.VK_LEFT)
+		{runner.move2();}
+            if (key == KeyEvent.VK_RIGHT)
+                {runner.move1();}
 	}
 
+
+
+        private void released(KeyEvent e,String text)
+             { int key=e.getKeyCode();
+	       if ((key==KeyEvent.VK_LEFT) || (key==KeyEvent.VK_RIGHT))
+		    runner.stop();
+         } 
 	/**
 	 * run
 	 * This is run method for the main thread

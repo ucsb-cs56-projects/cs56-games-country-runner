@@ -26,9 +26,9 @@ public class Runner extends Sprite
 	//The X_POSITION - pos. of the runner
 	//The yPosition will get set to GROUND in the
 	//super constructor
-    private static final double X_POSITION = 480.0;
+    private double xPosition = 480.0;
     private double yPosition;
-
+    public double xVel = 0;
 	//Several booleans that help determine his current
 	//image and position
 	//This constitutes the runner's "state"
@@ -58,22 +58,22 @@ public class Runner extends Sprite
     public Runner()
     {
     	//Open the spriteSheet
-    	super(100, 109, X_POSITION, "runnerSheet");
+    	super(100, 109, 480, "runnerSheet");
 
 		//Set up his initial state
     	this.running = true;
     	this.jumping = false;
-      
+        this.xVel=0;         
 		//Initilize the sequences
-		runningSequence = new SpriteSequence();
+	runningSequence = new SpriteSequence();
 
 		//Fill the sequences
 		//NOTE: we have to explicitly say the number of
 		//images in the sequence
-		int numImages = 4;
+	int numImages = 4;
     	for (int i = 0; i < numImages; i++)
 		{
-			this.runningSequence.addImage(getSubImage(i, 0));
+		  this.runningSequence.addImage(getSubImage(i, 0));
 		}
     }
 
@@ -86,6 +86,7 @@ public class Runner extends Sprite
     public void updateCurrentPosition()
     {
 		updateJumpPosition();
+                updateMovePosition();
     }
 
 	/** updateCurrentImage
@@ -149,9 +150,13 @@ public class Runner extends Sprite
         this.running=false;
     }
 
+    public void move1()
+    { this.xVel=5;}
 
-
-
+    public void move2()
+    {this.xVel=-5;}
+    public void stop()
+    {this.xVel=0;}
 	/** updateJumpPosition
 	 * this is called by updateCurrentPosition
 	 * to make the jump happen.  It uses a formula
@@ -197,4 +202,24 @@ public class Runner extends Sprite
 		}
 		return false;
     }
+
+
+
+
+public void updateMovePosition()
+	{
+      	    double newXPos = this.xPosition+this.xVel;
+            this.xPosition=newXPos;
+	    this.setX(newXPos);
+	     
+
+    }
 }
+
+
+
+
+
+
+
+
