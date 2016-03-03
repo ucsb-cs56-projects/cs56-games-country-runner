@@ -1,6 +1,7 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 
 import sun.audio.AudioPlayer;
+import edu.ucsb.cs56.projects.games.country_runner.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -191,9 +192,21 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
     	//Draw the background
 		g2 = (Graphics2D) g;
-		Image image = new ImageIcon("res/600x400maplebackground.jpg").getImage();
+
+		Image image = new ImageIcon("res/background1.jpg").getImage();
+		
+		
+		Image image1 = new ImageIcon("res/background.jpg").getImage();
+		
+		
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
-		g.drawImage(image, 0, 0, this);
+		if(CountryRunnerTitleScreen.changeBackground == true){
+		    g.drawImage(image1, 0, 0, this);
+		 
+		}
+		else{
+		    g.drawImage(image, 0, 0, this);
+		}
 
 		//Update the sprites' positions
 		runner.updateCurrentPosition();

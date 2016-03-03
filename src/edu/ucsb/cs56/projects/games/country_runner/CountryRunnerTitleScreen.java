@@ -10,14 +10,17 @@ public class CountryRunnerTitleScreen extends JPanel{
     JButton playGameButton;
     JButton helpButton;
     JButton highscoreButton;
+    JButton chooseBackground;
     JLabel titleLabel;
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
     JFrame instuctionsFrame;
+    public static boolean changeBackground = false;
 
     public CountryRunnerTitleScreen(){
         playGameButton = new JButton("Play Game");
+	chooseBackground = new JButton("Choose Background");
         helpButton = new JButton("Instructions");
         highscoreButton = new JButton("High Score");
         titleLabel = new JLabel("Country Runner");
@@ -53,6 +56,9 @@ public class CountryRunnerTitleScreen extends JPanel{
         gbc.gridx = 3;
         gbc.gridy = 3;
         botPanel.add(helpButton, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 4;
+	botPanel.add(chooseBackground, gbc);
 
         //add bot and top panel to this.panel
         add(topPanel);
@@ -71,5 +77,16 @@ public class CountryRunnerTitleScreen extends JPanel{
                 JOptionPane.showMessageDialog(instuctionsFrame, instructions,"Instructions",JOptionPane.INFORMATION_MESSAGE);
             }
         });
+	chooseBackground.addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseReleased(MouseEvent e) {
+		if(changeBackground == false){
+		    changeBackground = true;
+		}
+		else{
+		    changeBackground = false;
+		}
+	    }
+       });
     }
 }
