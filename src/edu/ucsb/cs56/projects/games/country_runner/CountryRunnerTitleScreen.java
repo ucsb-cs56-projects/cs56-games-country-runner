@@ -16,9 +16,12 @@ public class CountryRunnerTitleScreen extends JPanel{
     JPanel topPanel;
     JPanel botPanel;
     JFrame instuctionsFrame;
+
     public static boolean changeBackground = false;
 
     public CountryRunnerTitleScreen(){
+	
+	this.repaint();
         playGameButton = new JButton("Play Game");
 	chooseBackground = new JButton("Choose Background");
         helpButton = new JButton("Instructions");
@@ -37,6 +40,7 @@ public class CountryRunnerTitleScreen extends JPanel{
         setLayout(new GridLayout(2,1));
 
         //set title font and size
+
         titleLabel.setFont(new Font("Serif",Font.BOLD,38));
         titleLabel.setVerticalAlignment(SwingConstants.CENTER);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -60,6 +64,8 @@ public class CountryRunnerTitleScreen extends JPanel{
 	gbc.gridy = 4;
 	botPanel.add(chooseBackground, gbc);
 
+	topPanel.setOpaque(false);
+	botPanel.setOpaque(false);
         //add bot and top panel to this.panel
         add(topPanel);
         add(botPanel);
@@ -88,5 +94,11 @@ public class CountryRunnerTitleScreen extends JPanel{
 		}
 	    }
        });
+    }
+    public void paintComponent(Graphics g){
+	
+	Image im = new ImageIcon("res/newbackground.jpg").getImage();
+	
+        g.drawImage(im, 0, 0, this);
     }
 }

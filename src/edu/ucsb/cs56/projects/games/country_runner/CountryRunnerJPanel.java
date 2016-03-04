@@ -219,9 +219,14 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		{
 		    // can add death animation here
 		    g.drawImage(heaven, 0, 0, this);
+		    	try
+			{
+				mainThread.sleep(1000);
+		    }
+		    catch(Exception e){}
 		    this.gameIsRunning = false;
-            AudioPlayer.player.stop(BackgroundMusic.song);
-            CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
+		    AudioPlayer.player.stop(BackgroundMusic.song);
+		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
 		}
 
 		else
