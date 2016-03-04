@@ -218,12 +218,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if (this.runnerHasCollided(snail, sheep, runner)) // need to add snail to this later
 		{
 		    // can add death animation here
-		    g.drawImage(heaven, 0, 0, this);
-		    	try
-			{
-				mainThread.sleep(1000);
-		    }
-		    catch(Exception e){}
+	        
 		    this.gameIsRunning = false;
 		    AudioPlayer.player.stop(BackgroundMusic.song);
 		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
@@ -257,17 +252,18 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      */
     public boolean runnerHasCollided(Snail s, Sheep c, Runner r) // need to add snail to this function too
     {
-		if ((r.getY() + r.getHeight()) >= c.getY())
+        	if ((r.getY() + r.getHeight()) >= c.getY())
 		{
-			return c.getX() == r.getX();
-		}
-		if((r.getY() + r.getHeight()) >= s.getY())
-		{
-			if(Math.abs(s.getX()-r.getX())<=20)
-			{
+		    if ((c.getX()+50>r.getX()) && ((c.getX()-50) <r.getX()))
 			return true;
-			}
 		}
-		return false;
+      
+	     	if((r.getY() + r.getHeight()) >= s.getY())
+		 {
+		    if ((s.getX()+40>r.getX()) && ((s.getX()-20) <r.getX()))
+			return true;
+		 }
+
+	       return false;
     }
 }//JPanel
