@@ -1,6 +1,7 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 
 import sun.audio.AudioPlayer;
+import edu.ucsb.cs56.projects.games.country_runner.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,9 +19,10 @@ import java.awt.event.*;
 public class CountryRunnerJPanel extends JPanel implements Runnable
 {
 	//Booleans for the game logic
-	boolean gameIsRunning;
-	boolean upArrowPressed;
+    boolean gameIsRunning;
+    boolean upArrowPressed;
     boolean runnerHasCollided;
+    boolean superJumpPressed;
     //GROUND is for positioning
     //ths sprites.  Note that this
     //is also defined in the Sprite class
@@ -54,7 +56,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	//accept keyboard input
         //sets panel layout to no layout manager
         setFocusable(true);
-		requestFocusInWindow();
+	requestFocusInWindow();
         setLayout(null);
 
 		//These booleans determine the "state" of the JPanel/game
@@ -64,9 +66,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
         this.score = 0;
 
 		//The thrad gets started once and its run method is the main game loop
-		this.mainThread = new Thread(this);
+	this.mainThread = new Thread(this);
         this.musicThread = new Thread(new BackgroundMusic());
-		mainThread.start();
+	mainThread.start();
         musicThread.start();
 
         //add score overlay
@@ -96,7 +98,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
             @Override
             public void keyReleased(KeyEvent e) {
-                //Not currently using
+                released(e,"keyReleased");
             }
 
             @Override
@@ -120,8 +122,23 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		{
 		    upArrowPressed = true;
 		}
+            if (key== KeyEvent.VK_X)
+                {
+                    superJumpPressed = true;
+                }
+            if (key== KeyEvent.VK_LEFT)
+		{runner.move2();}
+            if (key == KeyEvent.VK_RIGHT)
+                {runner.move1();}
 	}
 
+
+
+        private void released(KeyEvent e,String text)
+             { int key=e.getKeyCode();
+	       if ((key==KeyEvent.VK_LEFT) || (key==KeyEvent.VK_RIGHT))
+		    runner.stop();
+         } 
 	/**
 	 * run
 	 * This is run method for the main thread
@@ -143,6 +160,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			    runner.startJump();
 			    upArrowPressed = false;
 			}
+                        if (superJumpPressed)
+			{
+			    runner.superJump();
+                            superJumpPressed = false;
+                        }
 
             //update scores
             score = sheep.getScore() + snail.getScore();
@@ -170,9 +192,21 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
     	//Draw the background
 		g2 = (Graphics2D) g;
-		Image image = new ImageIcon("res/600x400maplebackground.jpg").getImage();
+
+		Image image = new ImageIcon("res/background1.jpg").getImage();
+		
+		
+		Image image1 = new ImageIcon("res/background.jpg").getImage();
+		
+		
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
-		g.drawImage(image, 0, 0, this);
+		if(CountryRunnerTitleScreen.changeBackground == true){
+		    g.drawImage(image1, 0, 0, this);
+		 
+		}
+		else{
+		    g.drawImage(image, 0, 0, this);
+		}
 
 		//Update the sprites' positions
 		runner.updateCurrentPosition();
@@ -184,10 +218,10 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if (this.runnerHasCollided(snail, sheep, runner)) // need to add snail to this later
 		{
 		    // can add death animation here
-		    g.drawImage(heaven, 0, 0, this);
+	        
 		    this.gameIsRunning = false;
-            AudioPlayer.player.stop(BackgroundMusic.song);
-            CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
+		    AudioPlayer.player.stop(BackgroundMusic.song);
+		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
 		}
 
 		else
@@ -218,17 +252,17 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      */
     public boolean runnerHasCollided(Snail s, Sheep c, Runner r) // need to add snail to this function too
     {
-		if ((r.getY() + r.getHeight()) >= c.getY())
+        	if ((r.getY() + r.getHeight()) >= c.getY())
 		{
-			return c.getX() == r.getX();
-		}
-		if((r.getY() + r.getHeight()) >= s.getY())
-		{
-			if(Math.abs(s.getX()-r.getX())<=20)
-			{
+		    if ((c.getX()+50>r.getX()) && ((c.getX()-50) <r.getX()))
 			return true;
-			}
 		}
-		return false;
+         	if((r.getY() + r.getHeight()) >= s.getY())
+		 {
+		    if ((s.getX()+40>r.getX()) && ((s.getX()-20) <r.getX()))
+			return true;
+		 }
+
+	       return false;
     }
 }//JPanel

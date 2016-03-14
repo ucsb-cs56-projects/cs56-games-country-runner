@@ -10,14 +10,20 @@ public class CountryRunnerTitleScreen extends JPanel{
     JButton playGameButton;
     JButton helpButton;
     JButton highscoreButton;
+    JButton chooseBackground;
     JLabel titleLabel;
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
     JFrame instuctionsFrame;
 
+    public static boolean changeBackground = false;
+
     public CountryRunnerTitleScreen(){
+	
+	this.repaint();
         playGameButton = new JButton("Play Game");
+	chooseBackground = new JButton("Choose Background");
         helpButton = new JButton("Instructions");
         highscoreButton = new JButton("High Score");
         titleLabel = new JLabel("Country Runner");
@@ -34,6 +40,7 @@ public class CountryRunnerTitleScreen extends JPanel{
         setLayout(new GridLayout(2,1));
 
         //set title font and size
+
         titleLabel.setFont(new Font("Serif",Font.BOLD,38));
         titleLabel.setVerticalAlignment(SwingConstants.CENTER);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -53,7 +60,12 @@ public class CountryRunnerTitleScreen extends JPanel{
         gbc.gridx = 3;
         gbc.gridy = 3;
         botPanel.add(helpButton, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 4;
+	botPanel.add(chooseBackground, gbc);
 
+	topPanel.setOpaque(false);
+	botPanel.setOpaque(false);
         //add bot and top panel to this.panel
         add(topPanel);
         add(botPanel);
@@ -71,5 +83,22 @@ public class CountryRunnerTitleScreen extends JPanel{
                 JOptionPane.showMessageDialog(instuctionsFrame, instructions,"Instructions",JOptionPane.INFORMATION_MESSAGE);
             }
         });
+	chooseBackground.addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseReleased(MouseEvent e) {
+		if(changeBackground == false){
+		    changeBackground = true;
+		}
+		else{
+		    changeBackground = false;
+		}
+	    }
+       });
+    }
+    public void paintComponent(Graphics g){
+	
+	Image im = new ImageIcon("res/newbackground.jpg").getImage();
+	
+        g.drawImage(im, 0, 0, this);
     }
 }

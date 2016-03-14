@@ -6,6 +6,7 @@ project history
 ===============
 ```
  W14 | andrewberls 4pm | thetomcraig, sdrhoads | Running game with obstacles.
+ W16 | omeed 5pm       |Dongyang Li, Yueyang Li| Running game with obstacles.
 ```
 
 #Game Description
@@ -61,3 +62,6 @@ Runner jumps longer by holding down the <b>UP</b> button. Quickly tapping the <b
 
 Layer the background to create depth. Layering wil consist of of several backgrounds (some of which have transparent parts) that each scroll slightly faster then one behind it. 
 
+##<i>W16 Final Remarks</i>
+
+This is a game that we control a character to move and jump to avoid obstacles and get scores. Once the character collides with obstacles, game is over. The Gui.java is to create the window. The JPanel and title screen classes are used to draw image in different states of the game. Runner, Sheep and Snail classes which extends Sprite class will create and handle the state and behavior of the objects in the game. Runner object is the main character. Sheep and Snail objects are the obstacle objects. For future development of this legacy project, developer could implement the highest score record which can be showed in the title screen by clicking the "highest score" button. Also, developer can add shoot method to let the main character or obstacles shoot. Furthermore, developers also can make moving background which makes the game look more comfortable. For the opportunity of refactoring the project, future developers can move the action listeners out and create a InputHandler class to handle user inputs.
