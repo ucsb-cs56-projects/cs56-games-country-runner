@@ -17,7 +17,7 @@ public class CountryRunnerTitleScreen extends JPanel{
     JPanel botPanel;
     JFrame instuctionsFrame;
 
-    public static boolean changeBackground = false;
+    public static int changeBackground = 1;
 
     public CountryRunnerTitleScreen(){
 	
@@ -86,12 +86,23 @@ public class CountryRunnerTitleScreen extends JPanel{
 	chooseBackground.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mouseReleased(MouseEvent e) {
-		if(changeBackground == false){
+
+		Object[] possibleValues = { "First", "Second" };
+		Object selectedValue = JOptionPane.showInputDialog(null,
+							  "Choose one", "Input",
+							  JOptionPane.INFORMATION_MESSAGE, null,
+							  possibleValues, possibleValues[0]);
+		
+		if (selectedValue == "First")
+		    changeBackground = 1;
+		else if (selectedValue == "Second")
+		     changeBackground = 2;
+		/*if(changeBackground == false){
 		    changeBackground = true;
 		}
 		else{
 		    changeBackground = false;
-		}
+		    }*/
 	    }
        });
     }

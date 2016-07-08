@@ -193,20 +193,22 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	//Draw the background
 		g2 = (Graphics2D) g;
 
-		Image image = new ImageIcon("res/background1.jpg").getImage();
-		
-		
-		Image image1 = new ImageIcon("res/background.jpg").getImage();
+		Image[] backgrounds = new Image[2];
+
+		backgrounds[0] = new ImageIcon("res/background1.jpg").getImage();
+		backgrounds[1] = new ImageIcon("res/background.jpg").getImage();
 		
 		
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
-		if(CountryRunnerTitleScreen.changeBackground == true){
+
+		g.drawImage(backgrounds[CountryRunnerTitleScreen.changeBackground-1], 0, 0, this);
+		/*if(CountryRunnerTitleScreen.changeBackground == true){
 		    g.drawImage(image1, 0, 0, this);
 		 
 		}
 		else{
 		    g.drawImage(image, 0, 0, this);
-		}
+		    }*/
 
 		//Update the sprites' positions
 		runner.updateCurrentPosition();
