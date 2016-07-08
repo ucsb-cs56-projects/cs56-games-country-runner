@@ -5,19 +5,35 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+
 public class GameOverJPanel extends JPanel {
     public Graphics2D g2;
     Image backgroundImage;
     JButton playAgainButton;
     JButton backToMenuButton;
+    JButton scoreLabel;
+    //JLabel scoreLabel;
+    
+    private int score;
 
-    public GameOverJPanel() {
+    public GameOverJPanel(int score) {
+	this.score = score;
+	
         backgroundImage = new ImageIcon("res/gameover.png").getImage();
         this.repaint();
+	
+	/*scoreLabel = new JLabel("Your score: " + Integer.toString(score));
+        scoreLabel.setFont(new Font("Arial",Font.BOLD,24));
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setBounds(450,1,200,100);*/
 
+	String str = "Score: " + score;
+	scoreLabel = new JButton(str);
         playAgainButton = new JButton("Play Again?");
         backToMenuButton = new JButton("Go back to Main Menu");
 
+	this.add(scoreLabel);
         this.add(playAgainButton);
         this.add(backToMenuButton);
 
@@ -27,7 +43,7 @@ public class GameOverJPanel extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 CountryRunnerGui.setCurrentPanelTo(new CountryRunnerJPanel());
             }
-        });
+        }); 
         backToMenuButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
