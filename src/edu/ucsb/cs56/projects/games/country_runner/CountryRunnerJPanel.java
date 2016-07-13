@@ -221,18 +221,18 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    AudioPlayer.player.stop(BackgroundMusic.song);
 
 		    //save score to score system
-		    try{
-			ScoreSystem ss = new ScoreSystem();
-			
-			ss.addScore(score);
-		    
-			try{
-			    ss.saveScores();
-			}catch(Exception e){	
-			}
-		    }catch(Exception e){
-		    }
-		    
+		    ScoreSystem ss = new ScoreSystem();
+        try{
+            ss.loadScores();
+        }catch(Exception e){
+            System.out.println("Failed to save scores");
+        }
+        ss.addScore(score);
+
+        try{
+            ss.saveScores();
+        }catch(Exception e){
+        }
 
 		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(score));
 		}
