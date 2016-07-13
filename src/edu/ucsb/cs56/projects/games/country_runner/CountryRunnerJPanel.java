@@ -222,18 +222,14 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 		    //save score to score system
 		    ScoreSystem ss = new ScoreSystem();
-        try{
-            ss.loadScores();
-        }catch(Exception e){
-            System.out.println("Failed to save scores");
-        }
-        ss.addScore(score);
-
-        try{
-            ss.saveScores();
-        }catch(Exception e){
-        }
-
+		    try{
+			ss.loadScores();
+		    }catch(Exception e){}
+		    ss.addScore(score);
+		    try{
+			ss.saveScores();
+		    }catch(Exception e){}
+		    
 		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(score));
 		}
 

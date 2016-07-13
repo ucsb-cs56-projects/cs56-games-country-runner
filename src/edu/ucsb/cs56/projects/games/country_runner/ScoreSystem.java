@@ -13,11 +13,11 @@ import java.io.IOException;
 
 public class ScoreSystem extends ArrayList<Integer> {
 
-    public ScoreSystem() { }
+    public ScoreSystem() {}
 
     public void loadScores() throws java.io.IOException {
 
-        File file = new File("HighScores");
+        File file = new File("data/HighScores");
         if (!file.exists()) {
             file.createNewFile();
         }
@@ -44,7 +44,7 @@ public class ScoreSystem extends ArrayList<Integer> {
 
         try {
             //check if the file exists, if not, create one
-            File file = new File("HighScores");
+            File file = new File("data/HighScores");
             if (!file.exists()) {
                 file.createNewFile();
             }

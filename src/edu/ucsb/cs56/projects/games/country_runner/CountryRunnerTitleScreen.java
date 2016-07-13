@@ -91,8 +91,7 @@ public class CountryRunnerTitleScreen extends JPanel{
 	    try{
 		String scores = ss.toStringFromFile();
 		JOptionPane.showMessageDialog(instuctionsFrame, scores,"High Scores",JOptionPane.INFORMATION_MESSAGE);
-	    }catch(Exception ex){
-	    }
+	    }catch(Exception ex){}
             }
         });
 	chooseBackground.addMouseListener(new MouseAdapter() {
