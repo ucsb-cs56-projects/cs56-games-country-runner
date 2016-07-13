@@ -216,9 +216,24 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if (this.runnerHasCollided(snail, sheep, runner)) // need to add snail to this later
 		{
 		    // can add death animation here
-	        
+
 		    this.gameIsRunning = false;
 		    AudioPlayer.player.stop(BackgroundMusic.song);
+
+		    //save score to score system
+		    try{
+			ScoreSystem ss = new ScoreSystem();
+			
+			ss.addScore(score);
+		    
+			try{
+			    ss.saveScores();
+			}catch(Exception e){	
+			}
+		    }catch(Exception e){
+		    }
+		    
+
 		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(score));
 		}
 
