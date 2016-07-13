@@ -1,4 +1,5 @@
 package edu.ucsb.cs56.projects.games.country_runner;
+import edu.ucsb.cs56.projects.games.country_runner.ScoreSystem.java;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,6 +82,17 @@ public class CountryRunnerTitleScreen extends JPanel{
             @Override
             public void mouseReleased(MouseEvent e) {
                 JOptionPane.showMessageDialog(instuctionsFrame, instructions,"Instructions",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        highscoreButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            	 ScoreSystem ss = new ScoreSystem();
+        try{
+            String scores = ss.toStringFromFile();
+        }catch(Exception e){
+        }
+                JOptionPane.showMessageDialog(instuctionsFrame, scores,"scores",JOptionPane.INFORMATION_MESSAGE);
             }
         });
 	chooseBackground.addMouseListener(new MouseAdapter() {
