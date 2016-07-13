@@ -34,10 +34,10 @@ public class ScoreSystem extends ArrayList<Integer> {
 
     public void addScore(int score) { this.add(score); }
 
- public void saveScores() throws java.io.IOException {
-
+    public void saveScores() throws java.io.IOException {
+	
         int size = this.size();
-
+	
         //sort currente arraylist in decreasing order
         Collections.sort(this);
         Collections.reverse(this);
@@ -66,10 +66,10 @@ public class ScoreSystem extends ArrayList<Integer> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-}
-
- public String toStringFromMemory() {
-
+    }
+    
+    public String toStringFromMemory() {
+	
         //sort currente arraylist in decreasing order
         Collections.sort(this);
         Collections.reverse(this);

@@ -1,5 +1,5 @@
 package edu.ucsb.cs56.projects.games.country_runner;
-import edu.ucsb.cs56.projects.games.country_runner.ScoreSystem.java;
+import edu.ucsb.cs56.projects.games.country_runner.ScoreSystem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,20 +79,20 @@ public class CountryRunnerTitleScreen extends JPanel{
             }
         });
         helpButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                JOptionPane.showMessageDialog(instuctionsFrame, instructions,"Instructions",JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+	    @Override
+	    public void mouseReleased(MouseEvent e) {
+	    JOptionPane.showMessageDialog(instuctionsFrame, instructions,"Instructions",JOptionPane.INFORMATION_MESSAGE);
+	    }
+	});
         highscoreButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            	 ScoreSystem ss = new ScoreSystem();
-        try{
-            String scores = ss.toStringFromFile();
-        }catch(Exception e){
-        }
-                JOptionPane.showMessageDialog(instuctionsFrame, scores,"scores",JOptionPane.INFORMATION_MESSAGE);
+	    @Override
+	    public void mouseReleased(MouseEvent e) {
+	    ScoreSystem ss = new ScoreSystem();
+	    try{
+		String scores = ss.toStringFromFile();
+		JOptionPane.showMessageDialog(instuctionsFrame, scores,"High Scores",JOptionPane.INFORMATION_MESSAGE);
+	    }catch(Exception ex){
+	    }
             }
         });
 	chooseBackground.addMouseListener(new MouseAdapter() {
