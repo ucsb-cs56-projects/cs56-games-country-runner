@@ -6,6 +6,7 @@ import edu.ucsb.cs56.projects.games.country_runner.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 
 /** CountryRunnerJPanel
@@ -31,6 +32,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	//Main thread of execution.
     Thread mainThread;
     Thread musicThread;
+
+    //Background
+    private Background backOne;
+    private Background backTwo;
+    private BufferedImage back;
 
 	//The runner and the sheep, there
 	//is only one sheep right now, may want
@@ -65,7 +71,24 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	this.runnerHasCollided = false;
         this.score = 0;
 
-		//The thrad gets started once and its run method is the main game loop
+
+	//background
+	//Load background images
+	String[] backgrounds = new String[3];
+	for (int i=1; i<=backgrounds.length; i++) {
+	    String imagePath = "res/background";
+	    imagePath += i;
+	    imagePath += ".jpg";		    
+	    backgrounds[i-1] = imagePath;
+	}
+	
+	//String imageName = "background.png";
+	backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
+        backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
+
+
+	
+	//The thrad gets started once and its run method is the main game loop
 	this.mainThread = new Thread(this);
         this.musicThread = new Thread(new BackgroundMusic());
 	mainThread.start();
@@ -192,19 +215,10 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
     	//Draw the background
 		g2 = (Graphics2D) g;
-		
-		//Load background images
-		Image[] backgrounds = new Image[3];
-		for (int i=1; i<=backgrounds.length; i++) {
-		    String imagePath = "res/background";
-		    imagePath += i;
-		    imagePath += ".jpg";		    
-		    backgrounds[i-1] = new ImageIcon(imagePath).getImage();
-		}
 	
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
 
-		g.drawImage(backgrounds[CountryRunnerTitleScreen.changeBackground-1], 0, 0, this);
+		scrollingBackground(g);
 
 		//Update the sprites' positions
 		runner.updateCurrentPosition();
@@ -274,4 +288,21 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 	       return false;
     }
+
+    public void scrollingBackground(Graphics g)
+    {
+	if (back == null)
+	    back = (BufferedImage)(createImage(getWidth(), getHeight()));
+	
+	// Create a buffer to draw to
+	Graphics buffer = back.createGraphics();
+	
+	// Put the two copies of the background image onto the buffer
+	backOne.draw(buffer);
+	backTwo.draw(buffer);
+	
+	// Draw the image onto the window
+	g.drawImage(back, 0, 0, this);	
+    }
+    
 }//JPanel

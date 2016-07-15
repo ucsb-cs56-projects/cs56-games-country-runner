@@ -98,17 +98,17 @@ public class CountryRunnerTitleScreen extends JPanel{
 	    @Override
 	    public void mouseReleased(MouseEvent e) {
 
-		Object[] possibleValues = { "Farm", "Desert", "Dark"};
+		Object[] possibleValues = { "Sakura Forest", "Desert", "Limbo"};
 		Object selectedValue = JOptionPane.showInputDialog(null,
 							  "Choose one", "Input",
 							  JOptionPane.INFORMATION_MESSAGE, null,
 							  possibleValues, possibleValues[0]);
 		
-		if (selectedValue == "Farm")
+		if (selectedValue == "Sakura Forest")
 		    changeBackground = 1;
 		else if (selectedValue == "Desert")
 		     changeBackground = 2;
-		else if (selectedValue == "Dark")
+		else if (selectedValue == "Limbo")
 		    changeBackground = 3;
 		/*if(changeBackground == false){
 		    changeBackground = true;
