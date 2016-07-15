@@ -176,7 +176,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			//Sleep the main thread so its doesn't update everything super quickly
 			try
 			{
-				mainThread.sleep(35);
+				mainThread.sleep(65);
 		    }
 		    catch(Exception e){}
 
