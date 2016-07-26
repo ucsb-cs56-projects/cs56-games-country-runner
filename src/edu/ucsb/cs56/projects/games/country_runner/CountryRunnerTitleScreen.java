@@ -11,6 +11,7 @@ public class CountryRunnerTitleScreen extends JPanel{
     JButton playGameButton;
     JButton helpButton;
     JButton highscoreButton;
+    JButton chooseAvatar;
     JButton chooseBackground;
     JLabel titleLabel;
     GridBagConstraints gbc;
@@ -19,12 +20,14 @@ public class CountryRunnerTitleScreen extends JPanel{
     JFrame instuctionsFrame;
 
     public static int changeBackground = 1;
+    public static String avatar = "Cowboy";
 
     public CountryRunnerTitleScreen(){
 	
 	this.repaint();
         playGameButton = new JButton("Play Game");
 	chooseBackground = new JButton("Choose Background");
+	chooseAvatar = new JButton("Choose Avatar");
         helpButton = new JButton("Instructions");
         highscoreButton = new JButton("High Score");
         titleLabel = new JLabel("Country Runner");
@@ -33,9 +36,9 @@ public class CountryRunnerTitleScreen extends JPanel{
         botPanel = new JPanel(new GridBagLayout());
 
         // instructions
-        final String instructions = "Avoid all obstacles that come into the screen. Could be a stationary scarecrow, or a dashing sheep.\n" +
-                "Some crows could be overhead so time your jumps carefully." +
-                "Press the UP arrow key to jump";
+        final String instructions = "Avoid all obstacles that come into the screen.\n" + "Could be a stationary scarecrow, or a dashing sheep.\n" +
+                "Some crows could be overhead so time your jumps carefully.\n" +
+                "Press the Up arrow key to jump, Left/Right arrow keys to move forward or backward.\n";
 
         //set layout manager for this panel
         setLayout(new GridLayout(2,1));
@@ -63,6 +66,9 @@ public class CountryRunnerTitleScreen extends JPanel{
         botPanel.add(helpButton, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 4;
+	botPanel.add(chooseAvatar, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 5;
 	botPanel.add(chooseBackground, gbc);
 
 	topPanel.setOpaque(false);
@@ -94,6 +100,18 @@ public class CountryRunnerTitleScreen extends JPanel{
 	    }catch(Exception ex){}
             }
         });
+	chooseAvatar.addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseReleased(MouseEvent e) {
+
+		Object[] possibleValues = { "Cowboy", "Cowgirl", "Pumpkin Head"};
+		Object selectedValue = JOptionPane.showInputDialog(null,
+							  "Choose one", "Input",
+							  JOptionPane.INFORMATION_MESSAGE, null,
+							  possibleValues, possibleValues[0]);
+		avatar = selectedValue.toString();
+	    }
+       });
 	chooseBackground.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mouseReleased(MouseEvent e) {

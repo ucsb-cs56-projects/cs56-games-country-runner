@@ -41,7 +41,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	//The runner and the sheep, there
 	//is only one sheep right now, may want
 	//to add more in the future.
-    Runner runner = new Runner();
+    Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
     Sheep sheep = new Sheep();
     Snail snail = new Snail();
 
@@ -74,19 +74,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 	//background
 	//Load background images
-	String[] backgrounds = new String[3];
-	for (int i=1; i<=backgrounds.length; i++) {
-	    String imagePath = "res/background";
-	    imagePath += i;
-	    imagePath += ".jpg";		    
-	    backgrounds[i-1] = imagePath;
-	}
+	String[] backgrounds = Background.loadBackgrounds();
 	
 	//String imageName = "background.png";
 	backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
         backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
-
-
 	
 	//The thrad gets started once and its run method is the main game loop
 	this.mainThread = new Thread(this);

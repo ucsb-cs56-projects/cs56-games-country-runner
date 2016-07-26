@@ -62,8 +62,16 @@ public class Background {
         return image.getWidth();
     }
  
-    /*public String toString() {
-        return "Background: x=&amp;amp;amp;quot; + getX() + ", y=" + getY() + ", height=" + image.getHeight() + ", width=" + image.getWidth();
-	}*/
+    public static String[] loadBackgrounds() {
+	//Load background images
+	String[] backgrounds = new String[3];
+	for (int i=1; i<=backgrounds.length; i++) {
+	    String imagePath = "res/background";
+	    imagePath += i;
+	    imagePath += ".jpg";		    
+	    backgrounds[i-1] = imagePath;
+	}
+	return backgrounds;
+    }
  
 }

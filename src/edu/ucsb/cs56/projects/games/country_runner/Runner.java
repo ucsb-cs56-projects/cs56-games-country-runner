@@ -55,10 +55,10 @@ public class Runner extends Sprite
      * sets up the spriteSheet and fills the
      * sequences with images from it
      */
-    public Runner()
+    public Runner(String avatar)
     {
     	//Open the spriteSheet
-    	super(100, 109, 480, "runnerSheet");
+    	super(100, 109, 480, avatar);
 
 		//Set up his initial state
     	this.running = true;
@@ -128,6 +128,8 @@ public class Runner extends Sprite
 			return;
 		}
 	  	//Setting up values for jump
+		//this.a=-16;
+		//this.v=80;
     	        this.v = 50;
 		this.a = -9.8;
 		this.t = 0;

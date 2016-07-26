@@ -13,20 +13,14 @@ public class GameOverJPanel extends JPanel {
     JButton playAgainButton;
     JButton backToMenuButton;
     JButton scoreLabel;
-    //JLabel scoreLabel;
     
     private int score;
 
     public GameOverJPanel(int score) {
 	this.score = score;
 	
-        backgroundImage = new ImageIcon("res/gameover.png").getImage();
+        backgroundImage = new ImageIcon("res/Gameover.jpg").getImage();
         this.repaint();
-	
-	/*scoreLabel = new JLabel("Your score: " + Integer.toString(score));
-        scoreLabel.setFont(new Font("Arial",Font.BOLD,24));
-        scoreLabel.setForeground(Color.WHITE);
-        scoreLabel.setBounds(450,1,200,100);*/
 
 	String str = "Score: " + score;
 	scoreLabel = new JButton(str);
