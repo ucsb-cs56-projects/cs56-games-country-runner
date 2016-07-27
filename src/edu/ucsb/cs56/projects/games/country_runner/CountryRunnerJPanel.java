@@ -44,6 +44,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
     Sheep sheep = new Sheep(CountryRunnerTitleScreen.difficulty);
     Snail snail = new Snail(CountryRunnerTitleScreen.difficulty);
+    Raccoon raccoon = new Raccoon(CountryRunnerTitleScreen.difficulty);
+    Panda panda = new Panda(CountryRunnerTitleScreen.difficulty);
 
     //Score Overlay
     JLabel scoreLabel;
@@ -182,7 +184,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
                         }
 
             //update scores
-            score = sheep.getScore() + snail.getScore();
+	    score = sheep.getScore() + snail.getScore() + raccoon.getScore() + panda.getScore();
 
 			//Every iteration of the main loop, we want
 			//to call this to redraw all of the images
@@ -216,10 +218,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		runner.updateCurrentPosition();
 		sheep.updateCurrentPosition();
 		snail.updateCurrentPosition();
+		raccoon.updateCurrentPosition();
+		panda.updateCurrentPosition();
 
 		//Collision check, did the runner hit anything?
 		//If so, the game is over
-		if (this.runnerHasCollided(snail, sheep, runner)) // need to add snail to this later
+		if (this.runnerHasCollided(panda, raccoon, snail, sheep, runner)) // need to add snail to this later
 		{
 		    // can add death animation here
 
@@ -249,9 +253,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			runner.updateCurrentImage();
 			sheep.updateCurrentImage();
 			snail.updateCurrentImage();
+			raccoon.updateCurrentImage();
+			panda.updateCurrentImage();
 			g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
 			g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
 			g2.drawImage(snail.getCurrentImage(), (int)snail.getX(), (int)snail.getY(), null);
+			g2.drawImage(raccoon.getCurrentImage(), (int)raccoon.getX(), (int)raccoon.getY(), null);
+			g2.drawImage(panda.getCurrentImage(), (int)panda.getX(), (int)panda.getY(), null);
 
             scoreLabel.setText("Score: " + Integer.toString(score));
 			
@@ -261,11 +269,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 	/** runnerHasCollided
 	 * Determines if the runner hits the sheep object
+	 *need much better organization
      * @param c sheep object
      * @param r runner object
      * @return boolean true if there is a runnerHasCollided, false if not
      */
-    public boolean runnerHasCollided(Snail s, Sheep c, Runner r) // need to add snail to this function too
+    public boolean runnerHasCollided(Panda p, Raccoon a, Snail s, Sheep c, Runner r) // need to add snail to this function too
     {
         	if ((r.getY() + r.getHeight()) >= c.getY())
 		{
@@ -275,6 +284,16 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
          	if((r.getY() + r.getHeight()) >= s.getY())
 		 {
 		    if ((s.getX()+40>r.getX()) && ((s.getX()-20) <r.getX()))
+			return true;
+		 }
+        	if ((r.getY() + r.getHeight()) >= a.getY())
+		{
+		    if ((a.getX()+40>r.getX()) && ((a.getX()-20) <r.getX()))
+			return true;
+		}
+         	if((r.getY() + r.getHeight()) >= p.getY())
+		 {
+		    if ((p.getX()+40>r.getX()) && ((p.getX()-20) <r.getX()))
 			return true;
 		 }
 
