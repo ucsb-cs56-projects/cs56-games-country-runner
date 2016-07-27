@@ -42,8 +42,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	//is only one sheep right now, may want
 	//to add more in the future.
     Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
-    Sheep sheep = new Sheep();
-    Snail snail = new Snail();
+    Sheep sheep = new Sheep(CountryRunnerTitleScreen.difficulty);
+    Snail snail = new Snail(CountryRunnerTitleScreen.difficulty);
 
     //Score Overlay
     JLabel scoreLabel;

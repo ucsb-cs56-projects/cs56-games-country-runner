@@ -13,14 +13,17 @@ public class CountryRunnerTitleScreen extends JPanel{
     JButton highscoreButton;
     JButton chooseAvatar;
     JButton chooseBackground;
+    JButton chooseDifficulty;
     JLabel titleLabel;
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
     JFrame instuctionsFrame;
 
+    //default flag values
     public static int changeBackground = 1;
     public static String avatar = "Cowboy";
+    public static int difficulty = 1;
 
     public CountryRunnerTitleScreen(){
 	
@@ -28,6 +31,7 @@ public class CountryRunnerTitleScreen extends JPanel{
         playGameButton = new JButton("Play Game");
 	chooseBackground = new JButton("Choose Background");
 	chooseAvatar = new JButton("Choose Avatar");
+	chooseDifficulty = new JButton("Choose Difficulty");
         helpButton = new JButton("Instructions");
         highscoreButton = new JButton("High Score");
         titleLabel = new JLabel("Country Runner");
@@ -66,9 +70,12 @@ public class CountryRunnerTitleScreen extends JPanel{
         botPanel.add(helpButton, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 4;
-	botPanel.add(chooseAvatar, gbc);
+	botPanel.add(chooseDifficulty, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 5;
+	botPanel.add(chooseAvatar, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 6;
 	botPanel.add(chooseBackground, gbc);
 
 	topPanel.setOpaque(false);
@@ -100,6 +107,24 @@ public class CountryRunnerTitleScreen extends JPanel{
 	    }catch(Exception ex){}
             }
         });
+	chooseDifficulty.addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseReleased(MouseEvent e) {
+
+		Object[] possibleValues = { "Easy", "Normal", "Hard"};
+		Object selectedValue = JOptionPane.showInputDialog(null,
+							  "Choose one", "Input",
+							  JOptionPane.INFORMATION_MESSAGE, null,
+							  possibleValues, possibleValues[0]);
+		
+		if (selectedValue == "Easy")
+		    difficulty = 1;
+		else if (selectedValue == "Normal")
+		    difficulty = 2;
+		else if (selectedValue == "Hard")
+		    difficulty = 3;
+	    }
+       });
 	chooseAvatar.addMouseListener(new MouseAdapter() {
 	    @Override
 	    public void mouseReleased(MouseEvent e) {
@@ -128,12 +153,6 @@ public class CountryRunnerTitleScreen extends JPanel{
 		     changeBackground = 2;
 		else if (selectedValue == "Limbo")
 		    changeBackground = 3;
-		/*if(changeBackground == false){
-		    changeBackground = true;
-		}
-		else{
-		    changeBackground = false;
-		    }*/
 	    }
        });
     }

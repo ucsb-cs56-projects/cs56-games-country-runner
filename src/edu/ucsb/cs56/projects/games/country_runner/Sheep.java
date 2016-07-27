@@ -9,11 +9,15 @@ package edu.ucsb.cs56.projects.games.country_runner;
  */
 public class Sheep extends Sprite
 {
-	//initialXPosition goes into the super constructor
-    private static final double initialXPosition = 20.0;
+    //initialXPosition goes into the super constructor
+    private static final double initialXPosition = -120.0;
 
-	//The sequence that holds the running images
-	private SpriteSequence runningSequence;
+    //depends on difficulty level
+    private static double speed = 10.0;
+    private static double occurance = -100.0;
+    
+    //The sequence that holds the running images
+    private SpriteSequence runningSequence;
 
     //holds score for amount of times user jumped over this object
     private int score;
@@ -23,10 +27,14 @@ public class Sheep extends Sprite
      * sets up the spriteSheet and fills the
      * sequences with images from it
      */
-    public Sheep()
+    public Sheep(int difficulty)
     {
     	//Call super constructor
     	super(100, 50, initialXPosition, "sheepSheet");
+
+	//initialize
+        score = 0;
+	setDifficulty(difficulty);
 
 		//Initilize the sequence
 		runningSequence = new SpriteSequence();
@@ -44,6 +52,30 @@ public class Sheep extends Sprite
 
     }
 
+	/** setDifficulty
+	 * set speed and occurance 
+	 * according to difficulty
+	*/
+	public void setDifficulty(int difficulty) {
+	    switch (difficulty) {
+	    case 1: {
+		speed = 10.0;
+		occurance = -400.0;
+		break;
+	    }
+	    case 2: {
+		speed = 10.0;
+		occurance = -200.0;
+		break;
+	    }
+	    case 3: {
+		speed = 20.0;
+		occurance = -100.0;
+		break;
+	    }
+	    }
+	}
+
 	/** updateCurrentPosition
 	 * Moves the sheep to left until it is off screen.
 	 * Once it is, we mov it back to the left,
@@ -53,10 +85,10 @@ public class Sheep extends Sprite
     {
     	//Right now, using the actual size of the window.
     	//Will want to change this later...
-		this.setX(this.getX() + 10);
+		this.setX(this.getX() + speed);
 		if (this.getX() == 600)
 		{
-			this.setX(-100);
+			this.setX(occurance);
             score++;
 		}
     }
