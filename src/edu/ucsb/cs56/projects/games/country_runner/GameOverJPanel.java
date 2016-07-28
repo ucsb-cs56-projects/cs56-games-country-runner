@@ -52,6 +52,7 @@ public class GameOverJPanel extends JPanel {
 		@Override
 		public void mouseReleased(MouseEvent e){
 		    String str = (String)JOptionPane.showInputDialog(null, "Input Name", "Username", JOptionPane.INFORMATION_MESSAGE, null, null,"Name");
+		    if (!str.isEmpty()) {
 		    name = str;
 
 		    //save score to score system
@@ -64,8 +65,7 @@ public class GameOverJPanel extends JPanel {
 		    try{
 			ss.saveScores();
 		    }catch(Exception q){}
-		    
-
+		    }
 		}
 	    });
     }
