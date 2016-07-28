@@ -1,5 +1,5 @@
 package edu.ucsb.cs56.projects.games.country_runner;
-
+import java.lang.Math;
 
 /**Draws the Sheep object on the screen
  * @author Christina Morris, Mathew Glodack
@@ -70,17 +70,17 @@ public class Raccoon extends Sprite
 	    }
 	    case 2: {
 		speed = 20.0;
-		occurance = 60;
+		occurance = 30;
 		break;
 	    }
 	    case 3: {
-		speed = 14.0;
-		occurance = 50;
+		speed = 30.0;
+		occurance = 60;
 		break;
 	    }
 	    }
 	    waiting = true;
-	    counter = occurance;
+	    counter = randomWithRange(occurance, occurance+100);
 	}
 
 
@@ -108,7 +108,7 @@ public class Raccoon extends Sprite
 			{
 			    this.setX(initialXPosition);
 			    score++;
-			    counter = occurance;
+			    counter = randomWithRange(occurance, occurance+100);
 			    waiting = true;
 			}
 		}
@@ -126,6 +126,13 @@ public class Raccoon extends Sprite
     public int getScore() {
         return score;
     }
+
+    int randomWithRange(int min, int max)
+    {
+	int range = (max - min) + 1;     
+	return (int)(Math.random() * range) + min;
+    }
+    
 }
 
 

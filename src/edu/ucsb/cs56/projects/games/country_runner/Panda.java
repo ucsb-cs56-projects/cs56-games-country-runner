@@ -1,5 +1,5 @@
 package edu.ucsb.cs56.projects.games.country_runner;
-
+import java.lang.Math;
 
 /**Draws the Sheep object on the screen
  * @author Christina Morris, Mathew Glodack
@@ -80,7 +80,7 @@ public class Panda extends Sprite
 	    }
 	    }
 	    waiting = true;
-	    counter = occurance;
+	    counter = randomWithRange(occurance, occurance+100);
 	}
 
 
@@ -108,7 +108,7 @@ public class Panda extends Sprite
 			{
 			    this.setX(initialXPosition);
 			    score++;
-			    counter = occurance;
+			    counter = randomWithRange(occurance, occurance+100);
 			    waiting = true;
 			}
 		}
@@ -126,6 +126,12 @@ public class Panda extends Sprite
     public int getScore() {
         return score;
     }
-}
 
+    int randomWithRange(int min, int max)
+    {
+	int range = (max - min) + 1;     
+	return (int)(Math.random() * range) + min;
+    }
+    
+}
 

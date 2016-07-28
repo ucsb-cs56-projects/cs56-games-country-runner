@@ -1,5 +1,5 @@
 package edu.ucsb.cs56.projects.games.country_runner;
-
+import java.lang.Math;
 
 /**Draws the Sheep object on the screen
  * @author Christina Morris, Mathew Glodack
@@ -65,22 +65,22 @@ public class Sheep extends Sprite
 	    switch (difficulty) {
 	    case 1: {
 		speed = 7.0;
-		occurance = 27;
+		occurance = 5;
 		break;
 	    }
 	    case 2: {
 		speed = 10.0;
-		occurance = 20;
+		occurance = 15;
 		break;
 	    }
 	    case 3: {
 		speed = 10.0;
-		occurance = 17;
+		occurance = 10;
 		break;
 	    }
 	    }
 	    waiting = true;
-	    counter = occurance;
+	    counter = randomWithRange(occurance, occurance+100);
 	}
 
 	/** updateCurrentPosition
@@ -107,7 +107,7 @@ public class Sheep extends Sprite
 			{
 			    this.setX(initialXPosition);
 			    score++;
-			    counter = occurance;
+			    counter = randomWithRange(occurance, occurance+100);
 			    waiting = true;
 			}
 		}
@@ -125,6 +125,11 @@ public class Sheep extends Sprite
     public int getScore() {
         return score;
     }
+
+    int randomWithRange(int min, int max)
+    {
+	int range = (max - min) + 1;     
+	return (int)(Math.random() * range) + min;
+    }
+    
 }
-
-
