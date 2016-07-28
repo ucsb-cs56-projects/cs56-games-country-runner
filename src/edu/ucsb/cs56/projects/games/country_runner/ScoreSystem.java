@@ -11,7 +11,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ScoreSystem extends ArrayList<Integer> {
+public class ScoreSystem extends ArrayList<Score> {
 
     public ScoreSystem() {}
 
@@ -26,13 +26,14 @@ public class ScoreSystem extends ArrayList<Integer> {
             String line;
             Boolean dot = false;
             while ((line = br.readLine()) != null) {
-                int score = Integer.parseInt(line);
-                this.add(score);
+		Score s = new Score(line);
+                //int score = Integer.parseInt(line);
+                this.add(s);
             }
         }
     }
 
-    public void addScore(int score) { this.add(score); }
+    public void addScore(Score score) { this.add(score); }
 
     public void saveScores() throws java.io.IOException {
 	
@@ -53,10 +54,10 @@ public class ScoreSystem extends ArrayList<Integer> {
             BufferedWriter bw = new BufferedWriter(fw);
 
             //write scores to the file line by line
-            for (int i=0; i<size; i++) {
-                int score = this.get(i);
-                if (score != 0) {
-                    String content = score + System.lineSeparator();
+            for (int i=0; i<10 && i<size; i++) {
+                Score score = this.get(i);
+                if (score.score != 0) {
+                    String content = score.toString() + System.lineSeparator();
                     bw.write(content);
                 }
             }
@@ -77,7 +78,7 @@ public class ScoreSystem extends ArrayList<Integer> {
         String result = "";
 
         for (int i=0; i<this.size(); i++)
-            result = result + (i+1) + ". " + this.get(i) + "\n";
+            result = result + (i+1) + ". " + this.get(i).toString() + "\n";
 
         //if memory is empty, print out "Empty"
         if (this.size() == 0)

@@ -230,17 +230,20 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    this.gameIsRunning = false;
 		    AudioPlayer.player.stop(BackgroundMusic.song);
 
+		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(score));
+		    
 		    //save score to score system
 		    ScoreSystem ss = new ScoreSystem();
 		    try{
 			ss.loadScores();
 		    }catch(Exception e){}
-		    ss.addScore(score);
+		    Score s = new Score (score, GameOverJPanel.name, CountryRunnerTitleScreen.difficulty);
+		    ss.addScore(s);
 		    try{
 			ss.saveScores();
 		    }catch(Exception e){}
 		    
-		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(score));
+		   
 		}
 
 		else
