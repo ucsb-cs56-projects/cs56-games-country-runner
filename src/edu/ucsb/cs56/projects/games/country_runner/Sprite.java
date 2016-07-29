@@ -23,7 +23,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	//The GROUND, where the sprites rest. Note
 	//that this is also defined in the JPanel
 	//x and y positions that every sprite needs
-    final double GROUND = 375.0;
+    final double GROUND = 366.0;
 	double xPosition;
 	double yPosition;
 

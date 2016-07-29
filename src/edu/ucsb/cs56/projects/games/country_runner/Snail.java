@@ -1,31 +1,28 @@
 package edu.ucsb.cs56.projects.games.country_runner;
+import java.lang.Math;
 
-import java.awt.geom.GeneralPath; // combinations of lines and curves
-import java.awt.geom.AffineTransform; // translation, rotation, scale
-import java.awt.Shape; // general class for shapes
-
-//imports for the sprites
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import javax.imageio.ImageIO;
-
-
-/**Draws the Snail object on the screen
+/**Draws the Sheep object on the screen
  * @author Christina Morris, Mathew Glodack
  * @author Sidney Rhoads, Tom Craig
- * @author Brian Yan Sal Olivares
- * @version cs56, W15, proj2
+ * @version cs56, W14, proj2
  *
  */
 public class Snail extends Sprite
 {
-	//initialXPosition goes into the super constructor
-    private static final double initialXPosition = 20.0;
+    //initialXPosition goes into the super constructor
+    private static final double initialXPosition = -100.0;
 
-	//The sequence that holds the running images
-	private SpriteSequence runningSequence;
+    //speed and occruance depends on difficulty level
+    private static double speed = 10.0;
+    /*occurance and counter are used for timing, 
+     *negative occurance indicates this obstacle will not present
+      need better implementation for more precise timing */
+    private static int occurance = 12;
+    private static int counter;
+    private static Boolean waiting;
+    
+    //The sequence that holds the running images
+    private SpriteSequence runningSequence;
 
     //holds score for amount of times user jumped over this object
     private int score;
@@ -35,10 +32,14 @@ public class Snail extends Sprite
      * sets up the spriteSheet and fills the
      * sequences with images from it
      */
-    public Snail()
+    public Snail(int difficulty)
     {
     	//Call super constructor
     	super(100, 50, initialXPosition, "snailSheet");
+
+	//initialize
+        score = 0;
+	setDifficulty(difficulty);
 
 		//Initilize the sequence
 		runningSequence = new SpriteSequence();
@@ -52,7 +53,35 @@ public class Snail extends Sprite
 			this.runningSequence.addImage(getSubImage(i, 0));
 		}
 
+        score = 0;
+
     }
+
+	/** setDifficulty
+	 * set speed and occurance 
+	 * according to difficulty
+	*/
+	public void setDifficulty(int difficulty) {
+	    switch (difficulty) {
+	    case 1: {
+		speed = 10.0;
+		occurance = 70;
+		break;
+	    }
+	    case 2: {
+		speed = 14.0;
+		occurance = 50;
+		break;
+	    }
+	    case 3: {
+		speed = 10.0;
+		occurance = 35;
+		break;
+	    }
+	    }
+	    waiting = true;
+	    counter = randomWithRange(occurance, occurance+100);
+	}
 
 	/** updateCurrentPosition
 	 * Moves the sheep to left until it is off screen.
@@ -63,12 +92,26 @@ public class Snail extends Sprite
     {
     	//Right now, using the actual size of the window.
     	//Will want to change this later...
-		this.setX(this.getX() + 10);
-		if (this.getX() == 600)
+	//todo: factor timer function out; make it more time precise 
+	if (occurance > 0) {
+	    if (waiting) {
+		if (counter > 0)
+		    counter--;
+		else
+		    waiting = false;
+	    }
+	    else
 		{
-			this.setX(-100);
-            score++;
+		    this.setX(this.getX() + speed);
+		    if (this.getX() == 600)
+			{
+			    this.setX(initialXPosition);
+			    score++;
+			    counter = randomWithRange(occurance, occurance+100);
+			    waiting = true;
+			}
 		}
+	}
     }
 
 	/** updateCurrentImage
@@ -82,4 +125,13 @@ public class Snail extends Sprite
     public int getScore() {
         return score;
     }
+
+    int randomWithRange(int min, int max)
+    {
+	int range = (max - min) + 1;     
+	return (int)(Math.random() * range) + min;
+    }
+    
 }
+
+

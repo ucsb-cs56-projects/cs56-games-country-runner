@@ -26,8 +26,8 @@ public class Runner extends Sprite
 	//The X_POSITION - pos. of the runner
 	//The yPosition will get set to GROUND in the
 	//super constructor
-    private double xPosition = 480.0;
-    private double yPosition;
+    private double xPosition = 380.0;
+    private double yPosition = 10;
     public double xVel = 0;
 	//Several booleans that help determine his current
 	//image and position
@@ -55,10 +55,10 @@ public class Runner extends Sprite
      * sets up the spriteSheet and fills the
      * sequences with images from it
      */
-    public Runner()
+    public Runner(String avatar)
     {
     	//Open the spriteSheet
-    	super(100, 109, 480, "runnerSheet");
+    	super(100, 109, 480, avatar);
 
 		//Set up his initial state
     	this.running = true;
@@ -128,7 +128,9 @@ public class Runner extends Sprite
 			return;
 		}
 	  	//Setting up values for jump
-    	        this.v = 50;
+		//this.a=-16;
+		//this.v=80;
+    	        this.v = 70;
 		this.a = -9.8;
 		this.t = 0;
 		//Setting up boolean for jump
@@ -151,10 +153,10 @@ public class Runner extends Sprite
     }
 
     public void move1()
-    { this.xVel=5;}
+    { this.xVel=7;}
 
     public void move2()
-    {this.xVel=-5;}
+    {this.xVel=-9;}
     public void stop()
     {this.xVel=0;}
 	/** updateJumpPosition

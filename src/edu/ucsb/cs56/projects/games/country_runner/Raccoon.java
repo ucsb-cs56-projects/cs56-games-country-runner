@@ -7,7 +7,7 @@ import java.lang.Math;
  * @version cs56, W14, proj2
  *
  */
-public class Sheep extends Sprite
+public class Raccoon extends Sprite
 {
     //initialXPosition goes into the super constructor
     private static final double initialXPosition = -100.0;
@@ -32,10 +32,10 @@ public class Sheep extends Sprite
      * sets up the spriteSheet and fills the
      * sequences with images from it
      */
-    public Sheep(int difficulty)
+    public Raccoon(int difficulty)
     {
     	//Call super constructor
-    	super(100, 50, initialXPosition, "sheepSheet");
+    	super(100, 109, initialXPosition, "raccoonSheet");
 
 	//initialize
         score = 0;
@@ -64,24 +64,25 @@ public class Sheep extends Sprite
 	public void setDifficulty(int difficulty) {
 	    switch (difficulty) {
 	    case 1: {
-		speed = 7.0;
-		occurance = 5;
+		speed = 0.0;
+		occurance = -1;
 		break;
 	    }
 	    case 2: {
-		speed = 10.0;
-		occurance = 15;
+		speed = 20.0;
+		occurance = 30;
 		break;
 	    }
 	    case 3: {
-		speed = 10.0;
-		occurance = 10;
+		speed = 30.0;
+		occurance = 60;
 		break;
 	    }
 	    }
 	    waiting = true;
 	    counter = randomWithRange(occurance, occurance+100);
 	}
+
 
 	/** updateCurrentPosition
 	 * Moves the sheep to left until it is off screen.
@@ -133,3 +134,5 @@ public class Sheep extends Sprite
     }
     
 }
+
+

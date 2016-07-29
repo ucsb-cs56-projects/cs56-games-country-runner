@@ -6,6 +6,7 @@ import edu.ucsb.cs56.projects.games.country_runner.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 
 /** CountryRunnerJPanel
@@ -32,12 +33,19 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     Thread mainThread;
     Thread musicThread;
 
+    //Background
+    private Background backOne;
+    private Background backTwo;
+    private BufferedImage back;
+
 	//The runner and the sheep, there
 	//is only one sheep right now, may want
 	//to add more in the future.
-    Runner runner = new Runner();
-    Sheep sheep = new Sheep();
-    Snail snail = new Snail();
+    Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
+    Sheep sheep = new Sheep(CountryRunnerTitleScreen.difficulty);
+    Snail snail = new Snail(CountryRunnerTitleScreen.difficulty);
+    Raccoon raccoon = new Raccoon(CountryRunnerTitleScreen.difficulty);
+    Panda panda = new Panda(CountryRunnerTitleScreen.difficulty);
 
     //Score Overlay
     JLabel scoreLabel;
@@ -65,7 +73,16 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	this.runnerHasCollided = false;
         this.score = 0;
 
-		//The thrad gets started once and its run method is the main game loop
+
+	//background
+	//Load background images
+	String[] backgrounds = Background.loadBackgrounds();
+	
+	//String imageName = "background.png";
+	backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
+        backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
+	
+	//The thrad gets started once and its run method is the main game loop
 	this.mainThread = new Thread(this);
         this.musicThread = new Thread(new BackgroundMusic());
 	mainThread.start();
@@ -167,7 +184,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
                         }
 
             //update scores
-            score = sheep.getScore() + snail.getScore();
+	    score = sheep.getScore() + snail.getScore() + raccoon.getScore() + panda.getScore();
 
 			//Every iteration of the main loop, we want
 			//to call this to redraw all of the images
@@ -176,7 +193,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			//Sleep the main thread so its doesn't update everything super quickly
 			try
 			{
-				mainThread.sleep(85);
+				mainThread.sleep(65);
 		    }
 		    catch(Exception e){}
 
@@ -192,36 +209,28 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
     	//Draw the background
 		g2 = (Graphics2D) g;
-
-		Image image = new ImageIcon("res/background1.jpg").getImage();
-		
-		
-		Image image1 = new ImageIcon("res/background.jpg").getImage();
-		
-		
+	
 		Image heaven = new ImageIcon("res/heaven.jpg").getImage();
-		if(CountryRunnerTitleScreen.changeBackground == true){
-		    g.drawImage(image1, 0, 0, this);
-		 
-		}
-		else{
-		    g.drawImage(image, 0, 0, this);
-		}
+
+		scrollingBackground(g);
 
 		//Update the sprites' positions
 		runner.updateCurrentPosition();
 		sheep.updateCurrentPosition();
 		snail.updateCurrentPosition();
+		raccoon.updateCurrentPosition();
+		panda.updateCurrentPosition();
 
 		//Collision check, did the runner hit anything?
 		//If so, the game is over
-		if (this.runnerHasCollided(snail, sheep, runner)) // need to add snail to this later
+		if (this.runnerHasCollided(panda, raccoon, snail, sheep, runner)) // need to add snail to this later
 		{
 		    // can add death animation here
-	        
+
 		    this.gameIsRunning = false;
 		    AudioPlayer.player.stop(BackgroundMusic.song);
-		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel());
+
+		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(score));
 		}
 
 		else
@@ -234,9 +243,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			runner.updateCurrentImage();
 			sheep.updateCurrentImage();
 			snail.updateCurrentImage();
+			raccoon.updateCurrentImage();
+			panda.updateCurrentImage();
 			g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
 			g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
 			g2.drawImage(snail.getCurrentImage(), (int)snail.getX(), (int)snail.getY(), null);
+			g2.drawImage(raccoon.getCurrentImage(), (int)raccoon.getX(), (int)raccoon.getY(), null);
+			g2.drawImage(panda.getCurrentImage(), (int)panda.getX(), (int)panda.getY(), null);
 
             scoreLabel.setText("Score: " + Integer.toString(score));
 			
@@ -246,11 +259,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 	/** runnerHasCollided
 	 * Determines if the runner hits the sheep object
+	 *need much better organization
      * @param c sheep object
      * @param r runner object
      * @return boolean true if there is a runnerHasCollided, false if not
      */
-    public boolean runnerHasCollided(Snail s, Sheep c, Runner r) // need to add snail to this function too
+    public boolean runnerHasCollided(Panda p, Raccoon a, Snail s, Sheep c, Runner r) // need to add snail to this function too
     {
         	if ((r.getY() + r.getHeight()) >= c.getY())
 		{
@@ -262,7 +276,34 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    if ((s.getX()+40>r.getX()) && ((s.getX()-20) <r.getX()))
 			return true;
 		 }
+        	if ((r.getY() + r.getHeight()) >= a.getY())
+		{
+		    if ((a.getX()+40>r.getX()) && ((a.getX()-20) <r.getX()))
+			return true;
+		}
+         	if((r.getY() + r.getHeight()) >= p.getY())
+		 {
+		    if ((p.getX()+40>r.getX()) && ((p.getX()-20) <r.getX()))
+			return true;
+		 }
 
 	       return false;
     }
+
+    public void scrollingBackground(Graphics g)
+    {
+	if (back == null)
+	    back = (BufferedImage)(createImage(getWidth(), getHeight()));
+	
+	// Create a buffer to draw to
+	Graphics buffer = back.createGraphics();
+	
+	// Put the two copies of the background image onto the buffer
+	backOne.draw(buffer);
+	backTwo.draw(buffer);
+	
+	// Draw the image onto the window
+	g.drawImage(back, 0, 0, this);	
+    }
+    
 }//JPanel
