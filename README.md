@@ -7,6 +7,7 @@ project history
 ```
  W14 | andrewberls 4pm | thetomcraig, sdrhoads | Running game with obstacles.
  W16 | omeed 5pm       |Dongyang Li, Yueyang Li| Running game with obstacles.
+ M16 |                 |Karli Yokotake, Yuxiang (Ethan) Wang | Running game with obstacles.
 ```
 
 #Game Description
@@ -18,15 +19,19 @@ Country Runner is an "avoid-the-obstacles" sidescroller game. Ride your piggy th
 
 Use the <b>UP</b> and <b>DOWN</b> arrow keys to cycle through your options. Press <b>RIGHT</b> to select. 
 Select <b>Play</b> to start the game. 
+Select <b>High Scores</b> to display user high scores.
 Select <b>Instructions</b> to learn how to play.
-(The HighScores will be displayed on Title Page)
+Select <b>Choose Difficulty</b> choose the difficulty of the game. 
+Select <b>Choose Avatar</b> to choose an avatar to pay.
+Select <b>Choose Background</b> to choose a background for the game.
+(The HighScores will be displayed on a pop up on Title Page)
 
 
 ##Instuctions
 
-Avoid all obstacles that come into the screen. Could be a stationary scarecrow, or a dashing sheep. Some crows could be overhead so time your jumps carefully. 
-
-Press the <b>UP</b> arrow key to jump
+Avoid all obstacles that come into the screen. Could be a stationary scarecrow, or a dashing sheep.
+Some crows could be overhead so time your jumps carefully.
+Press the Up arrow key to jump, Left/Right arrow keys to move forward or backward.
 
 --------------------------
 #Developer Notes
@@ -55,8 +60,9 @@ Type `ant -p` to view the currently available tasks you can perform.
 
 
 ##<i>Ideas Future Versions of Country Runner</i>
+Prevent the add score button from showing up on the game over screen when the score is 0.
 
-Apply a scoring system to the game. Your score increases the farther you get without colliding with an obstacle. Keep a record of scores so that Highecores can be displayed on the Title Screen. 
+Set a boundary that prevents the player from moving of the screen.
 
 Runner jumps longer by holding down the <b>UP</b> button. Quickly tapping the <b>UP</b> button will result in shorter jumps. 
 
@@ -64,4 +70,4 @@ Layer the background to create depth. Layering wil consist of of several backgro
 
 ##<i>W16 Final Remarks</i>
 
-This is a game that we control a character to move and jump to avoid obstacles and get scores. Once the character collides with obstacles, game is over. The Gui.java is to create the window. The JPanel and title screen classes are used to draw image in different states of the game. Runner, Sheep and Snail classes which extends Sprite class will create and handle the state and behavior of the objects in the game. Runner object is the main character. Sheep and Snail objects are the obstacle objects. For future development of this legacy project, developer could implement the highest score record which can be showed in the title screen by clicking the "highest score" button. Also, developer can add shoot method to let the main character or obstacles shoot. Furthermore, developers also can make moving background which makes the game look more comfortable. For the opportunity of refactoring the project, future developers can move the action listeners out and create a InputHandler class to handle user inputs.
+This is a game that we control a character to move and jump to avoid obstacles and get scores. Once the character collides with obstacles, game is over. The Gui.java is to create the window. The JPanel and title screen classes are used to draw image in different states of the game. Runner, Sheep and Snail classes which extends Sprite class will create and handle the state and behavior of the objects in the game. Runner object is the main character. Sheep, Snail, Racoon, and Panda objects are the obstacle objects. For future development of this legacy project, developer could prevent the player from moving off screen. Also, developer can add shoot method to let the main character or obstacles shoot. Furthermore, developers also can make a layered background which makes the game look more comfortable. For the opportunity of refactoring the project, future developers can move the action listeners out and create a InputHandler class to handle user inputs.
