@@ -26,18 +26,18 @@
   
   <!-- target that compiles the src codes and make a build folder to store the class file -->
   <target name="compile" description="Compiles Country Runner">
-    <mkdir dir="build" />
+   <mkdir dir="build" />
     <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source">
       <classpath>
-	<pathelement location="build" />
-	<pathelement location="lib/junit-4.8.2.jar" />
+<pathelement location="build" />
+<pathelement location="lib/junit-4.8.2.jar" />
       </classpath>
     </javac>
   </target>
   
   <!-- target that runs the program -->
   <target name="run" description="Runs Country Runner" depends="compile">
-    <java classname="${mainClass}" fork="true">
+   <java classname="${mainClass}" fork="true">
       <classpath refid="project.class.path"/>
     </java>
   </target>
@@ -49,7 +49,7 @@
     </delete>
     <delete dir="javadoc" quiet="true" />
   </target>
-  
+    
   <!-- target that generates javadoc files -->
   <target name="javadoc" description="Generates JavaDoc files for Country Runner" depends="compile">
     <delete dir="javadoc"  quiet="true" />
