@@ -7,7 +7,7 @@ import java.lang.Math;
  * @version cs56, W14, proj2
  *
  */
-public class Raccoon extends Sprite
+public class Raccoon extends Obstacle
 {
     //initialXPosition goes into the super constructor
     private static final double initialXPosition = -100.0;
@@ -25,7 +25,7 @@ public class Raccoon extends Sprite
     private SpriteSequence runningSequence;
 
     //holds score for amount of times user jumped over this object
-    private int score;
+
 
 
     /** Default Constructor makes the Sheep.
@@ -36,10 +36,7 @@ public class Raccoon extends Sprite
     {
     	//Call super constructor
     	super(100, 109, initialXPosition, "raccoonSheet");
-
-	//initialize
-        score = 0;
-	setDifficulty(difficulty);
+		setDifficulty(difficulty);
 
 		//Initilize the sequence
 		runningSequence = new SpriteSequence();
@@ -52,9 +49,6 @@ public class Raccoon extends Sprite
 		{
 			this.runningSequence.addImage(getSubImage(i, 0));
 		}
-
-        score = 0;
-
     }
 
 	/** setDifficulty
@@ -93,46 +87,28 @@ public class Raccoon extends Sprite
     {
     	//Right now, using the actual size of the window.
     	//Will want to change this later...
-	//todo: factor timer function out; make it more time precise 
-	if (occurance > 0) {
-	    if (waiting) {
-		if (counter > 0)
-		    counter--;
-		else
-		    waiting = false;
-	    }
-	    else
-		{
-		    this.setX(this.getX() + speed);
-		    if (this.getX() == 600)
+		//todo: factor timer function out; make it more time precise 
+		if (occurance > 0) {
+		    if (waiting) 
+		    {
+				if (counter > 0)
+				    counter--;
+				else
+				    waiting = false;
+		    }
+		    else
 			{
-			    this.setX(initialXPosition);
-			    score++;
-			    counter = randomWithRange(occurance, occurance+100);
-			    waiting = true;
+			    this.setX(this.getX() + speed);
+			    if (this.getX() == 600)
+				{
+				    this.setX(initialXPosition);
+				    score++;
+				    counter = randomWithRange(occurance, occurance+100);
+				    waiting = true;
+				}
 			}
 		}
-	}
     }
-
-	/** updateCurrentImage
-	 * Moves to the next image in the running sequence
-     */
-	public void updateCurrentImage()
-	{
-		setCurrentImage(runningSequence.getNextImage());
-	}
-
-    public int getScore() {
-        return score;
-    }
-
-    int randomWithRange(int min, int max)
-    {
-	int range = (max - min) + 1;     
-	return (int)(Math.random() * range) + min;
-    }
-    
 }
 
 
