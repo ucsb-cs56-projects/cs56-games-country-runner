@@ -34,7 +34,7 @@ public class Bullet extends Sprite
     public Bullet(Runner runner)
     {
 	//reference a runner so one can get the position from where the bullet is to be shot
-	super(290,74, runner.returnXPosition(),runner.returnYPosition());
+	super(290,74, runner.getX(),runner.getY());
 	try {
 	    image = ImageIO.read(new File("redLaserRay.png"));
 	} catch (IOException e) {

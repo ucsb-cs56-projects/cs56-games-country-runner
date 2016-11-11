@@ -204,7 +204,6 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if (this.runnerHasCollided(panda, raccoon, snail, sheep, runner))
 		    {
 			runner.death();
-			
 		    }
 		//Every iteration of the main loop, we want
 		//to call this to redraw all of the images
@@ -236,11 +235,10 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	//if the runner is dying, do the death animation
 	if(runner.isDying())
 	    {
-		runner.death();
 		runner.updateDeath();
-		runner.updateCurrentImage();
-	        g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
-		if(runner.getY() == GROUND){
+	        g2.drawImage(runner.getCurrentImage(), (int)runner.returnXPosition(),
+			     (int)runner.getY(), null);
+		if(runner.getY() > GROUND){
 		    runner.setDying(false);
 		    this.gameIsRunning = false;
 		    AudioPlayer.player.stop(BackgroundMusic.song);

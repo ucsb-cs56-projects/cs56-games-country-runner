@@ -163,7 +163,7 @@ public class Runner extends Sprite
 	}
 	else
 	    {
-		updateDeath();
+		death();
 	    }
     }
     
@@ -284,8 +284,10 @@ public class Runner extends Sprite
      * knows the runner is dying.
      */
     public void death(){
-	this.a = -16;
-	this.v = 80;
+	if(isDying())
+	    return;
+	this.a = -12;
+	this.v = 60;
 	this.t = 0;
 	this.running = false;
 	this.jumping = true;
@@ -304,6 +306,10 @@ public class Runner extends Sprite
     {
 	return this.t;
     }
+    public double getV()
+    {
+	return this.v;
+    }
     /** public void updateDeath()
      *  called when the runner is supposedly dying
      *  from a collison with a monster such as a 
@@ -317,7 +323,7 @@ public class Runner extends Sprite
 	//to move runner up/down
         double newYPos = 0 + this.v*this.t + .5*this.a*(Math.pow(this.t,2));
 	this.setY(this.GROUND - this.getHeight() - newYPos);
-	this.t++;
+	this.t = this.t + 1.0;
     }
     
     /** isOnGround
@@ -346,7 +352,8 @@ public class Runner extends Sprite
 	double newXPos = this.xPosition+this.xVel;
 	this.xPosition=newXPos;
 	this.setX(newXPos);
-	
+	if((int)this.getX() < 0 || (int)this.getX() > 400)
+	    return;
 	
     }
 }
