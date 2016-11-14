@@ -7,7 +7,7 @@ import java.lang.Math;
  * @version cs56, W14, proj2
  *
  */
-public class Panda extends Sprite
+public class Panda extends Obstacle
 {
     //initialXPosition goes into the super constructor
     private static final double initialXPosition = -100.0;
@@ -24,9 +24,6 @@ public class Panda extends Sprite
     //The sequence that holds the running images
     private SpriteSequence runningSequence;
 
-    //holds score for amount of times user jumped over this object
-    private int score;
-
 
     /** Default Constructor makes the Sheep.
      * sets up the spriteSheet and fills the
@@ -36,10 +33,7 @@ public class Panda extends Sprite
     {
     	//Call super constructor
     	super(100, 100, initialXPosition, "pandaSheet");
-
-	//initialize
-        score = 0;
-	setDifficulty(difficulty);
+		setDifficulty(difficulty);
 
 		//Initilize the sequence
 		runningSequence = new SpriteSequence();
@@ -52,9 +46,6 @@ public class Panda extends Sprite
 		{
 			this.runningSequence.addImage(getSubImage(i, 0));
 		}
-
-        score = 0;
-
     }
 
 	/** setDifficulty
@@ -93,45 +84,28 @@ public class Panda extends Sprite
     {
     	//Right now, using the actual size of the window.
     	//Will want to change this later...
-	//todo: factor timer function out; make it more time precise 
-	if (occurance > 0) {
-	    if (waiting) {
-		if (counter > 0)
-		    counter--;
-		else
-		    waiting = false;
-	    }
-	    else
+		//todo: factor timer function out; make it more time precise 
+		if (occurance > 0) 
 		{
-		    this.setX(this.getX() + speed);
-		    if (this.getX() == 600)
+		    if (waiting) 
+		    {
+				if (counter > 0)
+				    counter--;
+				else
+				    waiting = false;
+		    }
+		    else
 			{
-			    this.setX(initialXPosition);
-			    score++;
-			    counter = randomWithRange(occurance, occurance+100);
-			    waiting = true;
+			    this.setX(this.getX() + speed);
+			    if (this.getX() == 600)
+				{
+				    this.setX(initialXPosition);
+				    score++;
+				    counter = randomWithRange(occurance, occurance+100);
+				    waiting = true;
+				}
 			}
 		}
 	}
-    }
-
-	/** updateCurrentImage
-	 * Moves to the next image in the running sequence
-     */
-	public void updateCurrentImage()
-	{
-		setCurrentImage(runningSequence.getNextImage());
-	}
-
-    public int getScore() {
-        return score;
-    }
-
-    int randomWithRange(int min, int max)
-    {
-	int range = (max - min) + 1;     
-	return (int)(Math.random() * range) + min;
-    }
-    
 }
 
