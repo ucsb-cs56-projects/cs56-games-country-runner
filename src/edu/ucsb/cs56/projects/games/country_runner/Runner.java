@@ -352,9 +352,16 @@ public class Runner extends Sprite
 	double newXPos = this.xPosition+this.xVel;
 	this.xPosition=newXPos;
 	this.setX(newXPos);
-	if((int)this.getX() < 0 || (int)this.getX() > 400)
+	if((int)this.getX() < 0){
+	    this.setX(0);
+	    xPosition = 0;
 	    return;
-	
+	}
+	if((int)this.getX() > 500){
+	    this.setX(500);
+	    xPosition = 500;
+	    return;
+	}
     }
 }
 
