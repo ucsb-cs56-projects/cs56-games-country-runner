@@ -41,8 +41,8 @@ public class CountryRunnerTitleScreen extends JPanel{
 
         // instructions
         final String instructions = "Avoid all obstacles that come into the screen.\n" + "Could be a stationary scarecrow, or a dashing sheep.\n" +
-                "Some crows could be overhead so time your jumps carefully.\n" +
-                "Press the Up arrow key to jump, Left/Right arrow keys to move forward or backward.\n";
+	    "Some crows could be overhead so time your jumps carefully.\n" +
+	    "Press the Up arrow key to jump, Left/Right arrow keys to move forward or backward.\n";
 
         //set layout manager for this panel
         setLayout(new GridLayout(2,1));
@@ -86,75 +86,75 @@ public class CountryRunnerTitleScreen extends JPanel{
 
         //event managers
         playGameButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                CountryRunnerGui.setCurrentPanelTo(new CountryRunnerJPanel());
-            }
-        });
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		    CountryRunnerGui.setCurrentPanelTo(new CountryRunnerJPanel());
+		}
+	    });
         helpButton.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mouseReleased(MouseEvent e) {
-	    JOptionPane.showMessageDialog(instuctionsFrame, instructions,"Instructions",JOptionPane.INFORMATION_MESSAGE);
-	    }
-	});
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		    JOptionPane.showMessageDialog(instuctionsFrame, instructions,"Instructions",JOptionPane.INFORMATION_MESSAGE);
+		}
+	    });
         highscoreButton.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mouseReleased(MouseEvent e) {
-	    ScoreSystem ss = new ScoreSystem();
-	    try{
-		String scores = ss.toStringFromFile();
-		JOptionPane.showMessageDialog(instuctionsFrame, scores,"High Scores",JOptionPane.INFORMATION_MESSAGE);
-	    }catch(Exception ex){}
-            }
-        });
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		    ScoreSystem ss = new ScoreSystem();
+		    try{
+			String scores = ss.toStringFromFile();
+			JOptionPane.showMessageDialog(instuctionsFrame, scores,"High Scores",JOptionPane.INFORMATION_MESSAGE);
+		    }catch(Exception ex){}
+		}
+	    });
 	chooseDifficulty.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mouseReleased(MouseEvent e) {
+		@Override
+		public void mouseReleased(MouseEvent e) {
 
-		Object[] possibleValues = { "Easy", "Normal", "Hard"};
-		Object selectedValue = JOptionPane.showInputDialog(null,
-							  "Choose one", "Input",
-							  JOptionPane.INFORMATION_MESSAGE, null,
-							  possibleValues, possibleValues[0]);
+		    Object[] possibleValues = { "Easy", "Normal", "Hard"};
+		    Object selectedValue = JOptionPane.showInputDialog(null,
+								       "Choose one", "Input",
+								       JOptionPane.INFORMATION_MESSAGE, null,
+								       possibleValues, possibleValues[0]);
 		
-		if (selectedValue == "Easy")
-		    difficulty = 1;
-		else if (selectedValue == "Normal")
-		    difficulty = 2;
-		else if (selectedValue == "Hard")
-		    difficulty = 3;
-	    }
-       });
+		    if (selectedValue == "Easy")
+			difficulty = 1;
+		    else if (selectedValue == "Normal")
+			difficulty = 2;
+		    else if (selectedValue == "Hard")
+			difficulty = 3;
+		}
+	    });
 	chooseAvatar.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mouseReleased(MouseEvent e) {
+		@Override
+		public void mouseReleased(MouseEvent e) {
 
-		Object[] possibleValues = { "Cowboy", "Cowgirl", "Pumpkin Head"};
-		Object selectedValue = JOptionPane.showInputDialog(null,
-							  "Choose one", "Input",
-							  JOptionPane.INFORMATION_MESSAGE, null,
-							  possibleValues, possibleValues[0]);
-		avatar = selectedValue.toString();
-	    }
-       });
+		    Object[] possibleValues = { "Cowboy", "Cowgirl", "Pumpkin Head"};
+		    Object selectedValue = JOptionPane.showInputDialog(null,
+								       "Choose one", "Input",
+								       JOptionPane.INFORMATION_MESSAGE, null,
+								       possibleValues, possibleValues[0]);
+		    avatar = selectedValue.toString();
+		}
+	    });
 	chooseBackground.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mouseReleased(MouseEvent e) {
+		@Override
+		public void mouseReleased(MouseEvent e) {
 
-		Object[] possibleValues = { "Sakura Forest", "Desert", "Limbo"};
-		Object selectedValue = JOptionPane.showInputDialog(null,
-							  "Choose one", "Input",
-							  JOptionPane.INFORMATION_MESSAGE, null,
-							  possibleValues, possibleValues[0]);
+		    Object[] possibleValues = { "Sakura Forest", "Desert", "Limbo"};
+		    Object selectedValue = JOptionPane.showInputDialog(null,
+								       "Choose one", "Input",
+								       JOptionPane.INFORMATION_MESSAGE, null,
+								       possibleValues, possibleValues[0]);
 		
-		if (selectedValue == "Sakura Forest")
-		    changeBackground = 1;
-		else if (selectedValue == "Desert")
-		     changeBackground = 2;
-		else if (selectedValue == "Limbo")
-		    changeBackground = 3;
-	    }
-       });
+		    if (selectedValue == "Sakura Forest")
+			changeBackground = 1;
+		    else if (selectedValue == "Desert")
+			changeBackground = 2;
+		    else if (selectedValue == "Limbo")
+			changeBackground = 3;
+		}
+	    });
     }
     public void paintComponent(Graphics g){
 	

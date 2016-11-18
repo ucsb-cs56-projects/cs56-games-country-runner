@@ -16,7 +16,7 @@ public class Panda extends Obstacle
     private static double speed = 10.0;
     /*occurance and counter are used for timing, 
      *negative occurance indicates this obstacle will not present
-      need better implementation for more precise timing */
+     need better implementation for more precise timing */
     private static int occurance = 12;
     private static int counter;
     private static Boolean waiting;
@@ -35,52 +35,55 @@ public class Panda extends Obstacle
     	super(100, 100, initialXPosition, "pandaSheet");
 		setDifficulty(difficulty);
 
-		//Initilize the sequence
-		runningSequence = new SpriteSequence();
+	//Initilize the sequence
+	runningSequence = new SpriteSequence();
 
-		//Fill the sequence
-		//NOTE: we have to explicitly say the number of
-		//images in the sequence
-		int numImages = 4;
+	//Fill the sequence
+	//NOTE: we have to explicitly say the number of
+	//images in the sequence
+	int numImages = 4;
     	for (int i = 0; i < numImages; i++)
-		{
-			this.runningSequence.addImage(getSubImage(i, 0));
-		}
+	    {
+		this.runningSequence.addImage(getSubImage(i, 0));
+	    }
+
+        score = 0;
+
     }
 
-	/** setDifficulty
-	 * set speed and occurance 
-	 * according to difficulty
-	*/
-	public void setDifficulty(int difficulty) {
-	    switch (difficulty) {
-	    case 1: {
-		speed = 0.0;
-		occurance = -1;
-		break;
-	    }
-	    case 2: {
-		speed = 0.0;
-		occurance = -1;
-		break;
-	    }
-	    case 3: {
-		speed = 20.0;
-		occurance = 120;
-		break;
-	    }
-	    }
-	    waiting = true;
-	    counter = randomWithRange(occurance, occurance+100);
+    /** setDifficulty
+     * set speed and occurance 
+     * according to difficulty
+     */
+    public void setDifficulty(int difficulty) {
+	switch (difficulty) {
+	case 1: {
+	    speed = 0.0;
+	    occurance = -1;
+	    break;
 	}
+	case 2: {
+	    speed = 0.0;
+	    occurance = -1;
+	    break;
+	}
+	case 3: {
+	    speed = 20.0;
+	    occurance = 120;
+	    break;
+	}
+	}
+	waiting = true;
+	counter = randomWithRange(occurance, occurance+100);
+    }
 
 
-	/** updateCurrentPosition
-	 * Moves the sheep to left until it is off screen.
-	 * Once it is, we mov it back to the left,
-	 * simulating a line of sheeps
-	*/
-	public void updateCurrentPosition()
+    /** updateCurrentPosition
+     * Moves the sheep to left until it is off screen.
+     * Once it is, we mov it back to the left,
+     * simulating a line of sheeps
+     */
+    public void updateCurrentPosition()
     {
     	//Right now, using the actual size of the window.
     	//Will want to change this later...
@@ -107,5 +110,25 @@ public class Panda extends Obstacle
 			}
 		}
 	}
+    }
+
+    /** updateCurrentImage
+     * Moves to the next image in the running sequence
+     */
+    public void updateCurrentImage()
+    {
+	setCurrentImage(runningSequence.getNextImage());
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    int randomWithRange(int min, int max)
+    {
+	int range = (max - min) + 1;     
+	return (int)(Math.random() * range) + min;
+    }
+    
 }
 
