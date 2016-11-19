@@ -116,6 +116,9 @@ public class Runner extends Sprite
     /** return Xposition() 
      *  return the xPosition variable
      */
+    public int getScore(){
+        return 0;
+    }
     public double returnXPosition(){
 	return xPosition;
     }

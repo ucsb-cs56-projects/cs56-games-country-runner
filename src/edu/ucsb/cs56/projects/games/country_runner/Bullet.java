@@ -59,6 +59,9 @@ public class Bullet extends Sprite
     /** updateCurrentPosition
      * Moves the bullet to left until it is off screen.
      */
+    public int getScore(){
+        return 0;
+    }
     public void updateCurrentPosition()
     {
 	if(!offTheScreen())

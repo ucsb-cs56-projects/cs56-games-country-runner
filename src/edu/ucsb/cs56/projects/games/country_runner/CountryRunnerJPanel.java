@@ -45,10 +45,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     //is only one sheep right now, may want
     //to add more in the future.
     Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
-    Sheep sheep = new Sheep(CountryRunnerTitleScreen.difficulty);
-    Snail snail = new Snail(CountryRunnerTitleScreen.difficulty);
-    Raccoon raccoon = new Raccoon(CountryRunnerTitleScreen.difficulty);
-    Panda panda = new Panda(CountryRunnerTitleScreen.difficulty);
+    
+    //initObstalcles(sheep, snail, racoon, panda)
+    ArrayList<Sprite> gameObstacles = initObstacles(10, 1, 1, 1);
     
     //Score Overlay
     JLabel scoreLabel;
@@ -200,8 +199,15 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			superJumpPressed = false;
 		    }
 		//update scores
-		score = sheep.getScore() + snail.getScore() + raccoon.getScore() + panda.getScore();
-		if (this.runnerHasCollided(panda, raccoon, snail, sheep, runner))
+		    //TODO: re formulate how the score is called
+		score = 0;
+		for(Sprite thisObstacle : gameObstacles)
+		{
+			score = score + thisObstacle.getScore();
+		}
+		
+		
+		if (this.runnerHasCollided(gameObstacles, runner))
 		    {
 			runner.death();
 		    }
@@ -246,27 +252,30 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		}
 	    }
 	else{
-	    //Update the sprites' positions
-	    runner.updateCurrentPosition();
-	    sheep.updateCurrentPosition();
-	    snail.updateCurrentPosition();
-	    raccoon.updateCurrentPosition();
-	    panda.updateCurrentPosition();
+	    
+	    //Update the sprites' positions	    
+	    runner.updateCurrentPosition();	    
+	    for(Sprite thisObstacle : gameObstacles){
+	    	thisObstacle.updateCurrentPosition();
+	    }
+
 	    //Update the sprites' images and draws them on the panel
 	    //Note that at the beginning of execution of the JPanel,
 	    //the sprites are put on the ground, and after that they
 	    //handle their own repositionings internally.  We do not
 	    //explicitly position them in the JPanel
-	    runner.updateCurrentImage();
-	    sheep.updateCurrentImage();
-	    snail.updateCurrentImage();
-	    raccoon.updateCurrentImage();
-	    panda.updateCurrentImage();
-	    g2.drawImage(sheep.getCurrentImage(), (int)sheep.getX(), (int)sheep.getY(), null);
-	    g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
-	    g2.drawImage(snail.getCurrentImage(), (int)snail.getX(), (int)snail.getY(), null);
-	    g2.drawImage(raccoon.getCurrentImage(), (int)raccoon.getX(), (int)raccoon.getY(), null);
-	    g2.drawImage(panda.getCurrentImage(), (int)panda.getX(), (int)panda.getY(), null);
+	    
+	    runner.updateCurrentImage();	    
+	    for(Sprite thisObstacle: gameObstacles){
+	    	thisObstacle.updateCurrentImage();
+	    }	
+	    //draw images
+	    g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);	    
+	    for(Sprite thisObstacle : gameObstacles){
+	    	g2.drawImage(thisObstacle.getCurrentImage(), (int)thisObstacle.getX(), (int)thisObstacle.getY(), null);
+
+	    }
+
 	    //draw each bullet
 	    //ArrayList<Bullet> bullets = runner.getBullets();
 	    //for(int i = 0; i < bullets.size(); i++)
@@ -280,6 +289,36 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	}
     }
     
+    private ArrayList<Sprite> initObstacles(int sheepNum, int snailNum, int raccoonNum, int pandaNum){
+    	Sheep makeSheep;
+    	Snail makeSnail;
+    	Raccoon makeRaccoon;
+    	Panda makePanda;
+    	Sprite temp;
+    	ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();
+    	
+    	for(int i = 0; i < sheepNum; i++){
+    		makeSheep = new Sheep(CountryRunnerTitleScreen.difficulty);
+    		temp = (Sprite) makeSheep;
+    		makeObstacle.add( temp );
+    	}
+    	for(int i = 0; i < snailNum; i++){
+    		makeSnail = new Snail(CountryRunnerTitleScreen.difficulty);
+    		temp = (Sprite) makeSnail;
+    		makeObstacle.add( temp );
+    	}
+    	for(int i = 0; i < raccoonNum; i++){
+    		makeRaccoon = new Raccoon(CountryRunnerTitleScreen.difficulty);
+    		temp = (Sprite) makeRaccoon;
+    		makeObstacle.add( temp );
+    	}
+    	for(int i = 0; i < pandaNum; i++){
+    		makePanda = new Panda(CountryRunnerTitleScreen.difficulty);
+    		temp = (Sprite) makePanda;
+    		makeObstacle.add( temp );
+    	}
+    	return makeObstacle;
+    }
     /** runnerHasCollided
      * Determines if the runner hits the sheep object
      *need much better organization
@@ -290,30 +329,21 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      * @param a raccoon object
      * @return boolean true if there is a runnerHasCollided, false if not
      */
-    public boolean runnerHasCollided(Panda p, Raccoon a, Snail s, Sheep c, Runner r) // need to add snail to this function too
+    
+    // TO DO: re parameterize this function so that it accepts arrayList<Sprite>
+    public boolean runnerHasCollided(ArrayList<Sprite> gameObstacles, Runner r )
     {
-	if ((r.getY() + r.getHeight()) >= c.getY())
-	    {
-		if ((c.getX()+50>r.getX()) && ((c.getX()-50) <r.getX()))
-		    return true;
-	    }
-	if((r.getY() + r.getHeight()) >= s.getY())
-	    {
-		if ((s.getX()+40>r.getX()) && ((s.getX()-20) <r.getX()))
-		    return true;
-	    }
-	if ((r.getY() + r.getHeight()) >= a.getY())
-	    {
-		if ((a.getX()+40>r.getX()) && ((a.getX()-20) <r.getX()))
-		    return true;
-	    }
-	if((r.getY() + r.getHeight()) >= p.getY())
-	    {
-		if ((p.getX()+40>r.getX()) && ((p.getX()-20) <r.getX()))
-		    return true;
-	    }
-	
-	return false;
+	    for(Sprite thisObstacle : gameObstacles)
+		{
+			if ((r.getY() + r.getHeight()) >= thisObstacle.getY())
+		    {
+				if ((thisObstacle.getX()+50>r.getX()) && ((thisObstacle.getX()-50) <r.getX()))
+				{
+				    return true;
+				}
+		    }
+		}
+		return false;
     }
     /** public void scrollingBackground(graphics g)
      *  creates a scrolling background with the use 
