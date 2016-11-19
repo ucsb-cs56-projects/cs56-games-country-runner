@@ -108,7 +108,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	//STUB.  This is a placeholder,
 	//each subclass will implement this differently
     }
-
+    public abstract int getScore();
     /** updateCurrentImage
      * Each class that ISA sprite will have
      * its own way of updating its image
