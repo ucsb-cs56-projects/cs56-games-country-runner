@@ -87,7 +87,7 @@ public class Obstacle extends Sprite
                 if (this.getX() == 600)
                 {
                     this.setX(initialXPosition);
-                    incrementScore();
+                    score++;
                     counter = randomWithRange(occurance, occurance+100);
                     waiting = true;
                 }

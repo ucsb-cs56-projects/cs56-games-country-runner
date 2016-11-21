@@ -39,7 +39,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     //by the tile sizes
     public int xTileSize;
     public int yTileSize;
-
+    public int score;
     /*
       --------------------------------------------------------------------
       IMPLEMENTATION NOTE:
@@ -116,7 +116,9 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	    }
 	return false;
     }
-    public abstract int getScore();
+    public int getScore(){
+	return score;
+    }
     /** updateCurrentImage
      * Each class that ISA sprite will have
      * its own way of updating its image
@@ -206,4 +208,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	this.currentImage = newImage;
     }
     public abstract void incrementScore();
+    public void setScore(int score){
+	this.score = score;
+    }
 }
