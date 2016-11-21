@@ -51,7 +51,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     
     //Score Overlay
     JLabel scoreLabel;
-    int score;
+    int score = 0;
     
     
     /** Constructor
@@ -72,8 +72,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	//These booleans determine the "state" of the JPanel/game
     	this.gameIsRunning = true;
     	this.upArrowPressed = false;
-    	this.runnerHasCollided = false;
-        this.score = 0;
+x    	this.runnerHasCollided = false;
 	
 	
 	//background
@@ -199,7 +198,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			superJumpPressed = false;
 		    }
 		//update scores
-		    //TODO: re formulate how the score is called
+	        //TODO: re formulate how the score is called
 		score = 0;
 		for(Sprite thisObstacle : gameObstacles)
 		{
@@ -242,50 +241,49 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	if(runner.isDying())
 	    {
 		runner.updateDeath();
-	        g2.drawImage(runner.getCurrentImage(), (int)runner.returnXPosition(),
-			     (int)runner.getY(), null);
+		g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
+		for(Sprite thisObstacle : gameObstacles){
+		    g2.drawImage(thisObstacle.getCurrentImage(), (int)thisObstacle.getX(), (int)thisObstacle.getY(), null);
+		}
 		if(runner.getY() > GROUND){
 		    runner.setDying(false);
 		    this.gameIsRunning = false;
 		    AudioPlayer.player.stop(BackgroundMusic.song);
-		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(score));
+		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(this.score));
 		}
 	    }
 	else{
+	    runner.updateCurrentImage();
+	    runner.updateCurrentPosition();
+	    g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
 	    
-	    //Update the sprites' positions	    
-	    runner.updateCurrentPosition();	    
-	    for(Sprite thisObstacle : gameObstacles){
-	    	thisObstacle.updateCurrentPosition();
-	    }
-
 	    //Update the sprites' images and draws them on the panel
 	    //Note that at the beginning of execution of the JPanel,
 	    //the sprites are put on the ground, and after that they
 	    //handle their own repositionings internally.  We do not
 	    //explicitly position them in the JPanel
-	    
-	    runner.updateCurrentImage();	    
-	    for(Sprite thisObstacle: gameObstacles){
-	    	thisObstacle.updateCurrentImage();
-	    }	
-	    //draw images
-	    g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);	    
-	    for(Sprite thisObstacle : gameObstacles){
-	    	g2.drawImage(thisObstacle.getCurrentImage(), (int)thisObstacle.getX(), (int)thisObstacle.getY(), null);
-
+	    ArrayList<Bullet> bullets = runner.getBullets();
+	    for(int i = 0; i < bullets.size(); i++){
+		runner.updateBulletPosition();
+	    }	    
+	    for(int i = 0; i < gameObstacles.size(); i++){
+		Sprite thisObstacle = gameObstacles.get(i);
+		thisObstacle.updateCurrentImage();
+		thisObstacle.updateCurrentPosition();
+		g2.drawImage(thisObstacle.getCurrentImage(), (int)thisObstacle.getX(), (int)thisObstacle.getY(), null);
+	        for(int j = 0; j < bullets.size(); j++)
+		    if(thisObstacle.collides(bullets.get(j))){
+			thisObstacle.incrementScore();
+			thisObstacle.setX(-100);
+			bullets.remove(j);
+			//Sprite makeObstacle = Sprite.randomlyCreateSprite();
+		    }	    
 	    }
-
-	    //draw each bullet
-	    //ArrayList<Bullet> bullets = runner.getBullets();
-	    //for(int i = 0; i < bullets.size(); i++)
-	    // {
-	    //	g2.drawImage(bullets.get(i).returnImage(), (int)bullets.get(i).getX(),
-	    //		     (int)bullets.get(i).getY(), null);
-	    // }
-	    scoreLabel.setText("Score: " + Integer.toString(score));
-	    
-	    
+	    for(int i = 0; i < bullets.size(); i++){
+		g2.drawImage(bullets.get(i).getCurrentImage(), (int)bullets.get(i).getX(), (int)bullets.get(i).getY(), null);
+		g2.drawString("BULLET", (int)bullets.get(i).getX(), (int)bullets.get(i).getY());
+	    }
+	    scoreLabel.setText("Score: " + Integer.toString(this.score));
 	}
     }
     

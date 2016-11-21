@@ -31,9 +31,9 @@ public class Runner extends Sprite
     private double yPosition = 10;
     public double xVel = 0;
     //the amount of time that each bullet can be fired in milliseconds
-    private static final int fireInterval = 1000;
+    private static final double fireInterval = 2500;
     //holds the time of when a bullet was last fired
-    private static int lastFire = 0; 
+    private static double lastFire = 0; 
     //Several booleans that help determine his current
     //image and position
     //This constitutes the runner's "state"
@@ -67,7 +67,7 @@ public class Runner extends Sprite
     {
     	//Open the spriteSheet
     	super(100, 109, 480, avatar);
-	
+	bulletList = new ArrayList<Bullet>();
 	//Set up his initial state
     	this.running = true;
     	this.jumping = false;
@@ -110,7 +110,7 @@ public class Runner extends Sprite
 	    Bullet bullet = new Bullet(this);
 	    bulletList.add(bullet);
 	    //updates lastFire time because fire was called
-	    lastFire = (int)System.currentTimeMillis();
+	    lastFire = System.currentTimeMillis();
 	}
     }
     /** return Xposition() 

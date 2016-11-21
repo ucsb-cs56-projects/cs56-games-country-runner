@@ -39,6 +39,9 @@ public class Raccoon extends Obstacle
 		counter = randomWithRange(occurance, occurance+100);
         score = 0;
     }
+    public void incrementScore(){
+	score++;
+    }
 }
 
 

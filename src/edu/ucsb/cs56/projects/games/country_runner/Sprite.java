@@ -108,6 +108,14 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	//STUB.  This is a placeholder,
 	//each subclass will implement this differently
     }
+    public boolean collides(Bullet b){
+	if (b.getY()+ b.getHeight() >= this.getY())
+	    {
+		if ((this.getX()+50>b.getX()) && ((this.getX()-50) <b.getX()))
+		    return true;
+	    }
+	return false;
+    }
     public abstract int getScore();
     /** updateCurrentImage
      * Each class that ISA sprite will have
@@ -197,4 +205,5 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     {
 	this.currentImage = newImage;
     }
+    public abstract void incrementScore();
 }
