@@ -47,7 +47,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
     
     //initObstalcles(sheep, snail, racoon, panda)
-    ArrayList<Sprite> gameObstacles = initObstacles(10, 1, 1, 1);
+    ArrayList<Sprite> gameObstacles = initObstacles(4, 1, 1, 1);
     
     //Score Overlay
     JLabel scoreLabel;
@@ -72,7 +72,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	//These booleans determine the "state" of the JPanel/game
     	this.gameIsRunning = true;
     	this.upArrowPressed = false;
-x    	this.runnerHasCollided = false;
+    	this.runnerHasCollided = false;
 	
 	
 	//background
@@ -280,8 +280,7 @@ x    	this.runnerHasCollided = false;
 		    }	    
 	    }
 	    for(int i = 0; i < bullets.size(); i++){
-		g2.drawImage(bullets.get(i).getCurrentImage(), (int)bullets.get(i).getX(), (int)bullets.get(i).getY(), null);
-		g2.drawString("BULLET", (int)bullets.get(i).getX(), (int)bullets.get(i).getY());
+		g2.drawImage(runner.getCurrentImage(), (int)bullets.get(i).getX(), (int)bullets.get(i).getY() - (int)runner.getHeight() / 2, null);
 	    }
 	    scoreLabel.setText("Score: " + Integer.toString(this.score));
 	}

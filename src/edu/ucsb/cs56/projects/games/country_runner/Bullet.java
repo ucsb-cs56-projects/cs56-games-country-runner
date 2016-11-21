@@ -21,7 +21,7 @@ public class Bullet extends Obstacle
     //the speed of bullet 
     private static final double speed = 15.0;
     //the amount of time that each bullet can be fired in milliseconds
-    private static final int fireInterval = 10;
+    private static final int fireInterval = 1000;
     //holds the time of when a bullet was last fired
     private static int lastFire = 0; 
     

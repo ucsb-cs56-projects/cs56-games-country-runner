@@ -31,7 +31,7 @@ public class Runner extends Sprite
     private double yPosition = 10;
     public double xVel = 0;
     //the amount of time that each bullet can be fired in milliseconds
-    private static final double fireInterval = 2500;
+    private static final double fireInterval = 2000;
     //holds the time of when a bullet was last fired
     private static double lastFire = 0; 
     //Several booleans that help determine his current
@@ -366,6 +366,7 @@ public class Runner extends Sprite
 	    return;
 	}
     }
+    public void incrementScore(){}
 }
 
 

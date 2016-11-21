@@ -42,7 +42,8 @@ public class CountryRunnerTitleScreen extends JPanel{
         // instructions
         final String instructions = "Avoid all obstacles that come into the screen.\n" + "Could be a stationary scarecrow, or a dashing sheep.\n" +
 	    "Some crows could be overhead so time your jumps carefully.\n" +
-	    "Press the Up arrow key to jump, Left/Right arrow keys to move forward or backward.\n";
+	    "Press the Up arrow key to jump, Left/Right arrow keys to move forward or backward.\n" +
+	    "Press the space bar to shoot an image of yourself to kill the obstacles!";
 
         //set layout manager for this panel
         setLayout(new GridLayout(2,1));
