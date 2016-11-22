@@ -4,9 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.io.IOException;
-/**Draws the Bullet object on the screen
- * @author Christina Morris, Mathew Glodack
- * @author Sidney Rhoads, Tom Craig
+/**Represents the Bullet object on the CountryRunnerJPanel
  * @author William Huang, Ray Ouyang
  * @version cs56, F16, proj2
  *
@@ -17,7 +15,7 @@ public class Bullet extends Obstacle
     private static double initialXPosition;
     private static int xPosition;
     private static int yPosition;
-    private double t;
+    private double t; //time
     //the speed of bullet 
     private static final double speed = 15.0;
     //the amount of time that each bullet can be fired in milliseconds
@@ -47,12 +45,17 @@ public class Bullet extends Obstacle
 	    return true;
 	return false;
     }
+    /** getScore 
+     *  returns 0. This should probably change 
+     *  and return the actual score
+     *  but that will affect CountryRunnerJPanel 
+     */
+    public int getScore(){
+	return 0;
+    }
     /** updateCurrentPosition
      * Moves the bullet to left until it is off screen.
      */
-    public int getScore(){
-        return 0;
-    }
     public void updateCurrentPosition()
     {
 	if(!offTheScreen())

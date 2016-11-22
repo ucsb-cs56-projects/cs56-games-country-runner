@@ -27,13 +27,15 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     boolean runnerHasCollided;
     boolean superJumpPressed;
     boolean fired;
+    //booleans for determining what to draw
+    //when a certain score is reached
     boolean easy;
     boolean medium;
     boolean impossible;
     boolean drawingLevel = false;
     boolean scoreWasTen = false;
     boolean scoreWasTwenty = false;
-    boolean scoreWasForty = false;
+    boolean scoreWasFive = false;
     //GROUND is for positioning
     //ths sprites.  Note that this
     //is also defined in the Sprite class
@@ -210,37 +212,39 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	        //TODO: re formulate how the score is called
 		score = levelsDefeated*5;
 		for(Sprite thisObstacle : gameObstacles)
-		{
+		    {
 			score = score + thisObstacle.getScore();
-		}
+		    }
 		if (this.runnerHasCollided(gameObstacles, runner))
 		    {
 			runner.death();
 		    }
-		if(score == 5 && scoreWasTen == false){
+		//deal with if a certain score has been reached in order
+		//to increase the difficulty of the game
+		if(score == 5 && scoreWasFive == false){
 		    int amountToAdd = 2;
 		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1 , amountToAdd);
 		    easy = true;
 		    drawingLevel = true;
-		    scoreWasTen = true;
+		    scoreWasFive = true;
 		    levelsDefeated = 1;
 		}
-		else if(score == 10 && scoreWasTwenty == false){
+		else if(score == 10 && scoreWasTen == false){
 		    int amountToAdd = 3;
 		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1 , amountToAdd);
 		    easy = false;
 		    medium = true;
 		    drawingLevel = true;
-		    scoreWasTwenty = true;
+		    scoreWasTen = true;
 		    levelsDefeated = 2;
 		}
-		else if(score == 20 && scoreWasForty == false){
+		else if(score == 20 && scoreWasTwenty == false){
 		    int amountToAdd = 4;
 		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1 , amountToAdd);
 		    medium = false;
 		    impossible = true;
 		    drawingLevel = true;
-		    scoreWasForty = true;
+		    scoreWasTwenty = true;
     		    levelsDefeated = 4;
 		}
 		//Every iteration of the main loop, we want
@@ -275,9 +279,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	    {
 		runner.updateDeath();
 		g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
+		//draw the Obstacles but don't update their position
 		for(Sprite thisObstacle : gameObstacles){
 		    g2.drawImage(thisObstacle.getCurrentImage(), (int)thisObstacle.getX(), (int)thisObstacle.getY(), null);
 		}
+		//when he reaches the bottom of the screen, animation ends
 		if(runner.getY() > GROUND){
 		    runner.setDying(false);
 		    this.gameIsRunning = false;
@@ -286,6 +292,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		}
 	    }
 	else{
+	    //if you reach pass the very beginning 
 	    if(drawingLevel && easy){
 		drawingPosition += 20;
 		g2.drawString("LEVEL 2!", drawingPosition, 200);
@@ -296,7 +303,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			drawingPosition = 0;
 			drawingLevel = false;
 		    }
-	    }
+	    }//if you pass the first level
 	    else if(drawingLevel && medium){
 		drawingPosition += 20;
 		g2.drawString("LEVEL 3!", drawingPosition, 200);
@@ -307,7 +314,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			drawingLevel = false;
 			easy = false;
 		    }
-	    }
+	    }//if you pass the medium level, Congrats and Good luck
 	    else if(drawingLevel && impossible){
 		drawingPosition += 20;
 		g2.drawString("GOOD LUCK!", drawingPosition, 200);
@@ -319,59 +326,66 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 			easy = false;
 		    }
 	    }
+	    //if no level is passed, drawRegularly
 	    else
 	        drawRegularly(g2);
 	}
     }
+    /** drawWithoutUpdating
+     *  @param Graphics2D g2
+     *  will practically pause the game (because
+     *  the obstacles are reset) and draw the runner
+     *  as the level increases and difficulty increases
+     */
     public void drawWithoutUpdating(Graphics2D g2){
 	runner.updateCurrentImage();
 	g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
-	
-	//Update the sprites' images and draws them on the panel
-	//Note that at the beginning of execution of the JPanel,
-	//the sprites are put on the ground, and after that they
-	//handle their own repositionings internally.  We do not
-	//explicitly position them in the JPanel
-	ArrayList<Bullet> bullets = runner.getBullets();
-	for(int i = 0; i < gameObstacles.size(); i++){
-	    Sprite thisObstacle = gameObstacles.get(i);
-	    thisObstacle.updateCurrentImage();
-	    g2.drawImage(thisObstacle.getCurrentImage(), (int)thisObstacle.getX(), (int)thisObstacle.getY(), null);   
-	}
 	scoreLabel.setText("Score: " + Integer.toString(this.score));
     }
+    /** drawRegularly
+     *  @param Graphics2D g2
+     *  will draw the obstacles, bullets, and runners
+     *  because no level has been passed 
+     */ 
     public void drawRegularly(Graphics2D g2){
+	//update the currentImage creates animation
 	runner.updateCurrentImage();
+	//update runner's position and draw the runner
 	runner.updateCurrentPosition();
 	g2.drawImage(runner.getCurrentImage(), (int)runner.getX(), (int)runner.getY(), null);
-	
-	//Update the sprites' images and draws them on the panel
-	//Note that at the beginning of execution of the JPanel,
-	//the sprites are put on the ground, and after that they
-	//handle their own repositionings internally.  We do not
-	//explicitly position them in the JPanel
+	//update the bulletPosition
 	ArrayList<Bullet> bullets = runner.getBullets();
 	for(int i = 0; i < bullets.size(); i++){
 	    runner.updateBulletPosition();
 	}
+	//update the sprite position and draw them
 	for(int i = 0; i < gameObstacles.size(); i++){
 	    Sprite thisObstacle = gameObstacles.get(i);
 	    thisObstacle.updateCurrentImage();
 	    thisObstacle.updateCurrentPosition();
 	    g2.drawImage(thisObstacle.getCurrentImage(), (int)thisObstacle.getX(), (int)thisObstacle.getY(), null);
-	    for(int j = 0; j < bullets.size(); j++)
-		if(thisObstacle.collides(bullets.get(j))){
-		    thisObstacle.incrementScore();
-		    thisObstacle.setX(-100);
+	    for(int j = 0; j < bullets.size(); j++)//check if any of the bullets collides with an obstacle
+		if(thisObstacle.collides(bullets.get(j))){ 
+		    thisObstacle.incrementScore(); //add score when shot and killed
+		    thisObstacle.setX(-100); //will fundamentally reset the obstacle when killed
 		    bullets.remove(j);
-		    //Sprite makeObstacle = Sprite.randomlyCreateSprite();
 		}	    
 	}
+	//draw the Bullet but could not figure out why
+	//cannot draw the bulletImage so using runner image instead
+	//as it adds some humor
 	for(int i = 0; i < bullets.size(); i++){
 	    g2.drawImage(runner.getCurrentImage(), (int)bullets.get(i).getX(), (int)bullets.get(i).getY() - (int)runner.getHeight() / 2, null);
 	}
+	//draw the score
 	scoreLabel.setText("Score: " + Integer.toString(this.score));
     }
+    /** runnerHasCollided
+     *  @param Runner r
+     *  @param ArrayList<Sprite> gameObstacles
+     *  will check if the runner has collided with an object
+     *  and return false or true based on their position
+     */
     public boolean runnerHasCollided(ArrayList<Sprite> gameObstacles, Runner r )
     {
 	for(Sprite thisObstacle : gameObstacles)
@@ -379,13 +393,20 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if ((r.getY() + r.getHeight()) >= thisObstacle.getY())
 		    {
 			if ((thisObstacle.getX()+50>r.getX()) && ((thisObstacle.getX()-50) <r.getX()))
-				{
-				    return true;
-				}
+			    {
+				return true;
+			    }
 		    }
-		}
-		return false;
+	    }
+	return false;
     }
+    /** initObstacles 
+     *  @param sheepNum
+     *  @param snailNum
+     *  @param raccoonNum
+     *  @param pandaNum
+     *  will initiate the amount of obstacles that the user wants
+     */
     private ArrayList<Sprite> initObstacles(int sheepNum, int snailNum, int raccoonNum, int pandaNum){
     	Sheep makeSheep;
     	Snail makeSnail;
@@ -394,27 +415,38 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	Sprite temp;
     	ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();
     	for(int i = 0; i < sheepNum; i++){
-    		makeSheep = new Sheep(CountryRunnerTitleScreen.difficulty);
-    		temp = (Sprite) makeSheep;
-    		makeObstacle.add( temp );
+	    makeSheep = new Sheep(CountryRunnerTitleScreen.difficulty);
+	    temp = (Sprite) makeSheep;
+	    makeObstacle.add( temp );
     	}
     	for(int i = 0; i < snailNum; i++){
-    		makeSnail = new Snail(CountryRunnerTitleScreen.difficulty);
-    		temp = (Sprite) makeSnail;
-    		makeObstacle.add( temp );
+	    makeSnail = new Snail(CountryRunnerTitleScreen.difficulty);
+	    temp = (Sprite) makeSnail;
+	    makeObstacle.add( temp );
     	}
     	for(int i = 0; i < raccoonNum; i++){
-    		makeRaccoon = new Raccoon(CountryRunnerTitleScreen.difficulty);
-    		temp = (Sprite) makeRaccoon;
-    		makeObstacle.add( temp );
+	    makeRaccoon = new Raccoon(CountryRunnerTitleScreen.difficulty);
+	    temp = (Sprite) makeRaccoon;
+	    makeObstacle.add( temp );
     	}
     	for(int i = 0; i < pandaNum; i++){
-    		makePanda = new Panda(CountryRunnerTitleScreen.difficulty);
-    		temp = (Sprite) makePanda;
-    		makeObstacle.add( temp );
+	    makePanda = new Panda(CountryRunnerTitleScreen.difficulty);
+	    temp = (Sprite) makePanda;
+	    makeObstacle.add( temp );
     	}
     	return makeObstacle;
     }
+    /** makeNewSpriteArray
+     *  @param sheepNum
+     *  @param snailNum
+     *  @param raccoonNum
+     *  @param pandaNum
+     *  @param amountToAdd
+     *  This method kind of sucks and should not make an entirely new array 
+     *  as it is a lot of work but this method is called when the level changes
+     *  and will make a new array with the amount of number of obstacles to add
+     *  to the screen
+     */ 
     private ArrayList<Sprite> makeNewSpriteArray(int sheepNum, int snailNum, int raccoonNum, int pandaNum , int amountToAdd)
     {
 	ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();
