@@ -24,7 +24,8 @@ public class CountryRunnerTitleScreen extends JPanel{
     public static int changeBackground = 1;
     public static String avatar = "Cowboy";
     public static int difficulty = 1;
-
+    /** Constructor that sets up the main menu of the Game
+     */
     public CountryRunnerTitleScreen(){
 	
 	this.repaint();
@@ -158,6 +159,9 @@ public class CountryRunnerTitleScreen extends JPanel{
 		}
 	    });
     }
+    /** paintComponent paints the background for the main menu screen
+     *  @param g
+     */
     public void paintComponent(Graphics g){
 	
 	Image im = new ImageIcon("res/newbackground.jpg").getImage();

@@ -10,11 +10,19 @@ public class Background {
  
     private int x;
     private int y;
- 
+    /** Background Constructor
+     *  constructs a new Background at 0,0 with imageName
+     *  @param imageName
+     */
     public Background(String imageName) {
         this(0,0,imageName);
     }
- 
+    /** Background Constructor 
+     *  constructs a new Background at (x,y) with imageName
+     *  @param x
+     *  @param y
+     *  @param z
+     */
     public Background(int x, int y, String imageName) {
         this.x = x;
         this.y = y;
@@ -48,20 +56,30 @@ public class Background {
         }
  
     }
- 
+    /** setX sets the the x coordinate of the Background
+     *  @param x
+     */ 
     public void setX(int x) {
         this.x = x;
     }
+    /** getX returns the x coordinate of the Background
+     */
     public int getX() {
         return this.x;
     }
+    /** getY returns the y coordinate of the Background
+     */
     public int getY() {
         return this.y;
     }
+    /** getImageWidth returns the image width of the background
+     */
     public int getImageWidth() {
         return image.getWidth();
     }
- 
+    /** loadBackgrounds loads the backgrounds into an array
+     *  of strings and then returns it
+     */ 
     public static String[] loadBackgrounds() {
 	//Load background images
 	String[] backgrounds = new String[3];

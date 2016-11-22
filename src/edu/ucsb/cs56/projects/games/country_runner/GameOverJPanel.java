@@ -17,7 +17,10 @@ public class GameOverJPanel extends JPanel {
     
     private int score;
     public static String name;
-
+    /** Constructor that sets up the Game Over Screen, which 
+     *  occurs when the player runs into an obstacle
+     *  @param score
+     */
     public GameOverJPanel(int score) {
 	this.score = score;
 	
@@ -74,7 +77,8 @@ public class GameOverJPanel extends JPanel {
 	}
 	
     }
-
+    /** paintComponent paints the Background Image
+     */
     public void paintComponent(Graphics g){
         g2 = (Graphics2D) g;
         g.drawImage(backgroundImage, 0, 0, this);

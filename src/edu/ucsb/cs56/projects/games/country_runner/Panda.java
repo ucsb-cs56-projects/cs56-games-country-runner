@@ -2,16 +2,21 @@ package edu.ucsb.cs56.projects.games.country_runner;
 import java.lang.Math;
 
 /**Draws the Sheep object on the screen
+ * Obstacles have a score but if you want to,
+ * you can create a static int score, which will be
+ * easier to maintain and thus easier to load scores
  * @author Christina Morris, Mathew Glodack
  * @author Sidney Rhoads, Tom Craig
- * @version cs56, W14, proj2
+ * @author William Huang, Ray Ouyang
+ * @version cs56, F16, proj2
  *
  */
 public class Panda extends Obstacle
 {
     /** Default Constructor makes the Sheep.
      * sets up the spriteSheet and fills the
-     * sequences with images from it
+     * sequences with images from it with a certain difficulty
+     * @param int difficulty
      */
     public Panda(int difficulty)
     {
@@ -43,6 +48,8 @@ public class Panda extends Obstacle
 		counter = randomWithRange(occurance, occurance+100);
         score = 0;
     }
+    /** incrementScore increments the Panda's score by 1
+     */
     public void incrementScore(){
 	score++;
     }

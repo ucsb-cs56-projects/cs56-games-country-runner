@@ -1,10 +1,11 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 import java.lang.Math;
 
-/**Draws the Sheep object on the screen
- * @author Christina Morris, Mathew Glodack
- * @author Sidney Rhoads, Tom Craig
- * @version cs56, W14, proj2
+/**Obstacle class that the will be extended by classes that 
+ * represent obstacles for the runner in the game such as 
+ * Sheep, raccoon, etc
+ * @author William Huang, Ray Ouyang
+ * @version cs56, F16, proj2
  *
  */
 public class Obstacle extends Sprite
@@ -20,7 +21,11 @@ public class Obstacle extends Sprite
     //holds score for amount of times user jumped over this object
     /** Default Constructor makes the Sheep.
      * sets up the spriteSheet and fills the
-     * sequences with images from it
+     * sequences with images from it 
+     * @param xInitial tile size
+     * @param yInitial tile size
+     * @param initial xPosition 
+     * @param the sheet name
      */
     int score;
     public Obstacle(int xInit, 
@@ -44,18 +49,23 @@ public class Obstacle extends Sprite
         score = 0;
     }
 
-	/** updateCurrentImage
-	 * Moves to the next image in the running sequence
+    /** updateCurrentImage
+     * Moves to the next image in the running sequence
      */
-	public void updateCurrentImage()
-	{
-		setCurrentImage(runningSequence.getNextImage());
-	}
-
+    public void updateCurrentImage()
+    {
+	setCurrentImage(runningSequence.getNextImage());
+    }
+    /** getScore returns the score of the obstacle
+     */
     public int getScore() {
         return score;
     }
-
+    /** randomWithRange returns a random number given a maximum
+     *  and a minimum to set the range
+     *  @param maximum
+     *  @param minimum
+     */
     int randomWithRange(int min, int max)
     {
 	int range = (max - min) + 1;     
@@ -94,6 +104,8 @@ public class Obstacle extends Sprite
             }
         }
     }
+    /** incrementScore increments the score by 1
+     */
     public void incrementScore(){
 	score++;
     }

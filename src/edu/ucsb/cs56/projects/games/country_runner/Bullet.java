@@ -26,7 +26,9 @@ public class Bullet extends Obstacle
     
     /** Default Constructor makes a Bullet.
      * sets up the spriteSheet and fills the
-     * sequences with images from it
+     * sequences with images from it but needs the runner passed
+     * as a parameter in order to get its current position
+     * @param runner
      */
     public Bullet(Runner runner)
     {

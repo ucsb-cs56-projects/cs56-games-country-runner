@@ -5,7 +5,8 @@ import javax.swing.*;
 /** CountryRunnerGui
  * @author Mathew Glodack, Christina Morris
  * @author Tom Craig, Sidney Rhoads
- * @version cs56, W14, proj2
+ * @author William Huang, Ray Ouyang
+ * @version cs56, W16, proj2
  *
  * Creates a JFrame for CounterRunnerJPanel.
  * This represents the actual on screen window,
@@ -36,12 +37,17 @@ public class CountryRunnerGui
 		mainWindow.add(cp);
 		mainWindow.setVisible(true);
     }
-
+    /** main creates a new CountryRunnerGUI
+     *  @param args
+     */
     public static void main(String [] args)
     {
         new CountryRunnerGui();
     }
-
+    /** setCurrentPanelTo sets the current panel to
+     *  what you want it to be
+     *  @param panel
+     */
     public static void setCurrentPanelTo(JPanel panel){
         mainWindow.setContentPane(panel);
         mainWindow.revalidate();
