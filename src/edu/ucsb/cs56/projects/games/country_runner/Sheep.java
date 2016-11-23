@@ -9,6 +9,10 @@ import java.lang.Math;
  */
 public class Sheep extends Obstacle
 {
+    /** Sheep Constructor creates a sheep object
+     *  based on the passed parameter difficulty
+     *  @param difficulty is converted based on int
+     */ 
     public Sheep(int difficulty)
     {
     	//Call super constructor
@@ -63,6 +67,8 @@ public class Sheep extends Obstacle
 	waiting = true;
 	counter = randomWithRange(occurance, occurance+100);
     }
+    /** incrementScore increments the score by one
+     */
     public void incrementScore(){
 	score++;
     }

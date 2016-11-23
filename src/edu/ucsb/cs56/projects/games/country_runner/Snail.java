@@ -9,6 +9,11 @@ import java.lang.Math;
  */
 public class Snail extends Obstacle
 {
+    /** Snail Constructor that creates a new Snail object
+     *  , which calls the Obstacle constructor,
+     *  and bases difciculty based on the int passed
+     *  @param difficulty determines speed and occurance
+     */
     public Snail(int difficulty)
     {
     	//Call super constructor
@@ -35,6 +40,8 @@ public class Snail extends Obstacle
 		counter = randomWithRange(occurance, occurance+100);
 	    score = 0;	
     }
+    /** incrementScore increments the score by 1
+     */
     public void incrementScore(){
 	score++;
     }

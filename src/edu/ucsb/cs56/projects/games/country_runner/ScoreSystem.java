@@ -12,9 +12,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ScoreSystem extends ArrayList<Score> {
-
+    /** Default constructor */
     public ScoreSystem() {}
-
+    /** loadScores 
+     *  loads the score into a file that is in
+     *  the data folder unless there is none.
+     *  If there is none, it will create a new file 
+     *  and put the score into the new file
+     */
     public void loadScores() throws java.io.IOException {
 
         File file = new File("data/HighScores");
@@ -32,9 +37,14 @@ public class ScoreSystem extends ArrayList<Score> {
             }
         }
     }
-
+    /** addScore adds a new score 
+     *  @param score
+     */	
     public void addScore(Score score) { this.add(score); }
-
+    /** saveScores saves the score into the file
+     *  and sorts the score in order to display the
+     *  highest score
+     */
     public void saveScores() throws java.io.IOException {
 	
         int size = this.size();
@@ -68,7 +78,11 @@ public class ScoreSystem extends ArrayList<Score> {
             e.printStackTrace();
         }
     }
-    
+
+    /** toStringFromMemory 
+     *  converts the ScoreSystem into a
+     *  String while at the same sorting it
+     */
     public String toStringFromMemory() {
 	
         //sort currente arraylist in decreasing order
@@ -86,7 +100,9 @@ public class ScoreSystem extends ArrayList<Score> {
 
         return result;
     }
-
+    /** toStringFromFile loads the scores and then
+     *  uses toStringFromMemory and returns that result
+     */
     public String toStringFromFile() throws java.io.IOException {
         try{
             this.loadScores();

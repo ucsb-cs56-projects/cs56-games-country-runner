@@ -20,7 +20,9 @@ public class SpriteSequence extends ArrayList<BufferedImage>
     //Index to "remember" where we are in the array
     //Meaning the lat image we pulled from the array
     private int currentIndex;
-
+    /** SpriteSequence creates a new SpriteSequence with
+     *  the currentIndex of the ArrayList to be 0
+     */
     //Constructor just sets the index to 0
     public SpriteSequence()
     {
@@ -28,7 +30,8 @@ public class SpriteSequence extends ArrayList<BufferedImage>
     }
 
     /** addImage
-     * Adds an image to the array. 'nuff said
+     * Adds an image to the array and returns true if it occurs
+     * @param newImage is the new Image you want to add to the ArrayList
      */
     public boolean addImage(BufferedImage newImage)
     {
