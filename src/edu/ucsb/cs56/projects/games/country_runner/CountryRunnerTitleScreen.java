@@ -24,7 +24,8 @@ public class CountryRunnerTitleScreen extends JPanel{
     public static int changeBackground = 1;
     public static String avatar = "Cowboy";
     public static int difficulty = 1;
-
+    /** Constructor that sets up the main menu of the Game
+     */
     public CountryRunnerTitleScreen(){
 	
 	this.repaint();
@@ -42,7 +43,9 @@ public class CountryRunnerTitleScreen extends JPanel{
         // instructions
         final String instructions = "Avoid all obstacles that come into the screen.\n" + "Could be a stationary scarecrow, or a dashing sheep.\n" +
 	    "Some crows could be overhead so time your jumps carefully.\n" +
-	    "Press the Up arrow key to jump, Left/Right arrow keys to move forward or backward.\n";
+	    "Press the Up arrow key to jump, Left/Right arrow keys to move forward or backward.\n" +
+	    "Press the space bar to use your magical powers and" +
+	    "shoot an image of yourself to kill the obstacles!";
 
         //set layout manager for this panel
         setLayout(new GridLayout(2,1));
@@ -156,6 +159,9 @@ public class CountryRunnerTitleScreen extends JPanel{
 		}
 	    });
     }
+    /** paintComponent paints the background for the main menu screen
+     *  @param g
+     */
     public void paintComponent(Graphics g){
 	
 	Image im = new ImageIcon("res/newbackground.jpg").getImage();

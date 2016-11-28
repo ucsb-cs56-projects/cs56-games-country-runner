@@ -35,27 +35,41 @@ public class GeneralPathWrapper implements Shape
     
     public GeneralPathWrapper() {gp = new GeneralPath();}
 
-    /** If we already have a GeneralPath, we can wrap it. */
+    /** If we already have a GeneralPath, we can wrap it with the parameter.
+     *  @param General Path gp
+     */
     public GeneralPathWrapper(GeneralPath gp) {this.gp = gp;}
 
     /**
-       Tests if the specified coordinates are inside the boundary of the
+       Get tests if the specified coordinates are inside the boundary of the
        Shape.
     */
    
     public GeneralPath get() {return gp;}
+    /** 
+     *	Set sets the General Path to the parameter passed in
+     *  @param General Path gp
+     */
     public void set(GeneralPath gp) {this.gp = gp;}
-
+    /** contains sees if gp contains the point
+     *  @param x coordinate
+     *  @param y coordinate
+     */
     public boolean contains(double x, double y) { return gp.contains(x,y); }
     
     /** Tests if the interior of the Shape entirely contains the
-     * specified rectangular area.
+     *  specified rectangular area.
+     *  @param x coordinate
+     *  @param y coordinate
+     *  @param width
+     *  @param height
      */
 
     public boolean contains(double x, double y, double w, double h) { return gp.contains(x,y,w,h); }
     
     /** Tests if a specified Point2D is inside the boundary of
-     * the Shape.
+     *  the Shape.
+     *  @param point2D p
      */
 
     public boolean contains(Point2D p) { return gp.contains(p); }
@@ -63,6 +77,7 @@ public class GeneralPathWrapper implements Shape
     /**
        Tests if the interior of the Shape entirely contains the
        specified Rectangle2D.
+       * @param rectangle r
     */
     
     public boolean contains(Rectangle2D r) { return gp.contains(r); }
@@ -82,6 +97,7 @@ public class GeneralPathWrapper implements Shape
     /** Returns an iterator object that iterates along the
      * Shape boundary and provides access to the geometry of
      * the Shape outline.
+     * @param AffineTransform at
      */
 
     public PathIterator getPathIterator(AffineTransform at) { return gp.getPathIterator( at); }
@@ -89,18 +105,25 @@ public class GeneralPathWrapper implements Shape
     /** Returns an iterator object that iterates along the
      * Shape boundary and provides access to a flattened view
      * of the Shape outline geometry.
+     * @param AffineTransform at
+     * @param double flatness
      */
     
     public PathIterator getPathIterator(AffineTransform at, double flatness) { return gp.getPathIterator( at, flatness); }
 
     /** Tests if the interior of the Shape intersects the
      * interior of a specified rectangular area.
+     * @param x coordinate
+     * @param y coordinate
+     * @param width
+     * @param height
      */
 
     public boolean intersects(double x, double y, double w, double h) { return gp.intersects(x, y, w, h);}
 
     /** Tests if the interior of the Shape intersects the interior of
      * a specified Rectangle2D.
+     * @param rectangle r
      */
 
     public boolean intersects(Rectangle2D r) { return gp.intersects(r); }

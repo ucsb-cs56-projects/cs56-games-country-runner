@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 
 /**Sprite an abstract class form which all particular sprites inherit.
  * @author Sidney Rhoads, Tom Craig
- * @version CS56, W14, proj2
+ * @version CS56, F16, proj2
  */
 public abstract class Sprite extends GeneralPathWrapper implements Shape
 {
@@ -39,7 +39,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     //by the tile sizes
     public int xTileSize;
     public int yTileSize;
-
+    public int score;
     /*
       --------------------------------------------------------------------
       IMPLEMENTATION NOTE:
@@ -61,6 +61,10 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
      * each sprite will have
      * Different sprites can have different tile sizes,
      * so we take the tile size as an input
+     * @param xTileSize is the horizontal pixel size of the image / 4
+     * @param yTileSize is the vertical pixel size of the image
+     * @param x position you want it created
+     * @param the file name assuming it is in the res folder
      */
     public Sprite(int xTileSize, int yTileSize, double x, String sheetName)
     {
@@ -90,6 +94,14 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	    }
     }
     //constructor for sprites without spritesheet
+    /** Constructor that tries to construct a sprite without a sprite sheet
+     *  This constructor is never used but was made for a hypothetical class
+     *  but it turns out it was never needed
+     *  @param xTileSize is the horizontal pixel size
+     *  @param yTileSize is the vertical pixel size
+     *  @param x is the initial x Position
+     *  @param y is the initial y Position
+     */
     public Sprite(int xTileSize, int yTileSize, double x, double y)
     {
 	//setting up tile and sizes and position
@@ -108,7 +120,23 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	//STUB.  This is a placeholder,
 	//each subclass will implement this differently
     }
-
+    /** Collides checks if bullet b 
+     *  collides with this Sprite
+     *  @param Bullet b 
+     */
+    public boolean collides(Bullet b){
+	if (b.getY()+ b.getHeight() >= this.getY())
+	    {
+		if ((this.getX()+50>b.getX()) && ((this.getX()-50) <b.getX()))
+		    return true;
+	    }
+	return false;
+    }
+    /** getScore returns the score
+     */
+    public int getScore(){
+	return score;
+    }
     /** updateCurrentImage
      * Each class that ISA sprite will have
      * its own way of updating its image
@@ -140,6 +168,8 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     /** getSubImage
      * Returns a single image, pulled
      * from the sprite sheet
+     * @param xGrid is xGrid size that gets passed in for the SpriteSheet method getSubimage
+     * @param yGrid is the yGrid size that gets passed in for the SpriteSheet method getSubimage
      */
     public BufferedImage getSubImage(int xGrid, int yGrid)
     {
@@ -147,7 +177,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     }
 
     /** getX
-     * @return returns the sprite's current x position on JPanel
+     *  returns the sprite's current x position on JPanel
      *
      */
     public double getX()
@@ -155,7 +185,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	return this.xPosition;
     }
     /** getY
-     * @return returns the sprite's current y position on JPanel
+     *  returns the sprite's current y position on JPanel
      *
      */
     public double getY()
@@ -196,5 +226,15 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     public void setCurrentImage(BufferedImage newImage)
     {
 	this.currentImage = newImage;
+    }
+    /** abstract method that every Sprite class must implement in order
+     *  to keep track of score
+     */
+    public abstract void incrementScore();
+    /** setScore sets the score of the Sprite
+     *  @param int score 
+     */
+    public void setScore(int score){
+	this.score = score;
     }
 }

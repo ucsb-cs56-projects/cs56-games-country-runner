@@ -4,41 +4,39 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.io.IOException;
-/**Draws the Bullet object on the screen
- * @author Christina Morris, Mathew Glodack
- * @author Sidney Rhoads, Tom Craig
+/**Represents the Bullet object on the CountryRunnerJPanel
  * @author William Huang, Ray Ouyang
  * @version cs56, F16, proj2
  *
  */
-public class Bullet extends Sprite
+public class Bullet extends Obstacle
 {
     //initialXPosition goes into the super constructor
     private static double initialXPosition;
     private static int xPosition;
-    private double t;
+    private static int yPosition;
+    private double t; //time
     //the speed of bullet 
     private static final double speed = 15.0;
     //the amount of time that each bullet can be fired in milliseconds
     private static final int fireInterval = 1000;
     //holds the time of when a bullet was last fired
     private static int lastFire = 0; 
-    //Image of the bullet
-    private BufferedImage image;
     
     
     /** Default Constructor makes a Bullet.
      * sets up the spriteSheet and fills the
-     * sequences with images from it
+     * sequences with images from it but needs the runner passed
+     * as a parameter in order to get its current position
+     * @param runner
      */
     public Bullet(Runner runner)
     {
 	//reference a runner so one can get the position from where the bullet is to be shot
-	super(290,74, runner.getX(),runner.getY());
-	try {
-	    image = ImageIO.read(new File("redLaserRay.png"));
-	} catch (IOException e) {
-	}
+	super(290/4,88, runner.getX(),"redLaserRay");
+	this.setX(runner.getX());
+	this.xPosition = (int)runner.getX();
+	this.setY((int)runner.getY() + (int)runner.getHeight() / 2);
     }
     /** public boolean canShoot()
      * determines if you can shoot based on 
@@ -49,12 +47,13 @@ public class Bullet extends Sprite
 	    return true;
 	return false;
     }
-    /** public BufferedImage returnImage()
-     * returns the current image of the bullet
+    /** getScore 
+     *  returns 0. This should probably change 
+     *  and return the actual score
+     *  but that will affect CountryRunnerJPanel 
      */
-    public BufferedImage returnImage()
-    {
-	return image;
+    public int getScore(){
+	return 0;
     }
     /** updateCurrentPosition
      * Moves the bullet to left until it is off screen.
@@ -62,8 +61,7 @@ public class Bullet extends Sprite
     public void updateCurrentPosition()
     {
 	if(!offTheScreen())
-	    if(canShoot())
-		xPosition = (int)(speed * t);
+	    xPosition = xPosition - (int)speed;
 	this.setX(xPosition);
 	t++;
     }
@@ -72,7 +70,7 @@ public class Bullet extends Sprite
      */
     public boolean offTheScreen()
     {
-	if(xPosition - 600 == 0)
+	if((int)this.getX() < 0 || xPosition < 0)
 	    return true;
 	return false;
     }

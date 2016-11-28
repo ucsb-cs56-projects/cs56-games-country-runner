@@ -31,9 +31,9 @@ public class Runner extends Sprite
     private double yPosition = 10;
     public double xVel = 0;
     //the amount of time that each bullet can be fired in milliseconds
-    private static final int fireInterval = 1000;
+    private static final double fireInterval = 2000;
     //holds the time of when a bullet was last fired
-    private static int lastFire = 0; 
+    private static double lastFire = 0; 
     //Several booleans that help determine his current
     //image and position
     //This constitutes the runner's "state"
@@ -61,13 +61,16 @@ public class Runner extends Sprite
     
     /** Default Constructor makes the Runner
      * sets up the spriteSheet and fills the
-     * sequences with images from it
+     * sequences with images from it with a string Avatar
+     * just in case the user wants to change avatars
+     * the avatars include cowboy, cowgirl, and others
+     * @param avatar
      */
     public Runner(String avatar)
     {
     	//Open the spriteSheet
     	super(100, 109, 480, avatar);
-	
+	bulletList = new ArrayList<Bullet>();
 	//Set up his initial state
     	this.running = true;
     	this.jumping = false;
@@ -110,8 +113,15 @@ public class Runner extends Sprite
 	    Bullet bullet = new Bullet(this);
 	    bulletList.add(bullet);
 	    //updates lastFire time because fire was called
-	    lastFire = (int)System.currentTimeMillis();
+	    lastFire = System.currentTimeMillis();
 	}
+    }
+    /** returnScore returns 0 because 
+     *  runner doesn't have a score
+     */
+    public int returnScore()
+    {
+	return 0;
     }
     /** return Xposition() 
      *  return the xPosition variable
@@ -281,7 +291,8 @@ public class Runner extends Sprite
     }
     /** death()
      * Called by JPanel to let the runner
-     * knows the runner is dying.
+     * knows the runner is dying and sets up the death 
+     * animation acceleration and velocity
      */
     public void death(){
 	if(isDying())
@@ -295,6 +306,7 @@ public class Runner extends Sprite
     }
     /** setDying(boolean dying)
      *  sets the private boolean dying
+     *  @param dying 
      */
     public void setDying(boolean dying){
 	this.dying = dying;
@@ -363,6 +375,9 @@ public class Runner extends Sprite
 	    return;
 	}
     }
+    /** incrementScore is abstract so just put it here
+     */
+    public void incrementScore(){}
 }
 
 
