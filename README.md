@@ -8,7 +8,7 @@ project history
  W14 | andrewberls 4pm | thetomcraig, sdrhoads | Running game with obstacles.
  W16 | omeed 5pm       |Dongyang Li, Yueyang Li| Running game with obstacles.
  M16 |                 |Karli Yokotake, Yuxiang (Ethan) Wang | Running game with obstacles.
- F16 |                 | William Huang, Ray Ouyang, Running game with obstacles
+ F16 |                 | William Huang, Ray Ouyang| Running game with obstacles
 ```
 
 #Game Description
