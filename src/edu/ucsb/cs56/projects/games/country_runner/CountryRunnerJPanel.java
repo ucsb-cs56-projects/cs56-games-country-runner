@@ -223,7 +223,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		//to increase the difficulty of the game
 		if(score == 5 && scoreWasFive == false){
 		    int amountToAdd = 2;
-		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1 , amountToAdd);
+		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, amountToAdd);
 		    easy = true;
 		    drawingLevel = true;
 		    scoreWasFive = true;
@@ -231,7 +231,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		}
 		else if(score == 10 && scoreWasTen == false){
 		    int amountToAdd = 3;
-		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1 , amountToAdd);
+		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, amountToAdd);
 		    easy = false;
 		    medium = true;
 		    drawingLevel = true;
@@ -240,7 +240,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		}
 		else if(score == 20 && scoreWasTwenty == false){
 		    int amountToAdd = 4;
-		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1 , 1, amountToAdd);
+		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, amountToAdd);
 		    medium = false;
 		    impossible = true;
 		    drawingLevel = true;
