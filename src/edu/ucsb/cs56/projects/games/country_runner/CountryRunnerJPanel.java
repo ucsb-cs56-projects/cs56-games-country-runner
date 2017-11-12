@@ -240,7 +240,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		}
 		else if(score == 20 && scoreWasTwenty == false){
 		    int amountToAdd = 4;
-		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1 , amountToAdd);
+		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1 , 1, amountToAdd);
 		    medium = false;
 		    impossible = true;
 		    drawingLevel = true;
