@@ -8,9 +8,7 @@ import java.lang.Math;
  */
 public class Platform extends Obstacle {
     public Platform(int difficulty) {
-        super(100, 50, -100, 0, "platformSheet");
-	//testing this out vv
-	this.y = GROUND - 10;
+        super(100, 50, -100.0, "platformSheet");
         switch (difficulty)
         {
             case 1: {
