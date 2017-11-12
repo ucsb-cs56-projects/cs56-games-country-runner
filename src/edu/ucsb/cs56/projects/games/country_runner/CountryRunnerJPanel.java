@@ -437,7 +437,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	}
 	for(int i = 0; i < platformNum; i++){
 	    makePlatform = new Platform(CountryRunnerTitleScreen.difficulty);
-	    temp = (Sprite) makeRaccoon;
+	    temp = (Sprite) makePlatform;
 	    makeObstacle.add( temp );
 	}
     	return makeObstacle;
