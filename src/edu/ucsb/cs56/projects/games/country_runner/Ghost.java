@@ -6,9 +6,9 @@ import java.lang.Math;
  * @version cs56, F17
  *
  */
-public class Platform extends Obstacle {
-    public Platform(int difficulty) {
-        super(150, 120, -100.0, "ghostSheet");
+public class Ghost extends Obstacle {
+    public Ghost(int difficulty) {
+        super(100, 50, -100.0, "ghostSheet"); //for some reason 100:50 is the only ratio that works
 	this.setY(GROUND - 180);
         switch (difficulty)
         {

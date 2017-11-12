@@ -55,7 +55,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     //to add more in the future.
     Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
     
-    //initObstalcles(sheep, snail, racoon, panda, platform) | F17: added platform
+    //initObstalcles(sheep, snail, racoon, panda, ghost) | F17: added flying obstacles
     ArrayList<Sprite> gameObstacles = initObstacles(2, 1, 1, 1, 1);
     
     //Score Overlay
@@ -392,8 +392,10 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	    {
 		if ((r.getY() + r.getHeight()) >= thisObstacle.getY())
 		    {
-			if ((thisObstacle.getX()+50>r.getX()) && ((thisObstacle.getX()-50) <r.getX()))
+			if ((thisObstacle.getX()+50 > r.getX()) && ((thisObstacle.getX()-50) <r.getX()))
 			    {
+				if ((r.getY() > thisObstacle.getY()))
+				    return false;
 				return true;
 			    }
 		    }
@@ -405,14 +407,15 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      *  @param snailNum
      *  @param raccoonNum
      *  @param pandaNum
+     *  @param ghostNum
      *  will initiate the amount of obstacles that the user wants
      */
-    private ArrayList<Sprite> initObstacles(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int platformNum){
+    private ArrayList<Sprite> initObstacles(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum){
     	Sheep makeSheep;
     	Snail makeSnail;
     	Raccoon makeRaccoon;
     	Panda makePanda;
-	Platform makePlatform;
+	Ghost makeGhost;
     	Sprite temp;
     	ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();
     	for(int i = 0; i < sheepNum; i++){
@@ -435,9 +438,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	    temp = (Sprite) makePanda;
 	    makeObstacle.add( temp );
     	}
-	for(int i = 0; i < platformNum; i++){
-	    makePlatform = new Platform(CountryRunnerTitleScreen.difficulty);
-	    temp = (Sprite) makePlatform;
+	for(int i = 0; i < ghostNum; i++){
+	    makeGhost = new Ghost(CountryRunnerTitleScreen.difficulty);
+	    temp = (Sprite) makeGhost;
 	    makeObstacle.add( temp );
 	}
     	return makeObstacle;
@@ -447,14 +450,14 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      *  @param snailNum
      *  @param raccoonNum
      *  @param pandaNum
-     *  @param platformNum
+     *  @param ghostNum
      *  @param amountToAdd
      *  This method kind of sucks and should not make an entirely new array 
      *  as it is a lot of work but this method is called when the level changes
      *  and will make a new array with the amount of number of obstacles to add
      *  to the screen
      */ 
-    private ArrayList<Sprite> makeNewSpriteArray(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int platformNum, int amountToAdd)
+    private ArrayList<Sprite> makeNewSpriteArray(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum, int amountToAdd)
     {
 	ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();
     	for(int i = 0; i < sheepNum; i++){
@@ -490,18 +493,19 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	    Sprite makePanda = new Panda(CountryRunnerTitleScreen.difficulty);
 	    makeObstacle.add(makePanda);
 	}
-    	for(int i = 0; i < platformNum; i++)
+    	for(int i = 0; i < ghostNum; i++)
 	{
-	    Sprite makePlatform = new Platform(CountryRunnerTitleScreen.difficulty);
-	    makeObstacle.add( makePlatform );
+	    Sprite makeGhost = new Ghost(CountryRunnerTitleScreen.difficulty);
+	    makeObstacle.add( makeGhost );
     	}
 	for(int i = 0; i < amountToAdd / 2; i++)
 	{
-	    Sprite makePlatform = new Platform(CountryRunnerTitleScreen.difficulty);
-	    makeObstacle.add(makePlatform);
+	    Sprite makeGhost = new Ghost(CountryRunnerTitleScreen.difficulty);
+	    makeObstacle.add(makeGhost);
 	}
     	return makeObstacle;
     }
+    
     /** public void scrollingBackground(graphics g)
      *  creates a scrolling background with the use 
      *  of buffering the images and backgrounds 
