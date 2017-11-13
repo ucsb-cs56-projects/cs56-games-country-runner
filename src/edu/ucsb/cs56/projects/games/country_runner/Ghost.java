@@ -8,7 +8,7 @@ import java.lang.Math;
  */
 public class Ghost extends Obstacle {
     public Ghost(int difficulty) {
-        super(100, 50, -100.0, "ghostSheet"); //for some reason 100:50 is the only ratio that works
+        super(50, 50, -100.0, "ghostSheet"); //for some reason 100:50 is the only ratio that works
 	this.setY(GROUND - 180);
         switch (difficulty)
         {
