@@ -19,7 +19,7 @@ public class Bullet extends Obstacle
     //the speed of bullet 
     private static final double speed = 15.0;
     //the amount of time that each bullet can be fired in milliseconds
-    private static final int fireInterval = 1000;
+    private static final int fireInterval = 100;
     //holds the time of when a bullet was last fired
     private static int lastFire = 0; 
     
@@ -33,11 +33,12 @@ public class Bullet extends Obstacle
     public Bullet(Runner runner)
     {
 	//reference a runner so one can get the position from where the bullet is to be shot
-	super(290/4,88, runner.getX(),"redLaserRay");
+	super(100, 100, runner.getX(),"bulletSheet");
 	this.setX(runner.getX());
 	this.xPosition = (int)runner.getX();
-	this.setY((int)runner.getY() + (int)runner.getHeight() / 2);
+	this.setY((int)runner.getY() + (int)runner.getHeight()/2 - 30);
     }
+
     /** public boolean canShoot()
      * determines if you can shoot based on 
      * the last fire that was made and the fireInterval

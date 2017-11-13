@@ -126,10 +126,14 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
      */
     public boolean collides(Bullet b){
 	if (b.getY()+ b.getHeight() >= this.getY())
+	{
+	    if ((this.getX()+50>b.getX()) && ((this.getX()-50) <b.getX()))
 	    {
-		if ((this.getX()+50>b.getX()) && ((this.getX()-50) <b.getX()))
-		    return true;
+		if ((b.getY() > this.getY()))
+		    return false;
+		return true;
 	    }
+	}
 	return false;
     }
     /** getScore returns the score
