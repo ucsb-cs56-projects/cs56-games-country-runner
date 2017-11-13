@@ -33,11 +33,12 @@ public class Bullet extends Obstacle
     public Bullet(Runner runner)
     {
 	//reference a runner so one can get the position from where the bullet is to be shot
-	super(290/4,88, runner.getX(),"redLaserRay");
+	super(100, 100, runner.getX(),"bulletSheet");
 	this.setX(runner.getX());
 	this.xPosition = (int)runner.getX();
-	this.setY((int)runner.getY() + (int)runner.getHeight() / 2);
+	this.setY((int)runner.getY() + (int)runner.getHeight()/2 - 30);
     }
+
     /** public boolean canShoot()
      * determines if you can shoot based on 
      * the last fire that was made and the fireInterval

@@ -371,12 +371,17 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    bullets.remove(j);
 		}	    
 	}
-	//draw the Bullet but could not figure out why
-	//cannot draw the bulletImage so using runner image instead
-	//as it adds some humor
+
+	//draw the Bullet
 	for(int i = 0; i < bullets.size(); i++){
-	    g2.drawImage(runner.getCurrentImage(), (int)bullets.get(i).getX(), (int)bullets.get(i).getY() - (int)runner.getHeight() / 2, null);
+		Sprite thisBullet = bullets.get(i);
+		thisBullet.updateCurrentImage();
+		thisBullet.updateCurrentPosition();
+		g2.drawImage(thisBullet.getCurrentImage(),
+			    (int)thisBullet.getX(),
+			    (int)thisBullet.getY(), null);
 	}
+
 	//draw the score
 	scoreLabel.setText("Score: " + Integer.toString(this.score));
     }
