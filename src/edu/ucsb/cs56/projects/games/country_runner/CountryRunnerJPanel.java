@@ -291,6 +291,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(this.score));
 		}
 	    }
+	else if (runner.isPoweredUp())
+	{
+		runner.updatePuP();
+		runner.setPoweredUp(true);
+		
+	
 	else{
 	    //if you reach pass the very beginning 
 	    if(drawingLevel && easy){
