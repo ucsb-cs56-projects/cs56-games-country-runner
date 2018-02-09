@@ -5,13 +5,13 @@ Country runner is 2-dimensional side-scrolling game. The objective of the game i
 
 ## __User Stories__
 -------------------
-⋅⋅* As a user, I can open the score board so that I can check my rank among other players.
-⋅⋅* As a user, I can view instructions so that I can learn to navigate and complete the game.
-⋅⋅* As a user, I can choose a difficulty level so that I can change the pace of the game.
-⋅⋅* As a user, I can choose an avatar so that I can pick which model appeals to me.
-⋅⋅* As a user, I can choose a background so that I can so that I can pick which scenery appeals to me.
-⋅⋅* As a user, I can jump so that I can avoid obstacles.
-⋅⋅* As a user, I can shoot missiles so that I can destroy obstacles.
+* As a user, I can open the score board so that I can check my rank among other players.
+* As a user, I can view instructions so that I can learn to navigate and complete the game.
+* As a user, I can choose a difficulty level so that I can change the pace of the game.
+* As a user, I can choose an avatar so that I can pick which model appeals to me.
+* As a user, I can choose a background so that I can so that I can pick which scenery appeals to me.
+* As a user, I can jump so that I can avoid obstacles.
+* As a user, I can shoot missiles so that I can destroy obstacles.
 
 ## __Software__
 -------------------
@@ -19,10 +19,10 @@ The software runs with strong delay and multiple bugs. The player is able to jum
 
 ## __User Stories__ 
 -------------------
-⋅⋅* As a user, I can change the background in the game to reflect seasons or time of day so that there is a change in scenery.
-⋅⋅* As a user, I can create new worlds after accumulating a certain amount of points so that there is a change in obstacles and scenery.
-⋅⋅* As a user, I can see how often missiles are created and how many missiles are left so I can score more points and level up.
-⋅⋅* As a user, I can go to a special game shop with my points converted into game currency to purchase objects such as life potions to give myself more chances in the game and turtle suits to slow down the game or special avatars so I can score more points, level up, and also enhance my overall experience of the game.
+* As a user, I can change the background in the game to reflect seasons or time of day so that there is a change in scenery.
+* As a user, I can create new worlds after accumulating a certain amount of points so that there is a change in obstacles and scenery.
+* As a user, I can see how often missiles are created and how many missiles are left so I can score more points and level up.
+* As a user, I can go to a special game shop with my points converted into game currency to purchase objects such as life potions to give myself more chances in the game and turtle suits to slow down the game or special avatars so I can score more points, level up, and also enhance my overall experience of the game.
 
 ## __README__
 -------------
@@ -39,12 +39,12 @@ There are a lot of issues, such as a glitchy level system, glitchy ghost sprites
 ## __Aditional Issues__
 -----------------------
 Current “issues” include:
-⋅⋅- Newer versions of Java do not support sun.audio.AudioPlayer or sun.audio.AudioStream/any(.sun imports do not work), so we have to comment out parts of the code that relate to music and audio in order to run the [program.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/92)
-⋅⋅- We would like to make a change in background scenery based on the time of the day that the user plays the [game.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/93)
-⋅⋅- We would like to have a missiles check feature so the player knows how long until the new missile [appears.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/94)
-⋅⋅- We want to create an inventory that lets the player store items that were not [used.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/95)
-⋅⋅- We want to convert points into game currency so the user can buy power-up items in a [store.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/96)
-⋅⋅- We want to create a game shop that users go to purchase power up [items.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/97)
+* Newer versions of Java do not support sun.audio.AudioPlayer or sun.audio.AudioStream/any(.sun imports do not work), so we have to comment out parts of the code that relate to music and audio in order to run the [program.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/92)
+* We would like to make a change in background scenery based on the time of the day that the user plays the [game.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/93)
+* We would like to have a missiles check feature so the player knows how long until the new missile [appears.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/94)
+* We want to create an inventory that lets the player store items that were not [used.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/95)
+* We want to convert points into game currency so the user can buy power-up items in a [store.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/96)
+* We want to create a game shop that users go to purchase power up [items.](https://github.com/ucsb-cs56-projects/cs56-games-country-runner/issues/97)
 
 ## __Source Code__
 ------------------ 
