@@ -1,3 +1,4 @@
+/*
 package edu.ucsb.cs56.projects.games.country_runner;
 
 import java.io.FileInputStream;
@@ -13,6 +14,7 @@ import sun.audio.AudioStream;
  * Class plays background music when the use is playing the game and stops
  * when he or she loses
  */
+/*
 public class BackgroundMusic implements Runnable{
     // Song is static so other classes can stop the music
     public static AudioStream song;
@@ -43,3 +45,4 @@ public class BackgroundMusic implements Runnable{
         playMusic();
     }
 }
+*/

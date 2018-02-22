@@ -46,6 +46,7 @@ public class Sheep extends Obstacle
      * set speed and occurance 
      * according to difficulty
      */
+    /**
     public void setDifficulty(int difficulty) {
 	switch (difficulty) {
 	case 1: {
@@ -67,6 +68,7 @@ public class Sheep extends Obstacle
 	waiting = true;
 	counter = randomWithRange(occurance, occurance+100);
     }
+     */
     /** incrementScore increments the score by one
      */
     public void incrementScore(){

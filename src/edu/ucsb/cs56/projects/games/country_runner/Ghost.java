@@ -2,13 +2,13 @@ package edu.ucsb.cs56.projects.games.country_runner;
 import java.lang.Math;
 
 /**Draws the Platform object on screen
- * @author Anna Lee, Ricardo Leon
- * @version cs56, F17
+ * @author Kitty Fung, Priscilla Lee
+ * @version cs56, S18
  *
  */
 public class Ghost extends Obstacle {
     public Ghost(int difficulty) {
-        super(50, 50, -100.0, "ghostSheet"); //for some reason 100:50 is the only ratio that works
+        super(100, 50, -94, "ghostSheet");
 	this.setY(GROUND - 180);
         switch (difficulty)
         {

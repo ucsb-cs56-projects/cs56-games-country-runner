@@ -15,7 +15,7 @@ public class Obstacle extends Sprite
     protected SpriteSequence runningSequence;
     protected double speed = 10.0;
 
-    protected int occurance = 12;
+    protected int occurance = 10;
     protected int counter;
     protected Boolean waiting;
     //holds score for amount of times user jumped over this object
@@ -41,7 +41,7 @@ public class Obstacle extends Sprite
 		//Fill the sequence
 		//NOTE: we have to explicitly say the number of
 		//images in the sequence
-		int numImages = 4;
+        int numImages = 3;
     	for (int i = 0; i < numImages; i++)
 		{
 			this.runningSequence.addImage(getSubImage(i, 0));
