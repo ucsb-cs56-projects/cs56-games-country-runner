@@ -1,6 +1,6 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 
-//import sun.audio.AudioPlayer;
+import javax.sound.sampled.*;
 import edu.ucsb.cs56.projects.games.country_runner.*;
 
 import javax.swing.*;
@@ -56,10 +56,11 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
     
     //initObstalcles(sheep, snail, racoon, panda, ghost) | F17: added flying obstacles
-    ArrayList<Sprite> gameObstacles = initObstacles(2, 1, 1, 1, 1);
+    ArrayList<Sprite> gameObstacles = initObstacles(1, 1, 1, 1, 1);
     
     //Score Overlay
     JLabel scoreLabel;
+    JLabel bulletLabel;
     int score;
     int drawingPosition;
     int levelsDefeated;
@@ -77,7 +78,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	//accept keyboard input
         //sets panel layout to no layout manager
         setFocusable(true);
-	requestFocusInWindow();
+	    requestFocusInWindow();
         setLayout(null);
 	
 	//These booleans determine the "state" of the JPanel/game
@@ -94,19 +95,20 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
         backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
 	
-	//The thrad gets started once and its run method is the main game loop
+	//The thread gets started once and its run method is the main game loop
 	this.mainThread = new Thread(this);
-      //  this.musicThread = new Thread(new BackgroundMusic());
+    //this.musicThread = new Thread(new BackgroundMusic());
         mainThread.start();
-       // musicThread.start();
-	
+        //musicThread.run();
+        BackgroundMusic.sound.playMusic();
         //add score overlay
         scoreLabel = new JLabel("Score: " + Integer.toString(score));
         scoreLabel.setFont(new Font("Arial",Font.BOLD,24));
         scoreLabel.setForeground(Color.BLACK);
         scoreLabel.setBounds(450,1,200,100);
         add(scoreLabel);
-	
+
+
 	//This part if ro regestering keyboard keys
 	//each overridden function is used to manage what
 	//happens when keys are pressed and released
@@ -222,7 +224,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		//deal with if a certain score has been reached in order
 		//to increase the difficulty of the game
 		if(score == 5 && scoreWasFive == false){
-		    int amountToAdd = 2;
+		    int amountToAdd = 1;
 		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, amountToAdd);
 		    easy = true;
 		    drawingLevel = true;
@@ -230,7 +232,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    levelsDefeated = 1;
 		}
 		else if(score == 10 && scoreWasTen == false){
-		    int amountToAdd = 3;
+		    int amountToAdd = 1;
 		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, amountToAdd);
 		    easy = false;
 		    medium = true;
@@ -239,7 +241,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		    levelsDefeated = 2;
 		}
 		else if(score == 20 && scoreWasTwenty == false){
-		    int amountToAdd = 4;
+		    int amountToAdd = 2;
 		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, amountToAdd);
 		    medium = false;
 		    impossible = true;
@@ -287,7 +289,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if(runner.getY() > GROUND){
 		    runner.setDying(false);
 		    this.gameIsRunning = false;
-//		    AudioPlayer.player.stop(BackgroundMusic.song);
+		    BackgroundMusic.sound.stop();
 		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(this.score));
 		}
 	    }
@@ -380,7 +382,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		g2.drawImage(thisBullet.getCurrentImage(),
 			    (int)thisBullet.getX(),
 			    (int)thisBullet.getY(), null);
-	}
+            bulletLabel = new JLabel("Bullet: " + thisBullet.getTimer()); //fix the timer
+            bulletLabel.setFont(new Font("Arial",Font.BOLD,20));
+            bulletLabel.setForeground(Color.BLACK);
+            bulletLabel.setBounds(450,40,200,100);
+            add(bulletLabel);
+        }
+
 
 	//draw the score
 	scoreLabel.setText("Score: " + Integer.toString(this.score));
@@ -415,6 +423,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      *  @param ghostNum
      *  will initiate the amount of obstacles that the user wants
      */
+
     private ArrayList<Sprite> initObstacles(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum){
     	Sheep makeSheep;
     	Snail makeSnail;
@@ -450,6 +459,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	}
     	return makeObstacle;
     }
+
     /** makeNewSpriteArray
      *  @param sheepNum
      *  @param snailNum
@@ -461,7 +471,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      *  as it is a lot of work but this method is called when the level changes
      *  and will make a new array with the amount of number of obstacles to add
      *  to the screen
-     */ 
+     */
+    
     private ArrayList<Sprite> makeNewSpriteArray(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum, int amountToAdd)
     {
 	ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();

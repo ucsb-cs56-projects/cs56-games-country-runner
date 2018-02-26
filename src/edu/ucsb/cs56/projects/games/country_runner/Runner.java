@@ -222,7 +222,7 @@ public class Runner extends Sprite
 	//Setting up values for jump
 	//this.a=-16;
 	//this.v=80;
-	this.v = 70;
+	this.v = 58;
 	this.a = -9.8;
 	this.t = 0;
 	//Setting up boolean for jump

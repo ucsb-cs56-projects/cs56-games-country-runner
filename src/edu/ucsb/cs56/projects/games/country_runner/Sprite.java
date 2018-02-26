@@ -136,10 +136,14 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
 	}
 	return false;
     }
+   
     /** getScore returns the score
      */
     public int getScore(){
 	return score;
+    }
+    public int getTimer(){
+        return (int)System.currentTimeMillis();
     }
     /** updateCurrentImage
      * Each class that ISA sprite will have

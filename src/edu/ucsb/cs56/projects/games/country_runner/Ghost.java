@@ -9,7 +9,7 @@ import java.lang.Math;
 public class Ghost extends Obstacle {
     public Ghost(int difficulty) {
         super(100, 50, -94, "ghostSheet");
-	this.setY(GROUND - 180);
+	this.setY(GROUND - 100);
         switch (difficulty)
         {
             case 1: {
