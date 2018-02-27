@@ -96,11 +96,12 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
         backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
 	
 	//The thread gets started once and its run method is the main game loop
-	this.mainThread = new Thread(this);
-    //this.musicThread = new Thread(new BackgroundMusic());
+        this.mainThread = new Thread(this);
         mainThread.start();
-        //musicThread.run();
-        BackgroundMusic.sound.playMusic();
+        
+        this.musicThread = new Thread(new BackgroundMusic());
+        musicThread.run();
+        //BackgroundMusic.sound.run();
         //add score overlay
         scoreLabel = new JLabel("Score: " + Integer.toString(score));
         scoreLabel.setFont(new Font("Arial",Font.BOLD,24));
@@ -289,7 +290,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if(runner.getY() > GROUND){
 		    runner.setDying(false);
 		    this.gameIsRunning = false;
-		    BackgroundMusic.sound.stop();
+            musicThread.stop();
 		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(this.score));
 		}
 	    }
