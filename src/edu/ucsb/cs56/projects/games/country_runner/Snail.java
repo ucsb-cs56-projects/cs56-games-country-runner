@@ -17,7 +17,7 @@ public class Snail extends Obstacle
     public Snail(int difficulty)
     {
     	//Call super constructor
-    	super(100, 50, -100.0, "snailSheet");
+    	super(100, 50, ((Math.random()*-800.0)-100), "snailSheet");
 		//initialize
 	   	switch (difficulty) {
 			case 1: {
@@ -27,11 +27,11 @@ public class Snail extends Obstacle
 			}
 			case 2: {
 			    speed = 14.0;
-			    occurance = 50;
+			    occurance = 35;
 			    break;
 			}
 			case 3: {
-			    speed = 10.0;
+			    speed = 17.0;
 			    occurance = 35;
 			    break;
 			}

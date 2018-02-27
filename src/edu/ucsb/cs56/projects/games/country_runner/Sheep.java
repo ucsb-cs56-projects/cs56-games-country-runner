@@ -16,7 +16,7 @@ public class Sheep extends Obstacle
     public Sheep(int difficulty)
     {
     	//Call super constructor
-    	super(100, 50, -100.0, "sheepSheet");
+    	super(100, 50, ((Math.random()*-800.0)-100), "sheepSheet");
 		switch (difficulty)
 		{
 			case 1: {
@@ -26,12 +26,12 @@ public class Sheep extends Obstacle
 			}
 			case 2: {
 			    speed = 10.0;
-			    occurance = 15;
+			    occurance = 10;
 			    break;
 			}
 			case 3: {
-			    speed = 10.0;
-			    occurance = 10;
+			    speed = 12.0;
+			    occurance = 15;
 			    break;
 			}
 		}

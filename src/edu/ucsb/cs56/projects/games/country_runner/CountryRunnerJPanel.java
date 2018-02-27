@@ -108,7 +108,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
         scoreLabel.setForeground(Color.BLACK);
         scoreLabel.setBounds(450,1,200,100);
         add(scoreLabel);
-
+       /*
+        bulletLabel = new JLabel("Bullet: " + runner.getBulletTimer());
+        bulletLabel.setFont(new Font("Arial",Font.BOLD,20));
+        bulletLabel.setForeground(Color.BLACK);
+        bulletLabel.setBounds(450,40,200,100);
+        add(bulletLabel);
+*/
 
 	//This part if ro regestering keyboard keys
 	//each overridden function is used to manage what
@@ -277,6 +283,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	Image heaven = new ImageIcon("res/heaven.jpg").getImage();
 	
 	scrollingBackground(g);
+        
 	//if the runner is dying, do the death animation
 	if(runner.isDying())
 	    {
@@ -383,14 +390,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		g2.drawImage(thisBullet.getCurrentImage(),
 			    (int)thisBullet.getX(),
 			    (int)thisBullet.getY(), null);
-            bulletLabel = new JLabel("Bullet: " + thisBullet.getTimer()); //fix the timer
-            bulletLabel.setFont(new Font("Arial",Font.BOLD,20));
-            bulletLabel.setForeground(Color.BLACK);
-            bulletLabel.setBounds(450,40,200,100);
-            add(bulletLabel);
         }
-
-
 	//draw the score
 	scoreLabel.setText("Score: " + Integer.toString(this.score));
     }

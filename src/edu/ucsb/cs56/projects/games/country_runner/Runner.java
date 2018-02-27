@@ -31,7 +31,7 @@ public class Runner extends Sprite
     private double yPosition = 10;
     public double xVel = 0;
     //the amount of time that each bullet can be fired in milliseconds
-    private static final double fireInterval = 2000;
+    private static final double fireInterval = 1000;
     //holds the time of when a bullet was last fired
     private static double lastFire = 0; 
     //Several booleans that help determine his current
@@ -66,8 +66,7 @@ public class Runner extends Sprite
      * the avatars include cowboy, cowgirl, and others
      * @param avatar
      */
-    public Runner(String avatar)
-    {
+    public Runner(String avatar){
     	//Open the spriteSheet
     	super(100, 109, 480, avatar);
 	bulletList = new ArrayList<Bullet>();
@@ -82,16 +81,17 @@ public class Runner extends Sprite
 	//NOTE: we have to explicitly say the number of
 	//images in the sequence
 	int numImages = 4;
-    	for (int i = 0; i < numImages; i++)
-	    {
+    	for (int i = 0; i < numImages; i++){
 		this.runningSequence.addImage(getSubImage(i, 0));
 	    }
+    }
+    public double getBulletTimer(){
+        return (System.currentTimeMillis()-lastFire); //fix this
     }
     /** public boolean isDying()
      *  returns the dying variable 
      */
-    public boolean isDying()
-    {
+    public boolean isDying(){
 	return dying;
     }
     /** canShoot()
