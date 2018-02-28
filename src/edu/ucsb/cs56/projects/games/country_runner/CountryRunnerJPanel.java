@@ -2,7 +2,6 @@ package edu.ucsb.cs56.projects.games.country_runner;
 
 import javax.sound.sampled.*;
 import edu.ucsb.cs56.projects.games.country_runner.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -95,16 +94,14 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	String[] backgrounds = Background.loadBackgrounds();
 
 	//String imageName = "background.png";
-	backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
-  backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
+        backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
+        backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
 
-	//The thread gets started once and its run method is the main game loop
+	    //The thread gets started once and its run method is the main game loop
         this.mainThread = new Thread(this);
         mainThread.start();
-
         this.musicThread = new Thread(new BackgroundMusic());
         musicThread.run();
-        //BackgroundMusic.sound.run();
         //add score overlay
         scoreLabel = new JLabel("Score: " + Integer.toString(score));
         scoreLabel.setFont(new Font("Arial",Font.BOLD,24));
@@ -206,7 +203,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
     	//While gameIsRunning is true, the game
     	//does all of its updating
-	while(this.gameIsRunning)
+        while(this.gameIsRunning)
 	    {
 		//if the spacebar is pressed,
 		//tell the runner to fire()
@@ -274,6 +271,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		try
 		    {
 			mainThread.sleep(65);
+            //musicThread.stop();
 		    }
 		catch(Exception e){}
 
@@ -289,7 +287,6 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
     	//Draw the background
 	g2 = (Graphics2D) g;
-
 	Image heaven = new ImageIcon("res/heaven.jpg").getImage();
 
 	scrollingBackground(g);
@@ -307,8 +304,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if(runner.getY() > GROUND){
 		    runner.setDying(false);
 		    this.gameIsRunning = false;
-            musicThread.stop();
-		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(this.score));
+            BackgroundMusic.clip.stop();
+            CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(this.score));
 		}
 	    }
 	else{
@@ -414,12 +411,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
 	for(Sprite thisObstacle : gameObstacles)
 	    {
-		if ((r.getY() + r.getHeight()) >= thisObstacle.getY())
+        if ((r.getY() + r.getHeight()) >= thisObstacle.getY())
 		    {
 			if ((thisObstacle.getX()+50 > r.getX()) && ((thisObstacle.getX()-50) <r.getX()))
 			    {
-				if ((r.getY() > thisObstacle.getY()))
-				    return false;
+                    if ((r.getY() > thisObstacle.getY())){
+                        return false;
+                    }
 				return true;
 			    }
 		    }
