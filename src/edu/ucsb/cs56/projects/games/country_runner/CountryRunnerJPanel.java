@@ -1,6 +1,6 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 
-import sun.audio.AudioPlayer;
+//import sun.audio.AudioPlayer;
 import edu.ucsb.cs56.projects.games.country_runner.*;
 
 import javax.swing.*;
@@ -96,9 +96,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	
 	//The thrad gets started once and its run method is the main game loop
 	this.mainThread = new Thread(this);
-        this.musicThread = new Thread(new BackgroundMusic());
-	mainThread.start();
-        musicThread.start();
+      //  this.musicThread = new Thread(new BackgroundMusic());
+        mainThread.start();
+       // musicThread.start();
 	
         //add score overlay
         scoreLabel = new JLabel("Score: " + Integer.toString(score));
@@ -287,7 +287,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if(runner.getY() > GROUND){
 		    runner.setDying(false);
 		    this.gameIsRunning = false;
-		    AudioPlayer.player.stop(BackgroundMusic.song);
+//		    AudioPlayer.player.stop(BackgroundMusic.song);
 		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(this.score));
 		}
 	    }
@@ -420,7 +420,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	Snail makeSnail;
     	Raccoon makeRaccoon;
     	Panda makePanda;
-	Ghost makeGhost;
+        Ghost makeGhost;
     	Sprite temp;
     	ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();
     	for(int i = 0; i < sheepNum; i++){
@@ -443,7 +443,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	    temp = (Sprite) makePanda;
 	    makeObstacle.add( temp );
     	}
-	for(int i = 0; i < ghostNum; i++){
+        for(int i = 0; i < ghostNum; i++){
 	    makeGhost = new Ghost(CountryRunnerTitleScreen.difficulty);
 	    temp = (Sprite) makeGhost;
 	    makeObstacle.add( temp );

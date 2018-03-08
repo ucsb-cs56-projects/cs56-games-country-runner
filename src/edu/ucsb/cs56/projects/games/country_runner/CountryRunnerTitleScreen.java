@@ -52,7 +52,7 @@ public class CountryRunnerTitleScreen extends JPanel{
 
         //set title font and size
 
-        titleLabel.setFont(new Font("Serif",Font.BOLD,38));
+        titleLabel.setFont(new Font("Cabin",Font.BOLD,38));
         titleLabel.setVerticalAlignment(SwingConstants.CENTER);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 

@@ -17,7 +17,7 @@ public class Snail extends Obstacle
     public Snail(int difficulty)
     {
     	//Call super constructor
-    	super(100, 50, -100.0, "snailSheet");	
+    	super(100, 50, -100.0, "snailSheet");
 		//initialize
 	   	switch (difficulty) {
 			case 1: {
