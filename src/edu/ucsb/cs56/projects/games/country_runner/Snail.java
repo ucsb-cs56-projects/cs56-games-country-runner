@@ -16,34 +16,34 @@ public class Snail extends Obstacle
      */
     public Snail(int difficulty)
     {
-    	//Call super constructor
-    	super(100, 50, ((Math.random()*-800.0)-100), "snailSheet");
-		//initialize
-	   	switch (difficulty) {
-			case 1: {
-			    speed = 10.0;
-			    occurance = 70;
-			    break;
-			}
-			case 2: {
-			    speed = 14.0;
-			    occurance = 35;
-			    break;
-			}
-			case 3: {
-			    speed = 17.0;
-			    occurance = 35;
-			    break;
-			}
-		}
-		waiting = true;
-		counter = randomWithRange(occurance, occurance+100);
-	    score = 0;	
+        //Call super constructor
+        super(100, 50, ((Math.random()*-800.0)-100), "snailSheet");
+        //initialize
+        switch (difficulty) {
+            case 1: {
+                speed = 10.0;
+                occurance = 70;
+                break;
+            }
+            case 2: {
+                speed = 14.0;
+                occurance = 35;
+                break;
+            }
+            case 3: {
+                speed = 17.0;
+                occurance = 35;
+                break;
+            }
+        }
+        waiting = true;
+        counter = randomWithRange(occurance, occurance+100);
+        score = 0;	
     }
     /** incrementScore increments the score by 1
      */
     public void incrementScore(){
-	score++;
+        score++;
     }
 }
 

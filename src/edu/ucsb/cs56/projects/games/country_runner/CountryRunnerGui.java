@@ -20,22 +20,22 @@ public class CountryRunnerGui
     public static JFrame mainWindow;
     public static final int WIDTH = 600;
     public static final int HEIGHT = 400;
-
+    
     CountryRunnerTitleScreen cp;
-
+    
     /** Constructor **/
     public CountryRunnerGui()
     {
         mainWindow = new JFrame();
-		cp = new CountryRunnerTitleScreen();
-
-		mainWindow.setSize(WIDTH, HEIGHT);
+        cp = new CountryRunnerTitleScreen();
+        
+        mainWindow.setSize(WIDTH, HEIGHT);
         mainWindow.setResizable(false);
         mainWindow.setTitle("Country Runner");
-		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setLocationRelativeTo(null);
-		mainWindow.add(cp);
-		mainWindow.setVisible(true);
+        mainWindow.add(cp);
+        mainWindow.setVisible(true);
     }
     /** main creates a new CountryRunnerGUI
      *  @param args
