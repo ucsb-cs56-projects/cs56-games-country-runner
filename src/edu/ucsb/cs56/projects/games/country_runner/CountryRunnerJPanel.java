@@ -23,8 +23,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     //Booleans for the game logic
     boolean gameIsRunning;
     boolean upArrowPressed;
-    boolean runnerHasCollided;
     boolean regularJumpPressed;
+    boolean runnerHasCollided;
     boolean fired;
     //Length of Key Press
     long startTime;
@@ -45,34 +45,35 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     public Graphics2D g2;
     //Main thread of execution.
     Thread mainThread;
-    
+
     //Background
     public Background backOne;
     public Background backTwo;
     public BufferedImage back;
     public String[] backgrounds;
-    
+
     //The runner and the sheep, there
     //is only one sheep right now, may want
     //to add more in the future.
     Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
-    
+
     //initObstalcles(sheep, snail, racoon, panda, ghost, portal) | F17: added flying obstacles
     ArrayList<Sprite> gameObstacles = initObstacles(1, 1, 1, 1, 1, 1);
-    
+
     //Score Overlay
     JLabel scoreLabel;
     JLabel bulletLabel;
     int score;
     int drawingPosition;
     int levelsDefeated;
-    
+
+    //Sound effects
     public Sound bgm = new Sound("res/Jipang.wav");
     public Sound incrementSound = new Sound("res/Increment.wav");
     public Sound jumpSound = new Sound("res/Jump.wav");
     public Sound levelUpSound = new Sound("res/LevelUp.wav");
     public Sound gameOverSound = new Sound("res/GameOver.wav");
-    
+
     /** Constructor
      * Sets up the boolean state variables for the JPanel
      * Sets up the main thread of execution
@@ -87,34 +88,34 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
         setFocusable(true);
         requestFocusInWindow();
         setLayout(null);
-        
+
         //These booleans determine the "state" of the JPanel/game
         this.gameIsRunning = true;
         this.upArrowPressed = false;
         this.runnerHasCollided = false;
-        
-        
+
+
         //background
         //Load background images
         backgrounds = Background.loadBackgrounds();
-        
+
         //String imageName = "background.png";
         backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
         backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
-        
+
         //The thread gets started once and its run method is the main game loop
         this.mainThread = new Thread(this);
         mainThread.start();
-        bgm.play();
-        bgm.loop();
-        
+        bgm.play(); //play bgm
+        bgm.loop(); //loop bgm
+
         //add score overlay
         scoreLabel = new JLabel("Score: " + Integer.toString(score));
         scoreLabel.setFont(new Font("Arial",Font.BOLD,24));
         scoreLabel.setForeground(Color.BLACK);
         scoreLabel.setBounds(450,1,200,100);
         add(scoreLabel);
-        
+
         //This part if ro regestering keyboard keys
         //each overridden function is used to manage what
         //happens when keys are pressed and released
@@ -132,19 +133,19 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
                 //keyPressed actions and don't care about
                 //anything else.  This may change in the future
             }
-            
+
             @Override
             public void keyReleased(KeyEvent e) {
                 released(e,"keyReleased");
             }
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
                 //Not currently using
             }
         });
     }
-    
+
     /** pressed
      * Handles all key pressed events, if the up
      * arrow was pressed, we set the upArrowPressed
@@ -159,6 +160,10 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
             fired = true;
    	    }
         //VK_UP = Up arrow
+        /*"Pressed" is continuously called while up key is held
+        *startTime gets the time @ which "pressed" is first called
+        *keyPressLength gets the time @ which "pressed" is last called - startTime
+        */
         if (key == KeyEvent.VK_UP){
             upArrowPressed = true;
             if(startTime == 0){
@@ -172,11 +177,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
         if (key == KeyEvent.VK_RIGHT)
    	    {runner.move1();}
     }
-    
-    
+
+
     /** private void released(KeyEvent e, String text)
      *  checks if the left or right key is released
      *  in order to stop the character
+     *  checks if the up key is released before 500ms
+     *  in order to switch from a super jump to a regular jump
      */
     private void released(KeyEvent e,String text)
     {
@@ -237,7 +244,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
                 runner.death();
                 gameOverSound.play();
             }
-            
+
             //deal with if a certain score has been reached in order
             //to increase the difficulty of the game
             if(score == 10 && scoreWasTen == false){
@@ -281,17 +288,17 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
             //Every iteration of the main loop, we want
             //to call this to redraw all of the images
             this.repaint();
-            
+
             //Sleep the main thread so its doesn't update everything super quickly
             try
             {
                 mainThread.sleep(65);
             }
             catch(Exception e){}
-            
+
         }
     }
-    
+
     /** paintComponent
      * Required for any graphics on a JPanel.
      * Does all of our drawing.  It is called when
@@ -302,9 +309,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
         //Draw the background
         g2 = (Graphics2D) g;
         Image heaven = new ImageIcon("res/heaven.jpg").getImage();
-        
+
         scrollingBackground(g);
-        
+
         //if the runner is dying, do the death animation
         if(runner.isDying())
         {
@@ -400,7 +407,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
                     bullets.remove(j);
                 }
         }
-        
+
         //draw the Bullet
         for(int i = 0; i < bullets.size(); i++){
             Sprite thisBullet = bullets.get(i);
@@ -489,7 +496,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      *  @param ghostNum
      *  will initiate the amount of obstacles that the user wants
      */
-    
+
     private ArrayList<Sprite> initObstacles(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum, int portalNum){
         Sheep makeSheep;
         Snail makeSnail;
@@ -537,7 +544,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
          */
         return makeObstacle;
     }
-    
+
     /** makeNewSpriteArray
      *  @param sheepNum
      *  @param snailNum
@@ -550,7 +557,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      *  and will make a new array with the amount of number of obstacles to add
      *  to the screen
      */
-    
+
     private ArrayList<Sprite> makeNewSpriteArray(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum, int portalNum, int amountToAdd)
     {
         ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();
@@ -606,7 +613,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
          */
         return makeObstacle;
     }
-    
+
     /** public void scrollingBackground(graphics g)
      *  creates a scrolling background with the use
      *  of buffering the images and backgrounds
@@ -615,16 +622,16 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
         if (back == null)
             back = (BufferedImage)(createImage(getWidth(), getHeight()));
-        
+
         // Create a buffer to draw to
         Graphics buffer = back.createGraphics();
-        
+
         // Put the two copies of the background image onto the buffer
         backOne.draw(buffer);
         backTwo.draw(buffer);
-        
+
         // Draw the image onto the window
         g.drawImage(back, 0, 0, this);
     }
-    
+
 }//JPanel

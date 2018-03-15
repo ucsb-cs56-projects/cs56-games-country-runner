@@ -40,7 +40,7 @@ public class Runner extends Sprite
     private boolean running;
     private boolean jumping;
     private boolean dying = false;
-    
+
     //Testing physics equations
     //These are for calculating the runner's jump
     //He has an jump velocity that can be set, and
@@ -51,14 +51,14 @@ public class Runner extends Sprite
     private double v;
     private double a;
     private double t;
-    
+
     //These are the sequences (arrays) that hold all the
     //images for a specific sequence (running, jumping, etc)
     private SpriteSequence runningSequence;
-    
+
     //This is the array where to access the bullets
     private ArrayList<Bullet> bulletList;
-    
+
     /** Default Constructor makes the Runner
      * sets up the spriteSheet and fills the
      * sequences with images from it with a string Avatar
@@ -76,7 +76,7 @@ public class Runner extends Sprite
         this.xVel=0;
         //Initilize the sequences
         runningSequence = new SpriteSequence();
-        
+
         //Fill the sequences
         //NOTE: we have to explicitly say the number of
         //images in the sequence
@@ -176,7 +176,7 @@ public class Runner extends Sprite
             death();
         }
     }
-    
+
     /** updateCurrentImage
      * Uses the state values (booleans) to figure out
      * what the guy should do next.
@@ -191,7 +191,7 @@ public class Runner extends Sprite
         {
             setCurrentImage(runningSequence.getNextImage());
         }
-        
+
         //When the sprites sheets are all done, these will
         //actual update with the jumping sequences
         else if (this.jumping)
@@ -203,8 +203,9 @@ public class Runner extends Sprite
             setCurrentImage(runningSequence.getNextImage());
         }
     }
-    
+
     public void startJump(){
+        //Default jump is a super jump
         //If the running is in the middle of a jump, no
         //need to change anything about his state
         if (!this.isOnGround()){
@@ -222,12 +223,13 @@ public class Runner extends Sprite
     }
     /**
      called by the jpanel, changes the runner's state so he
-     knows  he should be super jumping when the image gets updated
-     we set the jumpDistance to be 60.
+     knows  he should be normal jumping when the image gets updated
      */
-    
+
     public void regularJump()
     {
+        //If the jump key is held < 500ms
+        //switch from a super jump to a regular jump
         //If the running is in the middle of a jump, no
         //need to change anything about his state
         if (!this.isOnGround()){
@@ -270,16 +272,16 @@ public class Runner extends Sprite
         //equation: y = y_0 + v_0 + .5*g*t^2, which I
         //hope you learnd in physics 1.  It just finds
         //his correct position, to move him up/down
-        double newYPos = 0 + this.v*this.t + .5*this.a*(Math.pow(this.t,2));
+        double newYPos = 0 + this.v*this.t + 0.5*this.a*(Math.pow(this.t,2));
         this.setY(this.GROUND - this.getHeight() - newYPos);
         this.t++;
-        
+
         if (this.isOnGround())
         {
             this.jumping = false;
             this.running = true;
         }
-        
+
         //If he happens to fall farther than the ground, this pulls him up the ground
         else if (this.getY() > (GROUND - this.getHeight()))
         {
@@ -287,7 +289,7 @@ public class Runner extends Sprite
             this.jumping = false;
             this.running = true;
         }
-        
+
     }
     /** death()
      * Called by JPanel to let the runner
@@ -337,7 +339,7 @@ public class Runner extends Sprite
         this.setY(this.GROUND - this.getHeight() - newYPos);
         this.t = this.t + 1.0;
     }
-    
+
     /** isOnGround
      * Check whether the Runner is on the ground
      * Just checks if the runner position is the same
@@ -351,9 +353,7 @@ public class Runner extends Sprite
         }
         return false;
     }
-    
-    
-    
+
     /** public void updateMovePosition()
      *  updates the XPosition based on the
      *  physics formula x = x_0 + v_0 * t + .5 * a*t^2,

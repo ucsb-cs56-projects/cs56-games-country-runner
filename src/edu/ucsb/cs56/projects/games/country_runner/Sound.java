@@ -11,8 +11,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 /**
  * Handles playing, stoping, and looping of sounds for the game.
  * @author Tyler Thomas
- *
  */
+
 public class Sound {
     private Clip clip;
     public Sound(String fileName) {
@@ -47,7 +47,7 @@ public class Sound {
             e.printStackTrace();
             throw new RuntimeException("Sound: Line Unavailable Exception Error: " + e);
         }
-        
+
         // play, stop, loop the sound clip
     }
     public void play(){
