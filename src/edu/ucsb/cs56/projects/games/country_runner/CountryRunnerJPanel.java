@@ -1,8 +1,7 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 
-//import sun.audio.AudioPlayer;
+import javax.sound.sampled.*;
 import edu.ucsb.cs56.projects.games.country_runner.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -27,9 +26,9 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     boolean runnerHasCollided;
     boolean regularJumpPressed;
     boolean fired;
+    //Length of Key Press
     long startTime;
     long keyPressLength;
-
     //booleans for determining what to draw
     //when a certain score is reached
     boolean easy;
@@ -38,7 +37,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     boolean drawingLevel = false;
     boolean scoreWasTen = false;
     boolean scoreWasTwenty = false;
-    boolean scoreWasFive = false;
+    boolean scoreWasThirty = false;
     //GROUND is for positioning
     //ths sprites.  Note that this
     //is also defined in the Sprite class
@@ -46,27 +45,33 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     public Graphics2D g2;
     //Main thread of execution.
     Thread mainThread;
-    Thread musicThread;
 
     //Background
-    private Background backOne;
-    private Background backTwo;
-    private BufferedImage back;
+    public Background backOne;
+    public Background backTwo;
+    public BufferedImage back;
+    public String[] backgrounds;
 
     //The runner and the sheep, there
     //is only one sheep right now, may want
     //to add more in the future.
     Runner runner = new Runner(CountryRunnerTitleScreen.avatar);
 
-    //initObstalcles(sheep, snail, racoon, panda, ghost) | F17: added flying obstacles
-    ArrayList<Sprite> gameObstacles = initObstacles(2, 1, 1, 1, 1);
+    //initObstalcles(sheep, snail, racoon, panda, ghost, portal) | F17: added flying obstacles
+    ArrayList<Sprite> gameObstacles = initObstacles(1, 1, 1, 1, 1, 1);
 
     //Score Overlay
     JLabel scoreLabel;
+    JLabel bulletLabel;
     int score;
     int drawingPosition;
     int levelsDefeated;
 
+    public Sound bgm = new Sound("res/Jipang.wav");
+    public Sound incrementSound = new Sound("res/Increment.wav");
+    public Sound jumpSound = new Sound("res/Jump.wav");
+    public Sound levelUpSound = new Sound("res/LevelUp.wav");
+    public Sound gameOverSound = new Sound("res/GameOver.wav");
 
     /** Constructor
      * Sets up the boolean state variables for the JPanel
@@ -80,7 +85,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     	//accept keyboard input
         //sets panel layout to no layout manager
         setFocusable(true);
-	requestFocusInWindow();
+	      requestFocusInWindow();
         setLayout(null);
 
 	//These booleans determine the "state" of the JPanel/game
@@ -91,17 +96,17 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 
 	//background
 	//Load background images
-	String[] backgrounds = Background.loadBackgrounds();
+  backgrounds = Background.loadBackgrounds();
 
 	//String imageName = "background.png";
-	backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
+        backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
         backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-1]);
 
-	//The thrad gets started once and its run method is the main game loop
-	this.mainThread = new Thread(this);
-      //  this.musicThread = new Thread(new BackgroundMusic());
+	    //The thread gets started once and its run method is the main game loop
+        this.mainThread = new Thread(this);
         mainThread.start();
-       // musicThread.start();
+        bgm.play();
+        bgm.loop();
 
         //add score overlay
         scoreLabel = new JLabel("Score: " + Integer.toString(score));
@@ -145,115 +150,133 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      * arrow was pressed, we set the upArrowPressed
      * boolean to true, so the run method picks it up
      */
-    private void pressed(KeyEvent e, String text)
-    {
-	int key = e.getKeyCode();
-	//VK_SPACE = space bar
-	if(key == KeyEvent.VK_SPACE && !drawingLevel)
-	    {
-		fired = true;
-	    }
-	//VK_UP = Up arrow
-	if (key == KeyEvent.VK_UP){
-		upArrowPressed = true;
-	  if(startTime == 0){
-      startTime = System.currentTimeMillis();
-    }
-    keyPressLength = System.currentTimeMillis() - startTime;
-    }
-	if (key== KeyEvent.VK_LEFT)
-	    {runner.move2();}
-	if (key == KeyEvent.VK_RIGHT)
-	    {runner.move1();}
-    }
+     private void pressed(KeyEvent e, String text)
+       {
+   	int key = e.getKeyCode();
+   	//VK_SPACE = space bar
+   	if(key == KeyEvent.VK_SPACE && !drawingLevel)
+   	    {
+   		fired = true;
+   	    }
+   	//VK_UP = Up arrow
+   	if (key == KeyEvent.VK_UP){
+   		upArrowPressed = true;
+   	  if(startTime == 0){
+         jumpSound.play();
+         startTime = System.currentTimeMillis();
+       }
+       keyPressLength = System.currentTimeMillis() - startTime;
+       }
+   	if (key== KeyEvent.VK_LEFT)
+   	    {runner.move2();}
+   	if (key == KeyEvent.VK_RIGHT)
+   	    {runner.move1();}
+       }
 
 
-    /** private void released(KeyEvent e, String text)
-     *  checks if the left or right key is released
-     *  in order to stop the character
-     */
-    private void released(KeyEvent e,String text)
-    { int key=e.getKeyCode();
-	if ((key==KeyEvent.VK_LEFT) || (key==KeyEvent.VK_RIGHT))
-	    runner.stop();
-      if (key==KeyEvent.VK_UP){
-            if(keyPressLength < 500){
-                regularJumpPressed = true;
-	            }
-            startTime = 0;
-}
-    }
-    /**
-     * run
-     * This is run method for the main thread
-     * It will run once, but we have a while loop inside
-     * for the main execution of the the game logic.  It
-     * looks like a never-ending while loop, but we can
-     * control when the gameIsRUnning boolean is ON/OFF
-     */
-    public void run()
-    {
-    	//While gameIsRunning is true, the game
-    	//does all of its updating
-	while(this.gameIsRunning)
-	    {
-		//if the spacebar is pressed,
-		//tell the runner to fire()
-		if(fired)
-		    {
-			runner.fire();
-			fired = false;
-		    }
-		//If the up arrow has been pressed,
-		//we tell the runner to jump. This happens once.
-		if (upArrowPressed)
-		    {
-			runner.startJump();
-			upArrowPressed = false;
-		    }
-		if (regularJumpPressed)
-		    {
-			runner.regularJump();
-			regularJumpPressed = false;
-		    }
+       /** private void released(KeyEvent e, String text)
+        *  checks if the left or right key is released
+        *  in order to stop the character
+        */
+       private void released(KeyEvent e,String text)
+       {
+         int key=e.getKeyCode();
+   	if ((key==KeyEvent.VK_LEFT) || (key==KeyEvent.VK_RIGHT))
+   	    runner.stop();
+         if (key==KeyEvent.VK_UP){
+               if(keyPressLength < 500){
+                   regularJumpPressed = true;
+   	            }
+               startTime = 0;
+   }
+       }
+       /**
+        * run
+        * This is run method for the main thread
+        * It will run once, but we have a while loop inside
+        * for the main execution of the the game logic.  It
+        * looks like a never-ending while loop, but we can
+        * control when the gameIsRUnning boolean is ON/OFF
+        */
+       public void run()
+       {
+       	//While gameIsRunning is true, the game
+       	//does all of its updating
+   	while(this.gameIsRunning)
+   	    {
+   		//if the spacebar is pressed,
+   		//tell the runner to fire()
+   		if(fired)
+   		    {
+   			runner.fire();
+   			fired = false;
+   		    }
+   		//If the up arrow has been pressed,
+   		//we tell the runner to jump. This happens once.
+   		if (upArrowPressed)
+   		    {
+   			runner.startJump();
+   			upArrowPressed = false;
+   		    }
+   		if (regularJumpPressed)
+   		    {
+   			runner.regularJump();
+   			regularJumpPressed = false;
+   		    }
 		//update scores
 	        //TODO: re formulate how the score is called
-		score = levelsDefeated*5;
+		score = levelsDefeated*10;
 		for(Sprite thisObstacle : gameObstacles)
 		    {
+          if(thisObstacle!=gameObstacles.get(5)){
 			score = score + thisObstacle.getScore();
+    }
 		    }
-		if (this.runnerHasCollided(gameObstacles, runner))
+		if (this.runnerHasCollided(gameObstacles, runner)) //gameobstacles
 		    {
 			runner.death();
+      gameOverSound.play();
 		    }
+
 		//deal with if a certain score has been reached in order
 		//to increase the difficulty of the game
-		if(score == 5 && scoreWasFive == false){
-		    int amountToAdd = 2;
-		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, amountToAdd);
+		if(score == 10 && scoreWasTen == false){
+        while(runner.getY() < 257.0){ //runner is midair
+          drawRegularly(g2);
+        }
+        levelUpSound.play();
+		    int amountToAdd = 1;
+		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, 1, amountToAdd);
 		    easy = true;
 		    drawingLevel = true;
-		    scoreWasFive = true;
+		    scoreWasTen = true;
 		    levelsDefeated = 1;
 		}
-		else if(score == 10 && scoreWasTen == false){
-		    int amountToAdd = 3;
-		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, amountToAdd);
+		else if(score == 20 && scoreWasTwenty == false){
+      while(runner.getY() < 257.0){ //runner is midair
+        drawRegularly(g2);
+      }
+      levelUpSound.play();
+		    int amountToAdd = 1;
+		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, 1, amountToAdd);
 		    easy = false;
 		    medium = true;
 		    drawingLevel = true;
-		    scoreWasTen = true;
+		    scoreWasTwenty = true;
 		    levelsDefeated = 2;
 		}
-		else if(score == 20 && scoreWasTwenty == false){
-		    int amountToAdd = 4;
-		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, amountToAdd);
+		else if(score == 30 && scoreWasThirty == false){
+      while(runner.getY() < 257.0){ //runner is midair
+        drawRegularly(g2);
+      }
+      levelUpSound.play();
+		    int amountToAdd = 2;
+		    gameObstacles = makeNewSpriteArray(2, 1, 1, 1, 1, 1, amountToAdd);
 		    medium = false;
 		    impossible = true;
 		    drawingLevel = true;
-		    scoreWasTwenty = true;
-    		    levelsDefeated = 4;
+		    scoreWasThirty = true;
+    		levelsDefeated = 3;
 		}
 		//Every iteration of the main loop, we want
 		//to call this to redraw all of the images
@@ -278,10 +301,10 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
     {
     	//Draw the background
 	g2 = (Graphics2D) g;
-
 	Image heaven = new ImageIcon("res/heaven.jpg").getImage();
 
 	scrollingBackground(g);
+
 	//if the runner is dying, do the death animation
 	if(runner.isDying())
 	    {
@@ -295,43 +318,40 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		if(runner.getY() > GROUND){
 		    runner.setDying(false);
 		    this.gameIsRunning = false;
-//		    AudioPlayer.player.stop(BackgroundMusic.song);
-		    CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(this.score));
+            bgm.stop();
+            CountryRunnerGui.setCurrentPanelTo(new GameOverJPanel(this.score));
 		}
 	    }
 	else{
 	    //if you reach pass the very beginning
 	    if(drawingLevel && easy){
-		drawingPosition += 20;
-		g2.drawString("LEVEL 2!", drawingPosition, 200);
-		drawWithoutUpdating(g2);
-		if(drawingPosition == 600)
-		    {
-			easy = false;
-			drawingPosition = 0;
-			drawingLevel = false;
-		    }
+		      drawingPosition += 20;
+		      g2.drawString("LEVEL 2!", drawingPosition, 200);
+		      drawWithoutUpdating(g2);
+		      if(drawingPosition == 600){
+			         easy = false;
+			         drawingPosition = 0;
+			         drawingLevel = false;
+		      }
 	    }//if you pass the first level
 	    else if(drawingLevel && medium){
-		drawingPosition += 20;
-		g2.drawString("LEVEL 3!", drawingPosition, 200);
-		drawWithoutUpdating(g2);
-		if(drawingPosition == 600)
-		    {
-			drawingPosition = 0;
-			drawingLevel = false;
-			easy = false;
+        drawingPosition += 20;
+        g2.drawString("LEVEL 3!", drawingPosition, 200);
+        drawWithoutUpdating(g2);
+        if(drawingPosition == 600){
+          drawingPosition = 0;
+          drawingLevel = false;
+          easy = false;
 		    }
 	    }//if you pass the medium level, Congrats and Good luck
 	    else if(drawingLevel && impossible){
-		drawingPosition += 20;
-		g2.drawString("GOOD LUCK!", drawingPosition, 200);
-		drawWithoutUpdating(g2);
-		if(drawingPosition == 600)
-		    {
-			drawingPosition = 0;
-			drawingLevel = false;
-			easy = false;
+        drawingPosition += 20;
+        g2.drawString("GOOD LUCK!", drawingPosition, 200);
+        drawWithoutUpdating(g2);
+        if(drawingPosition == 600){
+          drawingPosition = 0;
+          drawingLevel = false;
+          easy = false;
 		    }
 	    }
 	    //if no level is passed, drawRegularly
@@ -375,6 +395,7 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	    for(int j = 0; j < bullets.size(); j++)//check if any of the bullets collides with an obstacle
 		if(thisObstacle.collides(bullets.get(j))){
 		    thisObstacle.incrementScore(); //add score when shot and killed
+        incrementSound.play();
 		    thisObstacle.setX(-100); //will fundamentally reset the obstacle when killed
 		    bullets.remove(j);
 		}
@@ -388,28 +409,73 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 		g2.drawImage(thisBullet.getCurrentImage(),
 			    (int)thisBullet.getX(),
 			    (int)thisBullet.getY(), null);
-	}
-
+        }
 	//draw the score
 	scoreLabel.setText("Score: " + Integer.toString(this.score));
     }
     /** runnerHasCollided
      *  @param Runner r
-     *  @param ArrayList<Sprite> gameObstacles
+     *  @param ArrayList<Sprite> n
      *  will check if the runner has collided with an object
      *  and return false or true based on their position
      */
     public boolean runnerHasCollided(ArrayList<Sprite> gameObstacles, Runner r)
     {
+      if(drawingLevel&&easy){
+        backOne = new Background(backgrounds[3]);
+        backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[3]);
+      }
+      if(drawingLevel&&medium){
+        backOne = new Background(backgrounds[4]);
+        backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[4]);
+      }
+      if(drawingLevel&&impossible){
+        backOne = new Background(backgrounds[0]);
+        backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[0]);
+      }
 	for(Sprite thisObstacle : gameObstacles)
 	    {
-		if ((r.getY() + r.getHeight()) >= thisObstacle.getY())
+        if ((r.getY() + r.getHeight()) >= thisObstacle.getY())
 		    {
 			if ((thisObstacle.getX()+50 > r.getX()) && ((thisObstacle.getX()-50) <r.getX()))
 			    {
-				if ((r.getY() > thisObstacle.getY()))
-				    return false;
-				return true;
+                    if ((r.getY() >= thisObstacle.getY())){
+                      if(thisObstacle==gameObstacles.get(5)&& thisObstacle.getY()+30>r.getY())
+                     {
+                            if(CountryRunnerTitleScreen.avatar.equals("Cowboy"))
+                            {
+                                runner = new Runner("Cowgirl"); //changes it to a different avatar
+                            }
+                            else if(CountryRunnerTitleScreen.avatar.equals("Cowgirl"))
+                            {
+                                runner = new Runner("Pumpkin Head"); //changes it to a different avatar
+                            }
+                            else if(CountryRunnerTitleScreen.avatar.equals("Pumpkin Head"))
+                            {
+                                runner = new Runner("Cowboy"); //changes it to a different avatar
+                            }
+                            if(CountryRunnerTitleScreen.changeBackground==3)
+                            {
+                              backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground-2]);
+                               backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground-2]);
+                            }
+                            else if (CountryRunnerTitleScreen.changeBackground==2)
+                            {
+                                backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground]);
+                                backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground]);
+                            }
+                            else
+                            {
+                                backOne = new Background(backgrounds[CountryRunnerTitleScreen.changeBackground+1]);
+                                backTwo = new Background(backOne.getImageWidth(), 0, backgrounds[CountryRunnerTitleScreen.changeBackground+1]);
+                            }
+                        }
+                        return false;
+                    }
+                    else if((r.getY() <= thisObstacle.getY())&& thisObstacle!=gameObstacles.get(5))
+                                        {
+                                            return true;
+                                        }
 			    }
 		    }
 	    }
@@ -423,13 +489,16 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      *  @param ghostNum
      *  will initiate the amount of obstacles that the user wants
      */
-    private ArrayList<Sprite> initObstacles(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum){
+
+    private ArrayList<Sprite> initObstacles(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum, int portalNum){
     	Sheep makeSheep;
     	Snail makeSnail;
     	Raccoon makeRaccoon;
     	Panda makePanda;
         Ghost makeGhost;
     	Sprite temp;
+      Portal makePortal;
+      //int portalNum = 1; do a math.random on this
     	ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();
     	for(int i = 0; i < sheepNum; i++){
 	    makeSheep = new Sheep(CountryRunnerTitleScreen.difficulty);
@@ -456,8 +525,19 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	    temp = (Sprite) makeGhost;
 	    makeObstacle.add( temp );
 	}
+  makePortal = new Portal(CountryRunnerTitleScreen.difficulty);
+        temp = (Sprite) makePortal;
+        makeObstacle.add( temp );
+        /*
+        for(int i = 0; i < portalNum; i++){
+         makePortal = new Portal(CountryRunnerTitleScreen.difficulty);
+         temp = (Sprite) makePortal;
+         makeObstacle.add( temp );
+         }
+         */
     	return makeObstacle;
     }
+
     /** makeNewSpriteArray
      *  @param sheepNum
      *  @param snailNum
@@ -470,7 +550,8 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
      *  and will make a new array with the amount of number of obstacles to add
      *  to the screen
      */
-    private ArrayList<Sprite> makeNewSpriteArray(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum, int amountToAdd)
+
+    private ArrayList<Sprite> makeNewSpriteArray(int sheepNum, int snailNum, int raccoonNum, int pandaNum, int ghostNum, int portalNum, int amountToAdd)
     {
 	ArrayList<Sprite> makeObstacle = new ArrayList<Sprite>();
     	for(int i = 0; i < sheepNum; i++){
@@ -516,6 +597,13 @@ public class CountryRunnerJPanel extends JPanel implements Runnable
 	    Sprite makeGhost = new Ghost(CountryRunnerTitleScreen.difficulty);
 	    makeObstacle.add(makeGhost);
 	}
+  Sprite makePortal = new Portal(CountryRunnerTitleScreen.difficulty);
+        makeObstacle.add(makePortal);
+        /* for(int i = 0; i < portalNum; i++){
+         Sprite makePortal = new Portal(CountryRunnerTitleScreen.difficulty);
+         makeObstacle.add(makePortal);
+         }
+         */
     	return makeObstacle;
     }
 

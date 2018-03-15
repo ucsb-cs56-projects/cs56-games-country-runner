@@ -21,8 +21,8 @@ public class Bullet extends Obstacle
     //the amount of time that each bullet can be fired in milliseconds
     //holds the time of when a bullet was last fired
     private static int lastFire = 0;
-    
-    
+
+
     /** Default Constructor makes a Bullet.
      * sets up the spriteSheet and fills the
      * sequences with images from it but needs the runner passed
@@ -31,12 +31,12 @@ public class Bullet extends Obstacle
      */
     public Bullet(Runner runner)
     {
-        //reference a runner so one can get the position from where the bullet is to be shot
-        super(100, 100, runner.getX(),"bulletSheet");
-        this.setX(runner.getX());
-        this.xPosition = (int)runner.getX();
-        this.setY((int)runner.getY() + (int)runner.getHeight()/2 - 30);
-        lastFire+=1;
+	//reference a runner so one can get the position from where the bullet is to be shot
+	super(100, 100, runner.getX(),"bulletSheet");
+	this.setX(runner.getX());
+	this.xPosition = (int)runner.getX();
+	this.setY((int)runner.getY() + (int)runner.getHeight()/2 - 30);
+    lastFire+=1;
     }
     /** getScore
      *  returns 0. This should probably change
@@ -44,26 +44,25 @@ public class Bullet extends Obstacle
      *  but that will affect CountryRunnerJPanel
      */
     public int getScore(){
-        return 0;
+	return 0;
     }
     /** updateCurrentPosition
      * Moves the bullet to left until it is off screen.
      */
     public void updateCurrentPosition()
     {
-        if(!offTheScreen())
-            xPosition = xPosition - (int)speed;
-        this.setX(xPosition);
-        t++;
+	if(!offTheScreen())
+	    xPosition = xPosition - (int)speed;
+	this.setX(xPosition);
+	t++;
     }
     /** public boolean offTheScreen()
      * checks if the bullet is off the screen
      */
     public boolean offTheScreen()
     {
-        if((int)this.getX() < 0 || xPosition < 0)
-            return true;
-        return false;
+	if((int)this.getX() < 0 || xPosition < 0)
+	    return true;
+	return false;
     }
 }
-

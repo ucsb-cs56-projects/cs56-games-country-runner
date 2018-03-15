@@ -31,7 +31,7 @@ public class Runner extends Sprite
     private double yPosition = 10;
     public double xVel = 0;
     //the amount of time that each bullet can be fired in milliseconds
-    private static final double fireInterval = 2000;
+    private static final double fireInterval = 1000;
     //holds the time of when a bullet was last fired
     private static double lastFire = 0;
     //Several booleans that help determine his current
@@ -66,8 +66,7 @@ public class Runner extends Sprite
      * the avatars include cowboy, cowgirl, and others
      * @param avatar
      */
-    public Runner(String avatar)
-    {
+    public Runner(String avatar){
     	//Open the spriteSheet
     	super(100, 109, 480, avatar);
 	bulletList = new ArrayList<Bullet>();
@@ -82,16 +81,17 @@ public class Runner extends Sprite
 	//NOTE: we have to explicitly say the number of
 	//images in the sequence
 	int numImages = 4;
-    	for (int i = 0; i < numImages; i++)
-	    {
+    	for (int i = 0; i < numImages; i++){
 		this.runningSequence.addImage(getSubImage(i, 0));
 	    }
+    }
+    public double getBulletTimer(){
+        return (System.currentTimeMillis()-lastFire); //fix this
     }
     /** public boolean isDying()
      *  returns the dying variable
      */
-    public boolean isDying()
-    {
+    public boolean isDying(){
 	return dying;
     }
     /** canShoot()
@@ -204,53 +204,45 @@ public class Runner extends Sprite
 	    }
     }
 
-    /** startJump
-     * Called by the JPanel, changes the runner's state so he
-     * knows he should be jumping when the image gets updated
-     * We set the jumpDistance to be 30, and it will be
-     * reduced as the jump progresses.  This constant can
-     * be altered later
-     */
-    public void startJump(){
-	//If the running is in the middle of a jump, no
-	//need to change anything about his state
-	if (!this.isOnGround()){
-		return;
-	}
-	//Setting up values for jump
-	//this.a=-9.8;
-	//this.v=65;
-	this.v = 65;
-	this.a = -9.8;
-	this.t = 0;
-	//Setting up boolean for jump
-	this.jumping = true;
-	this.running = false;
-    }
-    /**
-       called by the jpanel, changes the runner's state so he
-       knows  he should be super jumping when the image gets updated
-       we set the jumpDistance to be 60.
-    */
+     public void startJump(){
+     	//If the running is in the middle of a jump, no
+     	//need to change anything about his state
+     	if (!this.isOnGround()){
+     		return;
+     	}
+     	//Setting up values for jump
+     	//this.a=-9.8;
+     	//this.v=65;
+     	this.v = 65;
+     	this.a = -9.8;
+     	this.t = 0;
+     	//Setting up boolean for jump
+     	this.jumping = true;
+     	this.running = false;
+         }
+         /**
+            called by the jpanel, changes the runner's state so he
+            knows  he should be super jumping when the image gets updated
+            we set the jumpDistance to be 60.
+         */
 
-    public void regularJump()
-    {
-  //If the runnign is in the middle of a jump, no
-  //need to change anything about his state
-  if (!this.isOnGround()){
-    return;
-  }
-  //Setting up values for jump
-  //this.a=-9.8;
-  //this.v=55;
-  this.v = 50;
-  this.a = -9.8;
-  this.t = 3;
-  //Setting up boolean for jump
-  this.jumping = true;
-  this.running = false;
-  }
-
+         public void regularJump()
+         {
+       //If the running is in the middle of a jump, no
+       //need to change anything about his state
+       if (!this.isOnGround()){
+         return;
+       }
+       //Setting up values for jump
+       //this.a=-9.8;
+       //this.v=50;
+       this.v = 50;
+       this.a = -9.8;
+       this.t = 3;
+       //Setting up boolean for jump
+       this.jumping = true;
+       this.running = false;
+       }
     /** public void move1()
      *  move forward
      */
@@ -278,15 +270,14 @@ public class Runner extends Sprite
 	//equation: y = y_0 + v_0 + .5*g*t^2, which I
 	//hope you learnd in physics 1.  It just finds
 	//his correct position, to move him up/down
-
-  double newYPos = 0 + this.v*this.t + 0.5*this.a*(Math.pow(this.t,2));
+	double newYPos = 0 + this.v*this.t + .5*this.a*(Math.pow(this.t,2));
 	this.setY(this.GROUND - this.getHeight() - newYPos);
 	this.t++;
 
 	if (this.isOnGround())
 	    {
 	    	this.jumping = false;
-		    this.running = true;
+		this.running = true;
 	    }
 
 	//If he happens to fall farther than the ground, this pulls him up the ground

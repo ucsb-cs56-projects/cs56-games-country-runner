@@ -1,5 +1,4 @@
-
-package edu.ucsb.cs56.projects.games.country_runner;
+/*package edu.ucsb.cs56.projects.games.country_runner;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +10,7 @@ import javax.sound.sampled.*;
  * Class plays background music when the use is playing the game and stops
  * when he or she loses
  */
-
+/*
 public class BackgroundMusic implements Runnable{
     public static Clip clip;
     public void playMusic(String fileName){
@@ -38,3 +37,4 @@ public class BackgroundMusic implements Runnable{
         playMusic("res/Jipang.wav");
     }
 }
+*/
