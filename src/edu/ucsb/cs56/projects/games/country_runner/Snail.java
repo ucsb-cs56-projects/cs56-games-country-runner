@@ -38,7 +38,7 @@ public class Snail extends Obstacle
         }
         waiting = true;
         counter = randomWithRange(occurance, occurance+100);
-        score = 0;	
+        score = 0;
     }
     /** incrementScore increments the score by 1
      */

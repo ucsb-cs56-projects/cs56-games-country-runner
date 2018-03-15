@@ -26,12 +26,12 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     final double GROUND = 366.0;
     double xPosition;
     double yPosition;
-
+    
     //The sheet for the sprite and the current
     //image that is pulled from the sheet
     private static BufferedImage spriteSheet;
     BufferedImage currentImage;
-
+    
     //Tile size is the size of the subimages in
     //the sprite sheet. The tiles size is YOUR
     //job to not fuck up.  You must make sheets
@@ -51,8 +51,8 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
      [runningSequence = new SpriteSequence();]
      --------------------------------------------------------------------
      */
-
-
+    
+    
     /** Constuctor
      * creates a generic sprite instance at an initial (x,y) position
      * and the name of the sprite sheet it uses.
@@ -74,7 +74,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
         this.xPosition = x;
         //They always start at the ground
         this.yPosition = GROUND - this.getHeight();
-
+        
         //Loading the spriteSheet
         try
         {
@@ -84,7 +84,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
         {
             //This line for testing...
             //e.printStackTrace();
-
+            
             //While testing, use this so that testing objects
             //do not have to be initialized to an actual image
             if(sheetName == null)
@@ -99,7 +99,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
         //Setting up tile sizes and position
         this.xTileSize = xTileSize;
         this.yTileSize = yTileSize;
-
+        
         //Loading the spriteSheet
         try
         {
@@ -109,7 +109,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
         {
             //This line for testing...
             //e.printStackTrace();
-
+            
             //While testing, use this so that testing objects
             //do not have to be initialized to an actual image
             if(sheetName == null)
@@ -118,7 +118,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
             }
         }
     }
-
+    
     //constructor for sprites without spritesheet
     /** Constructor that tries to construct a sprite without a sprite sheet
      *  This constructor is never used but was made for a hypothetical class
@@ -136,7 +136,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
         this.xPosition = x;
         this.yPosition = y;
     }
-
+    
     /** updateCurrentPosition
      * Each class that ISA sprite will have
      * its own way of updating its position
@@ -162,7 +162,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
         }
         return false;
     }
-
+    
     /** getScore returns the score
      */
     public int getScore(){
@@ -177,7 +177,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
         //STUB.  This is a placeholder,
         //each subclass will implement this differently
     }
-
+    
     /** getHeight
      * Returns the yTileSize, which is
      * synonymous with height
@@ -186,7 +186,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     {
         return this.yTileSize;
     }
-
+    
     /** getWidth
      * Returns the xTileSize, which is
      * synonymous with width
@@ -195,7 +195,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     {
         return this.xTileSize;
     }
-
+    
     /** getSubImage
      * Returns a single image, pulled
      * from the sprite sheet
@@ -206,7 +206,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     {
         return spriteSheet.getSubimage(xGrid * xTileSize, yGrid * yTileSize, xTileSize, yTileSize);
     }
-
+    
     /** getX
      *  returns the sprite's current x position on JPanel
      *
@@ -223,7 +223,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     {
         return this.yPosition;
     }
-
+    
     /** getCurrentImage
      * returns the sprite's current Image that is
      *	that is ready to be displayed
@@ -232,7 +232,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     {
         return this.currentImage;
     }
-
+    
     /** setX
      * sets the sprite's current
      * x position on JPanel
@@ -241,7 +241,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     {
         this.xPosition = newXPosition;
     }
-
+    
     /** setY
      * sets the sprite's current y position on JPanel
      */
@@ -249,7 +249,7 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     {
         this.yPosition = newYPosition;
     }
-
+    
     /** setCurrentImage
      * sets the sprite's current Image that is
      *	that is ready to be displayed

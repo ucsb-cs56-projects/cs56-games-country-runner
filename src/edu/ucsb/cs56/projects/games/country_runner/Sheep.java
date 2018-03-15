@@ -37,10 +37,10 @@ public class Sheep extends Obstacle
         }
         waiting = true;
         counter = randomWithRange(occurance, occurance+100);
-
+        
         score = 0;
     }
-
+    
     public void incrementScore(){
         score++;
     }

@@ -74,7 +74,7 @@ public class ScoreSystem extends ArrayList<Score> {
             e.printStackTrace();
         }
     }
-
+    
     public void saveScores() throws java.io.IOException {
         
         int size = this.size();

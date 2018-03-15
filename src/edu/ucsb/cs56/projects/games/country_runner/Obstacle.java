@@ -14,7 +14,7 @@ public class Obstacle extends Sprite
     protected final double initialXPosition = -100.0;
     protected SpriteSequence runningSequence;
     protected double speed = 10.0;
-
+    
     protected int occurance = 10;
     protected int counter;
     protected Boolean waiting;
@@ -30,41 +30,41 @@ public class Obstacle extends Sprite
     int score;
     public Obstacle(int xInit, int yInit, double initialXPosition, String sheet)
     {
-    	//Call super constructor
-    	super(xInit, yInit, initialXPosition, sheet);
-		//Initilize the sequence
-		runningSequence = new SpriteSequence();
-
-		//Fill the sequence
-		//NOTE: we have to explicitly say the number of
-		//images in the sequence
+        //Call super constructor
+        super(xInit, yInit, initialXPosition, sheet);
+        //Initilize the sequence
+        runningSequence = new SpriteSequence();
+        
+        //Fill the sequence
+        //NOTE: we have to explicitly say the number of
+        //images in the sequence
         int numImages = 3;
-    	for (int i = 0; i < numImages; i++)
-		{
-			this.runningSequence.addImage(getSubImage(i, 0));
-		}
+        for (int i = 0; i < numImages; i++)
+        {
+            this.runningSequence.addImage(getSubImage(i, 0));
+        }
         score = 0;
     }
     //testing constructor for portal
-        public Obstacle(int xInit, int yInit, String sheet)
-        {
-            //Call super constructor
-            super(xInit, yInit, sheet);
-            //Initilize the sequence
-            runningSequence = new SpriteSequence();
-
-            //Fill the sequence
-            //NOTE: we have to explicitly say the number of
-            //images in the sequence
-            this.runningSequence.addImage(getSubImage(1, 0));
-        }
-
+    public Obstacle(int xInit, int yInit, String sheet)
+    {
+        //Call super constructor
+        super(xInit, yInit, sheet);
+        //Initilize the sequence
+        runningSequence = new SpriteSequence();
+        
+        //Fill the sequence
+        //NOTE: we have to explicitly say the number of
+        //images in the sequence
+        this.runningSequence.addImage(getSubImage(1, 0));
+    }
+    
     /** updateCurrentImage
      * Moves to the next image in the running sequence
      */
     public void updateCurrentImage()
     {
-	setCurrentImage(runningSequence.getNextImage());
+        setCurrentImage(runningSequence.getNextImage());
     }
     /** getScore returns the score of the obstacle
      */
@@ -78,10 +78,10 @@ public class Obstacle extends Sprite
      */
     int randomWithRange(int min, int max)
     {
-	int range = (max - min) + 1;
-	return (int)(Math.random() * range) + min;
+        int range = (max - min) + 1;
+        return (int)(Math.random() * range) + min;
     }
-
+    
     /** updateCurrentPosition
      * Moves the sheep to left until it is off screen.
      * Once it is, we mov it back to the left,
@@ -117,6 +117,6 @@ public class Obstacle extends Sprite
     /** incrementScore increments the score by 1
      */
     public void incrementScore(){
-	score++;
+        score++;
     }
 }

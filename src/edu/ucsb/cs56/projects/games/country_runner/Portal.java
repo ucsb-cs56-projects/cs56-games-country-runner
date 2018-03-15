@@ -16,11 +16,11 @@ public class Portal extends Obstacle
     public Portal(int appear)
     {
         //Call super constructor
-        super(100, 100, "portalSheet1");
+        super(100, 100, "portalSheet");
         this.setY(GROUND-230);
         occurance = 1;
         waiting = true;
         score = 0;
-
+        
     }
 }
