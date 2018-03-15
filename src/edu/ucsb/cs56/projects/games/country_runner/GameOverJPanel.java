@@ -14,6 +14,7 @@ public class GameOverJPanel extends JPanel {
     JButton backToMenuButton;
     JButton scoreLabel;
     JButton saveScoreLabel;
+    JButton clearScoreLabel;
     
     private int score;
     public static String name;
@@ -31,11 +32,13 @@ public class GameOverJPanel extends JPanel {
         scoreLabel = new JButton(str);
         playAgainButton = new JButton("Play Again?");
         backToMenuButton = new JButton("Go back to Main Menu");
+        clearScoreLabel = new JButton("Clear High Scores");
         /** Do not want to add the 'Save Score' button if a score of zero occurs **/
         if(score != 0){
             saveScoreLabel = new JButton("Save Score");
             this.add(saveScoreLabel);
         }
+        this.add(clearScoreLabel);
         this.add(scoreLabel);
         this.add(playAgainButton);
         this.add(backToMenuButton);
@@ -51,6 +54,18 @@ public class GameOverJPanel extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 CountryRunnerGui.setCurrentPanelTo(new CountryRunnerTitleScreen());
+            }
+        });
+        clearScoreLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                ScoreSystem ss = new ScoreSystem();
+                try{
+                    ss.loadScores();
+                }catch(Exception q){}
+                try{
+                    ss.clearScores();
+                }catch(Exception q){}
             }
         });
         if(saveScoreLabel != null){
