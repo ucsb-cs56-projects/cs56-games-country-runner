@@ -18,11 +18,11 @@ Country Runner is an "avoid-the-obstacles" sidescroller game. Ride your piggy th
 
 ##<i>Title Screen</i>
 
-Use the <b>UP</b> and <b>DOWN</b> arrow keys to cycle through your options. Press <b>RIGHT</b> to select. 
-Select <b>Play</b> to start the game. 
+Use the <b>UP</b> and <b>DOWN</b> arrow keys to cycle through your options. Press <b>RIGHT</b> to select.
+Select <b>Play</b> to start the game.
 Select <b>High Scores</b> to display user high scores.
 Select <b>Instructions</b> to learn how to play.
-Select <b>Choose Difficulty</b> choose the difficulty of the game. 
+Select <b>Choose Difficulty</b> choose the difficulty of the game.
 Select <b>Choose Avatar</b> to choose an avatar to pay.
 Select <b>Choose Background</b> to choose a background for the game.
 (The HighScores will be displayed on a pop up on Title Page)
@@ -37,26 +37,26 @@ Press the space key to use your magical powers and shoot an image of yourself to
 --------------------------
 #Developer Notes
 
-These notes will help the current or future developers understand the overall goals for Country Runner as well as some suggestions on how to imlement some of the main features. 
+These notes will help the current or future developers understand the overall goals for Country Runner as well as some suggestions on how to imlement some of the main features.
 
 ##<i>Country Runner Version 1.0 </i>
 
-Country Runner is a sidescroller game developed in Java. 
+Country Runner is a sidescroller game developed in Java.
 
 ###General Mechanics of the Game
 
-The runner is fixed at a constant X coordinate and translates his Y coordinate. 
+The runner is fixed at a constant X coordinate and translates his Y coordinate.
 To make the runner look like he is moving in the X direction, the background's X coordinate translates  at the speed that you want the runner to appear to move.  
 
-The background will be continuously replaced with the next bit of stage of in the background to make it appear as if the runner is traveling. This will also make jumping look like an arc. The background can repeat. 
- 
- 
-We want the motion of the runner "feel good." Jumping should models simple physics; for example, slowing down until he reaches highest point in jump, and then speeds up on the way down.  The jumps will be exaggerated so that he can actually jump over the obstacles. 
+The background will be continuously replaced with the next bit of stage of in the background to make it appear as if the runner is traveling. This will also make jumping look like an arc. The background can repeat.
+
+
+We want the motion of the runner "feel good." Jumping should models simple physics; for example, slowing down until he reaches highest point in jump, and then speeds up on the way down.  The jumps will be exaggerated so that he can actually jump over the obstacles.
 
 ###Running and Testing the Game
-We are using ant to automate compiling, testing, and running. 
+We are using ant to automate compiling, testing, and running.
 Type `ant run` to compile and run the game.
-Type `ant -p` to view the currently available tasks you can perform. 
+Type `ant -p` to view the currently available tasks you can perform.
 
 
 
@@ -65,9 +65,9 @@ Prevent the add score button from showing up on the game over screen when the sc
 
 Set a boundary that prevents the player from moving of the screen.
 
-Runner jumps longer by holding down the <b>UP</b> button. Quickly tapping the <b>UP</b> button will result in shorter jumps. 
+Runner jumps longer by holding down the <b>UP</b> button. Quickly tapping the <b>UP</b> button will result in shorter jumps.
 
-Layer the background to create depth. Layering wil consist of of several backgrounds (some of which have transparent parts) that each scroll slightly faster then one behind it. 
+Layer the background to create depth. Layering wil consist of of several backgrounds (some of which have transparent parts) that each scroll slightly faster then one behind it.
 
 ##<i>M16 Final Remarks</i>
 
@@ -87,3 +87,9 @@ This is a two dimensional platform game similar to the original super mario bros
 
 
 ##<i>F17 Final Remarks</i>
+
+##<i>W18 Final Remarks</i>
+
+This is a 2D side-scrolling game, where the user plays as a runner. The objective of the game is collect points by jumping over or destroying obstacles that appear at different frequencies. Some fun features that you can work on are creating an inventory, power-up shop, and a settings option. A significant bug would be in our portals function. It only works on level 1. After level 1, the portal is treated as a monster sprite and does not appear randomly. It would be great if the frequency of all sprites are changed to rebalance the game. Opportunities for refactoring would be in CountryRunnerJpanel.java, since it is the main program. It can be split into different files to make the code more readable. Changing the data structure of the sprites would also be helpful in improving this game. Our advice would be to focus on CountryRunnerJPanel.java, since most of the code that you will be implementing will involve it. Some good advice would be improving the balance of the game, since we added a lot of different features. Good luck!
+
+##<i>W18 Final Remarks</i>
