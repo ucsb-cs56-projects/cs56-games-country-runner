@@ -14,16 +14,16 @@ public class GameOverJPanel extends JPanel {
     JButton backToMenuButton;
     JButton scoreLabel;
     JButton saveScoreLabel;
-    
+
     private int score;
     public static String name;
-    /** Constructor that sets up the Game Over Screen, which 
+    /** Constructor that sets up the Game Over Screen, which
      *  occurs when the player runs into an obstacle
      *  @param score
      */
     public GameOverJPanel(int score) {
 	this.score = score;
-	
+
         backgroundImage = new ImageIcon("res/Gameover.jpg").getImage();
         this.repaint();
 
@@ -46,7 +46,7 @@ public class GameOverJPanel extends JPanel {
 		public void mouseReleased(MouseEvent e) {
 		    CountryRunnerGui.setCurrentPanelTo(new CountryRunnerJPanel());
 		}
-	    }); 
+	    });
         backToMenuButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -75,7 +75,7 @@ public class GameOverJPanel extends JPanel {
 		    }
 		});
 	}
-	
+
     }
     /** paintComponent paints the Background Image
      */

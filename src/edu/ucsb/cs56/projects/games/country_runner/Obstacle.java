@@ -28,10 +28,7 @@ public class Obstacle extends Sprite
      * @param the sheet name
      */
     int score;
-    public Obstacle(int xInit, 
-			    	int yInit, 
-			    	double initialXPosition, 
-			    	String sheet)
+    public Obstacle(int xInit, int yInit, double initialXPosition, String sheet)
     {
     	//Call super constructor
     	super(xInit, yInit, initialXPosition, sheet);

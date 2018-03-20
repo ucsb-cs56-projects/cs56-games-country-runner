@@ -19,7 +19,7 @@ public class Raccoon extends Obstacle
     public Raccoon(int difficulty)
     {
     	//Call super constructor
-    	super(100, 109, -100.0 , "raccoonSheet");
+    	super(100, 109, ((Math.random()*-800.0)-100), "raccoonSheet");
 		switch (difficulty)
 		{
 			case 1: {

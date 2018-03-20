@@ -21,7 +21,7 @@ public class Panda extends Obstacle
     public Panda(int difficulty)
     {
     	//Call super constructor
-    	super(100, 100, -100.0 , "pandaSheet");			
+    	super(100, 100, ((Math.random()*-800.0)-100) , "pandaSheet");
 	    /** setDifficulty
 	     * set speed and occurance 
 	     * according to difficulty
