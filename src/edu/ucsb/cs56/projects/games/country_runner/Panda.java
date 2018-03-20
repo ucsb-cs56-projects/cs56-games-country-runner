@@ -20,38 +20,37 @@ public class Panda extends Obstacle
      */
     public Panda(int difficulty)
     {
-    	//Call super constructor
-    	super(100, 100, ((Math.random()*-800.0)-100) , "pandaSheet");
-	    /** setDifficulty
-	     * set speed and occurance 
-	     * according to difficulty
-	     */	    
-		switch (difficulty) 
-		{
-			case 1: {
-			    speed = 0.0;
-			    occurance = -1;
-			    break;
-			}
-			case 2: {
-			    speed = 0.0;
-			    occurance = -1;
-			    break;
-			}
-			case 3: {
-			    speed = 20.0;
-			    occurance = 120;
-			    break;
-			}
-		}
-		waiting = true;
-		counter = randomWithRange(occurance, occurance+100);
+        //Call super constructor
+        super(100, 100, ((Math.random()*-800.0)-100) , "pandaSheet");
+        /** setDifficulty
+         * set speed and occurance
+         * according to difficulty
+         */
+        switch (difficulty)
+        {
+            case 1: {
+                speed = 0.0;
+                occurance = -1;
+                break;
+            }
+            case 2: {
+                speed = 0.0;
+                occurance = -1;
+                break;
+            }
+            case 3: {
+                speed = 20.0;
+                occurance = 120;
+                break;
+            }
+        }
+        waiting = true;
+        counter = randomWithRange(occurance, occurance+100);
         score = 0;
     }
     /** incrementScore increments the Panda's score by 1
      */
     public void incrementScore(){
-	score++;
+        score++;
     }
 }
-

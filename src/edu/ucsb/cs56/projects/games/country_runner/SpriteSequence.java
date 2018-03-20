@@ -26,19 +26,19 @@ public class SpriteSequence extends ArrayList<BufferedImage>
     //Constructor just sets the index to 0
     public SpriteSequence()
     {
-	currentIndex = 0;
+        currentIndex = 0;
     }
-
+    
     /** addImage
      * Adds an image to the array and returns true if it occurs
      * @param newImage is the new Image you want to add to the ArrayList
      */
     public boolean addImage(BufferedImage newImage)
     {
-	add(newImage);
-	return true;
+        add(newImage);
+        return true;
     }
-
+    
     /** getNextImage
      * Has looping logic, finds the next image in the
      * array and returns it.  If we are at the end,
@@ -46,21 +46,21 @@ public class SpriteSequence extends ArrayList<BufferedImage>
      */
     public BufferedImage getNextImage()
     {
-	currentIndex++;
-	if(currentIndex == this.size())
-	    {
-		currentIndex = 0;
-	    }
-
-	return this.get(currentIndex);
+        currentIndex++;
+        if(currentIndex == this.size())
+        {
+            currentIndex = 0;
+        }
+        
+        return this.get(currentIndex);
     }
-
+    
     /** resetIndex
      * Makes the index 0, should we need to start
      * over the animation sequence
      */
     public void resetIndex()
     {
-	currentIndex = 0;
+        currentIndex = 0;
     }
 }

@@ -16,11 +16,11 @@ public class Bullet extends Obstacle
     private static int xPosition;
     private static int yPosition;
     private double t; //time
-    //the speed of bullet 
+    //the speed of bullet
     private static final double speed = 15.0;
     //the amount of time that each bullet can be fired in milliseconds
     //holds the time of when a bullet was last fired
-    private static int lastFire = 0; 
+    private static int lastFire = 0;
     
     
     /** Default Constructor makes a Bullet.
@@ -31,39 +31,38 @@ public class Bullet extends Obstacle
      */
     public Bullet(Runner runner)
     {
-	//reference a runner so one can get the position from where the bullet is to be shot
-	super(100, 100, runner.getX(),"bulletSheet");
-	this.setX(runner.getX());
-	this.xPosition = (int)runner.getX();
-	this.setY((int)runner.getY() + (int)runner.getHeight()/2 - 30);
-    lastFire+=1;
+        //reference a runner so one can get the position from where the bullet is to be shot
+        super(100, 100, runner.getX(),"bulletSheet");
+        this.setX(runner.getX());
+        this.xPosition = (int)runner.getX();
+        this.setY((int)runner.getY() + (int)runner.getHeight()/2 - 30);
+        lastFire+=1;
     }
     /** getScore
-     *  returns 0. This should probably change 
+     *  returns 0. This should probably change
      *  and return the actual score
-     *  but that will affect CountryRunnerJPanel 
+     *  but that will affect CountryRunnerJPanel
      */
     public int getScore(){
-	return 0;
+        return 0;
     }
     /** updateCurrentPosition
      * Moves the bullet to left until it is off screen.
      */
     public void updateCurrentPosition()
     {
-	if(!offTheScreen())
-	    xPosition = xPosition - (int)speed;
-	this.setX(xPosition);
-	t++;
+        if(!offTheScreen())
+            xPosition = xPosition - (int)speed;
+        this.setX(xPosition);
+        t++;
     }
-    /** public boolean offTheScreen() 
-     * checks if the bullet is off the screen 
+    /** public boolean offTheScreen()
+     * checks if the bullet is off the screen
      */
     public boolean offTheScreen()
     {
-	if((int)this.getX() < 0 || xPosition < 0)
-	    return true;
-	return false;
+        if((int)this.getX() < 0 || xPosition < 0)
+            return true;
+        return false;
     }
 }
-

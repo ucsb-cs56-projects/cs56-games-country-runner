@@ -12,66 +12,36 @@ public class Sheep extends Obstacle
     /** Sheep Constructor creates a sheep object
      *  based on the passed parameter difficulty
      *  @param difficulty is converted based on int
-     */ 
+     */
     public Sheep(int difficulty)
     {
-    	//Call super constructor
-    	super(100, 50, ((Math.random()*-800.0)-100), "sheepSheet");
-		switch (difficulty)
-		{
-			case 1: {
-			    speed = 7.0;
-			    occurance = 5;
-			    break;
-			}
-			case 2: {
-			    speed = 10.0;
-			    occurance = 10;
-			    break;
-			}
-			case 3: {
-			    speed = 12.0;
-			    occurance = 15;
-			    break;
-			}
-		}
-		waiting = true;
-		counter = randomWithRange(occurance, occurance+100);
-
+        //Call super constructor
+        super(100, 50, ((Math.random()*-800.0)-100), "sheepSheet");
+        switch (difficulty)
+        {
+            case 1: {
+                speed = 7.0;
+                occurance = 5;
+                break;
+            }
+            case 2: {
+                speed = 10.0;
+                occurance = 10;
+                break;
+            }
+            case 3: {
+                speed = 12.0;
+                occurance = 15;
+                break;
+            }
+        }
+        waiting = true;
+        counter = randomWithRange(occurance, occurance+100);
+        
         score = 0;
-
     }
-
-    /** setDifficulty
-     * set speed and occurance 
-     * according to difficulty
-     */
-    /**
-    public void setDifficulty(int difficulty) {
-	switch (difficulty) {
-	case 1: {
-	    speed = 7.0;
-	    occurance = 5;
-	    break;
-	}
-	case 2: {
-	    speed = 10.0;
-	    occurance = 15;
-	    break;
-	}
-	case 3: {
-	    speed = 10.0;
-	    occurance = 10;
-	    break;
-	}
-	}
-	waiting = true;
-	counter = randomWithRange(occurance, occurance+100);
-    }
-     */
-    /** incrementScore increments the score by one
-     */
+    
     public void incrementScore(){
-	score++;
+        score++;
     }
 }

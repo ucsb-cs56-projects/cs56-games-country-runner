@@ -26,12 +26,12 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     final double GROUND = 366.0;
     double xPosition;
     double yPosition;
-
+    
     //The sheet for the sprite and the current
     //image that is pulled from the sheet
     private static BufferedImage spriteSheet;
     BufferedImage currentImage;
-
+    
     //Tile size is the size of the subimages in
     //the sprite sheet. The tiles size is YOUR
     //job to not fuck up.  You must make sheets
@@ -41,18 +41,18 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     public int yTileSize;
     public int score;
     /*
-      --------------------------------------------------------------------
-      IMPLEMENTATION NOTE:
-      Every class that inherites from this class will have some number of
-      SpriteSequences for animation.  The sprite sequence class is
-      essentially an arrayList and a saved index.
-      Later on, the sprites will call the getNextImage() method to
-      update the sequences.  The runner for example has this object:
-      [runningSequence = new SpriteSequence();]
-      --------------------------------------------------------------------
-    */
-
-
+     --------------------------------------------------------------------
+     IMPLEMENTATION NOTE:
+     Every class that inherites from this class will have some number of
+     SpriteSequences for animation.  The sprite sequence class is
+     essentially an arrayList and a saved index.
+     Later on, the sprites will call the getNextImage() method to
+     update the sequences.  The runner for example has this object:
+     [runningSequence = new SpriteSequence();]
+     --------------------------------------------------------------------
+     */
+    
+    
     /** Constuctor
      * creates a generic sprite instance at an initial (x,y) position
      * and the name of the sprite sheet it uses.
@@ -68,31 +68,57 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
      */
     public Sprite(int xTileSize, int yTileSize, double x, String sheetName)
     {
-	//Setting up tile sizes and position
-	this.xTileSize = xTileSize;
-	this.yTileSize = yTileSize;
-	this.xPosition = x;
-	//They always start at the ground
-	this.yPosition = GROUND - this.getHeight();
-
-	//Loading the spriteSheet
-	try
-	    {
-		spriteSheet = ImageIO.read(new File("res/" + sheetName + ".png"));
-	    }
-	catch (IOException e)
-	    {
-	    	//This line for testing...
-	        //e.printStackTrace();
-
-	        //While testing, use this so that testing objects
-	        //do not have to be initialized to an actual image
-	        if(sheetName == null)
-		    {
-			return;
-		    }
-	    }
+        //Setting up tile sizes and position
+        this.xTileSize = xTileSize;
+        this.yTileSize = yTileSize;
+        this.xPosition = x;
+        //They always start at the ground
+        this.yPosition = GROUND - this.getHeight();
+        
+        //Loading the spriteSheet
+        try
+        {
+            spriteSheet = ImageIO.read(new File("res/" + sheetName + ".png"));
+        }
+        catch (IOException e)
+        {
+            //This line for testing...
+            //e.printStackTrace();
+            
+            //While testing, use this so that testing objects
+            //do not have to be initialized to an actual image
+            if(sheetName == null)
+            {
+                return;
+            }
+        }
     }
+    //testing constructor for portal
+    public Sprite(int xTileSize, int yTileSize, String sheetName)
+    {
+        //Setting up tile sizes and position
+        this.xTileSize = xTileSize;
+        this.yTileSize = yTileSize;
+        
+        //Loading the spriteSheet
+        try
+        {
+            spriteSheet = ImageIO.read(new File("res/" + sheetName + ".png"));
+        }
+        catch (IOException e)
+        {
+            //This line for testing...
+            //e.printStackTrace();
+            
+            //While testing, use this so that testing objects
+            //do not have to be initialized to an actual image
+            if(sheetName == null)
+            {
+                return;
+            }
+        }
+    }
+    
     //constructor for sprites without spritesheet
     /** Constructor that tries to construct a sprite without a sprite sheet
      *  This constructor is never used but was made for a hypothetical class
@@ -104,43 +130,43 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
      */
     public Sprite(int xTileSize, int yTileSize, double x, double y)
     {
-	//setting up tile and sizes and position
-	this.xTileSize = xTileSize;
-	this.yTileSize = yTileSize;
-	this.xPosition = x;
-	this.yPosition = y;
+        //setting up tile and sizes and position
+        this.xTileSize = xTileSize;
+        this.yTileSize = yTileSize;
+        this.xPosition = x;
+        this.yPosition = y;
     }
-
+    
     /** updateCurrentPosition
      * Each class that ISA sprite will have
      * its own way of updating its position
      */
     public void updateCurrentPosition()
     {
-	//STUB.  This is a placeholder,
-	//each subclass will implement this differently
+        //STUB.  This is a placeholder,
+        //each subclass will implement this differently
     }
-    /** Collides checks if bullet b 
+    /** Collides checks if bullet b
      *  collides with this Sprite
-     *  @param Bullet b 
+     *  @param Bullet b
      */
     public boolean collides(Bullet b){
-	if (b.getY()+ b.getHeight() >= this.getY())
-	{
-	    if ((this.getX()+50>b.getX()) && ((this.getX()-50) <b.getX()))
-	    {
-		if ((b.getY() > this.getY()))
-		    return false;
-		return true;
-	    }
-	}
-	return false;
+        if (b.getY()+ b.getHeight() >= this.getY())
+        {
+            if ((this.getX()+50>b.getX()) && ((this.getX()-50) <b.getX()))
+            {
+                if ((b.getY() > this.getY()))
+                    return false;
+                return true;
+            }
+        }
+        return false;
     }
-   
+    
     /** getScore returns the score
      */
     public int getScore(){
-	return score;
+        return score;
     }
     /** updateCurrentImage
      * Each class that ISA sprite will have
@@ -148,28 +174,28 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
      */
     public void updateCurrentImage()
     {
-	//STUB.  This is a placeholder,
-	//each subclass will implement this differently
+        //STUB.  This is a placeholder,
+        //each subclass will implement this differently
     }
-
+    
     /** getHeight
      * Returns the yTileSize, which is
      * synonymous with height
      */
     public double getHeight()
     {
-	return this.yTileSize;
+        return this.yTileSize;
     }
-
+    
     /** getWidth
      * Returns the xTileSize, which is
      * synonymous with width
      */
     public double getWidth()
     {
-	return this.xTileSize;
+        return this.xTileSize;
     }
-
+    
     /** getSubImage
      * Returns a single image, pulled
      * from the sprite sheet
@@ -180,14 +206,14 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
     {
         return spriteSheet.getSubimage(xGrid * xTileSize, yGrid * yTileSize, xTileSize, yTileSize);
     }
-
+    
     /** getX
      *  returns the sprite's current x position on JPanel
      *
      */
     public double getX()
     {
-	return this.xPosition;
+        return this.xPosition;
     }
     /** getY
      *  returns the sprite's current y position on JPanel
@@ -195,51 +221,51 @@ public abstract class Sprite extends GeneralPathWrapper implements Shape
      */
     public double getY()
     {
-	return this.yPosition;
+        return this.yPosition;
     }
-
+    
     /** getCurrentImage
      * returns the sprite's current Image that is
      *	that is ready to be displayed
      */
     public BufferedImage getCurrentImage()
     {
-	return this.currentImage;
+        return this.currentImage;
     }
-
+    
     /** setX
      * sets the sprite's current
      * x position on JPanel
      */
     public void setX(double newXPosition)
     {
-	this.xPosition = newXPosition;
+        this.xPosition = newXPosition;
     }
-
+    
     /** setY
      * sets the sprite's current y position on JPanel
      */
     public void setY(double newYPosition)
     {
-	this.yPosition = newYPosition;
+        this.yPosition = newYPosition;
     }
-
+    
     /** setCurrentImage
      * sets the sprite's current Image that is
      *	that is ready to be displayed
      */
     public void setCurrentImage(BufferedImage newImage)
     {
-	this.currentImage = newImage;
+        this.currentImage = newImage;
     }
     /** abstract method that every Sprite class must implement in order
      *  to keep track of score
      */
     public abstract void incrementScore();
     /** setScore sets the score of the Sprite
-     *  @param int score 
+     *  @param int score
      */
     public void setScore(int score){
-	this.score = score;
+        this.score = score;
     }
 }

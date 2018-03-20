@@ -1,8 +1,8 @@
 package edu.ucsb.cs56.projects.games.country_runner;
 import java.lang.Math;
 
-/**Obstacle class that the will be extended by classes that 
- * represent obstacles for the runner in the game such as 
+/**Obstacle class that the will be extended by classes that
+ * represent obstacles for the runner in the game such as
  * Sheep, raccoon, etc
  * @author William Huang, Ray Ouyang
  * @version cs56, F16, proj2
@@ -14,44 +14,57 @@ public class Obstacle extends Sprite
     protected final double initialXPosition = -100.0;
     protected SpriteSequence runningSequence;
     protected double speed = 10.0;
-
+    
     protected int occurance = 10;
     protected int counter;
     protected Boolean waiting;
     //holds score for amount of times user jumped over this object
     /** Default Constructor makes the Sheep.
      * sets up the spriteSheet and fills the
-     * sequences with images from it 
+     * sequences with images from it
      * @param xInitial tile size
      * @param yInitial tile size
-     * @param initial xPosition 
+     * @param initial xPosition
      * @param the sheet name
      */
     int score;
     public Obstacle(int xInit, int yInit, double initialXPosition, String sheet)
     {
-    	//Call super constructor
-    	super(xInit, yInit, initialXPosition, sheet);
-		//Initilize the sequence
-		runningSequence = new SpriteSequence();
-
-		//Fill the sequence
-		//NOTE: we have to explicitly say the number of
-		//images in the sequence
+        //Call super constructor
+        super(xInit, yInit, initialXPosition, sheet);
+        //Initilize the sequence
+        runningSequence = new SpriteSequence();
+        
+        //Fill the sequence
+        //NOTE: we have to explicitly say the number of
+        //images in the sequence
         int numImages = 3;
-    	for (int i = 0; i < numImages; i++)
-		{
-			this.runningSequence.addImage(getSubImage(i, 0));
-		}
+        for (int i = 0; i < numImages; i++)
+        {
+            this.runningSequence.addImage(getSubImage(i, 0));
+        }
         score = 0;
     }
-
+    //testing constructor for portal
+    public Obstacle(int xInit, int yInit, String sheet)
+    {
+        //Call super constructor
+        super(xInit, yInit, sheet);
+        //Initilize the sequence
+        runningSequence = new SpriteSequence();
+        
+        //Fill the sequence
+        //NOTE: we have to explicitly say the number of
+        //images in the sequence
+        this.runningSequence.addImage(getSubImage(1, 0));
+    }
+    
     /** updateCurrentImage
      * Moves to the next image in the running sequence
      */
     public void updateCurrentImage()
     {
-	setCurrentImage(runningSequence.getNextImage());
+        setCurrentImage(runningSequence.getNextImage());
     }
     /** getScore returns the score of the obstacle
      */
@@ -65,10 +78,10 @@ public class Obstacle extends Sprite
      */
     int randomWithRange(int min, int max)
     {
-	int range = (max - min) + 1;     
-	return (int)(Math.random() * range) + min;
+        int range = (max - min) + 1;
+        return (int)(Math.random() * range) + min;
     }
-
+    
     /** updateCurrentPosition
      * Moves the sheep to left until it is off screen.
      * Once it is, we mov it back to the left,
@@ -78,10 +91,10 @@ public class Obstacle extends Sprite
     {
         //Right now, using the actual size of the window.
         //Will want to change this later...
-        //todo: factor timer function out; make it more time precise 
-        if (occurance > 0) 
+        //todo: factor timer function out; make it more time precise
+        if (occurance > 0)
         {
-            if (waiting) 
+            if (waiting)
             {
                 if (counter > 0)
                     counter--;
@@ -104,7 +117,6 @@ public class Obstacle extends Sprite
     /** incrementScore increments the score by 1
      */
     public void incrementScore(){
-	score++;
+        score++;
     }
 }
-

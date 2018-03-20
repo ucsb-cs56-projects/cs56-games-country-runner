@@ -14,39 +14,37 @@ import java.awt.geom.AffineTransform;
 
 
 /**
-   Because GeneralPath is declared as "final", we can't extend it.
-   That's inconvenient, because if we can declare shapes that
-   extend GeneralPath, we get all of the methods of GeneralPath that
-   implement the Shape interface.
-
-   That allows us to do graphics transformations like
-   translating, rotating and scaling (the Affine transforms).
-
-   So, GeneralPathWrapper is a wrapper around a GeneralPath object
-   that we can extend
-   * @author P. Conrad
-   * @author Christina Morris, Mathew Glodack
-   * @version CS56, S13
-   */
+ Because GeneralPath is declared as "final", we can't extend it.
+ That's inconvenient, because if we can declare shapes that
+ extend GeneralPath, we get all of the methods of GeneralPath that
+ implement the Shape interface.
+ That allows us to do graphics transformations like
+ translating, rotating and scaling (the Affine transforms).
+ So, GeneralPathWrapper is a wrapper around a GeneralPath object
+ that we can extend
+ * @author P. Conrad
+ * @author Christina Morris, Mathew Glodack
+ * @version CS56, S13
+ */
 
 public class GeneralPathWrapper implements Shape
 {
     private GeneralPath gp;
     
     public GeneralPathWrapper() {gp = new GeneralPath();}
-
+    
     /** If we already have a GeneralPath, we can wrap it with the parameter.
      *  @param General Path gp
      */
     public GeneralPathWrapper(GeneralPath gp) {this.gp = gp;}
-
+    
     /**
-       Get tests if the specified coordinates are inside the boundary of the
-       Shape.
-    */
-   
+     Get tests if the specified coordinates are inside the boundary of the
+     Shape.
+     */
+    
     public GeneralPath get() {return gp;}
-    /** 
+    /**
      *	Set sets the General Path to the parameter passed in
      *  @param General Path gp
      */
@@ -64,42 +62,42 @@ public class GeneralPathWrapper implements Shape
      *  @param width
      *  @param height
      */
-
+    
     public boolean contains(double x, double y, double w, double h) { return gp.contains(x,y,w,h); }
     
     /** Tests if a specified Point2D is inside the boundary of
      *  the Shape.
      *  @param point2D p
      */
-
+    
     public boolean contains(Point2D p) { return gp.contains(p); }
     
     /**
-       Tests if the interior of the Shape entirely contains the
-       specified Rectangle2D.
-       * @param rectangle r
-    */
+     Tests if the interior of the Shape entirely contains the
+     specified Rectangle2D.
+     * @param rectangle r
+     */
     
     public boolean contains(Rectangle2D r) { return gp.contains(r); }
- 
+    
     /** Returns an integer Rectangle that completely encloses the
      * Shape.
      */
-
+    
     public Rectangle getBounds() { return gp.getBounds(); }
     
     /** Returns a high precision and more accurate bounding box
      * of the Shape than the getBounds method.
      */
-
+    
     public Rectangle2D getBounds2D() { return gp.getBounds2D(); }
-
+    
     /** Returns an iterator object that iterates along the
      * Shape boundary and provides access to the geometry of
      * the Shape outline.
      * @param AffineTransform at
      */
-
+    
     public PathIterator getPathIterator(AffineTransform at) { return gp.getPathIterator( at); }
     
     /** Returns an iterator object that iterates along the
@@ -110,7 +108,7 @@ public class GeneralPathWrapper implements Shape
      */
     
     public PathIterator getPathIterator(AffineTransform at, double flatness) { return gp.getPathIterator( at, flatness); }
-
+    
     /** Tests if the interior of the Shape intersects the
      * interior of a specified rectangular area.
      * @param x coordinate
@@ -118,17 +116,17 @@ public class GeneralPathWrapper implements Shape
      * @param width
      * @param height
      */
-
+    
     public boolean intersects(double x, double y, double w, double h) { return gp.intersects(x, y, w, h);}
-
+    
     /** Tests if the interior of the Shape intersects the interior of
      * a specified Rectangle2D.
      * @param rectangle r
      */
-
+    
     public boolean intersects(Rectangle2D r) { return gp.intersects(r); }
     
     
-
-
+    
+    
 }
